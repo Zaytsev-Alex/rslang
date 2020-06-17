@@ -1,0 +1,168 @@
+$blue_color: rgba(112, 183, 194, 0.79);
+$blue_color_for_input: rgba(112, 183, 194, 0.5);
+$first_color: rgba(241, 240, 203, 0.4);
+$second_color: rgb(253, 253, 244);
+$third_color: rgba(2, 91, 126, 0.8);
+$green_color :rgba(35, 223, 119, 0.85);
+$fourth_color: rgba(1, 75, 104, 0.8);
+$button_background: rgba(202, 235, 216, 0.4);
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: $first_color;
+  height: 100vh;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  .card-container {
+    display: flex;
+    justify-content: center;
+
+    .card {
+      min-width: 550px;
+      max-width: 600px;
+
+      .card__wrapper {
+        border-radius: 8px;
+        background-color: $second_color;
+        -webkit-box-shadow: 0px 0px 15px 3px $blue_color;
+        -moz-box-shadow: 0px 0px 15px 3px $blue_color;
+        box-shadow: 0px 0px 15px 3px $blue_color;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card__img {
+        border-radius: 8px;
+      }
+      .card__main {
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+      }
+      .card__input {
+        border: none;
+        background-color: $blue_color_for_input;
+        width: 0px;
+        height: 50px;
+        font-size: 2.1rem;
+        font-family: "Inconsolata", monospace;
+        padding: 0 8px;
+        margin: 10px auto;
+        outline: none;
+        color: $fourth_color;
+      }
+      .card__word {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 0 15px;
+
+        .card__word-translate,
+        .card__transcription {
+          font-weight: 700;
+          font-size: 2rem;
+          text-align: left;
+          color: $fourth_color;
+        }
+      }
+
+      .card__buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        .card__hard-word-btn,
+        .card__skip-word-btn,
+        .card__delete-word-btn {
+          outline: none;
+          user-select: none;
+          background-color: $button_background;
+          border: 1px solid #e4cccc;
+          padding: 5px 10px;
+          color: $fourth_color;
+          font-family: inherit;
+          font-size: 1.5rem;
+          border-radius: 8px;
+          display: inline-block;
+          position: relative;
+          overflow: hidden;
+          transition: 0.2s ease-in-out;
+          margin-right: 10px;
+          &:hover {
+            background-color: $green_color;
+            cursor: pointer;
+            color: #fff;
+          }
+          &:hover:before {
+            left: 250px;
+            transition: .5s ease-in-out;
+          }
+          &:before {
+            content: "";
+            background: -webkit-gradient(
+              linear,
+              left top,
+              right top,
+              from(hsla(0, 0%, 100%, 0.1)),
+              to(hsla(0, 0%, 100%, 0.5))
+            );
+            background: linear-gradient(
+              90deg,
+              hsla(0, 0%, 100%, 0.1),
+              hsla(0, 0%, 100%, 0.5)
+            );
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            top: -8px;
+            left: -75px;
+            -webkit-transform: skewX(-45deg);
+            transform: skewX(-45deg);
+          }
+        }
+      }
+      .card__additional-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .card__additional-info,
+      .card__explain,
+      .card__word-expample {
+        margin-top: 10px;
+      }
+    }
+
+    .navigate {
+      display: flex;
+      align-items: center;
+      width: 2.5rem;
+      &:hover {
+        cursor: pointer;
+
+        svg {
+          fill: $green_color;
+        }
+      }
+
+      &.navigate--prev {
+        margin-right: 20px;
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+      &.navigate--next {
+        margin-left: 20px;
+      }
+      svg {
+        fill: $third_color;
+        width: 3rem;
+        height: 3rem;
+        transition: 0.45s;
+      }
+    }
+  }
+}
