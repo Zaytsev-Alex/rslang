@@ -6,18 +6,39 @@
     <title>Document</title>
 </head>
 <body>
-    <section class="container sprint">
-        <div class="sprint__promo">
-            <h2 class="sprint__promo_header">
-                Sprint
-            </h2>
-            <p class="sprint__promo_description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam corporis sit, quia earum velit et nulla quae, unde vero nesciunt ad ex assumenda ratione sed qui repellat tempora? Fugiat, perspiciatis!
-            </p>
-            <button class="sprint__promo_start-button">
-                Start
-            </button>
-        </div>
+    <section class="container">
+        <article class="sprint__card">
+            <div class="sprint__difficult-level">
+                <button class="sprint__difficult-level_item sprint__difficult-level_item-active">1</button>
+                <button class="sprint__difficult-level_item">2</button>
+                <button class="sprint__difficult-level_item">3</button>
+                <button class="sprint__difficult-level_item">4</button>
+                <button class="sprint__difficult-level_item">5</button>
+                <button class="sprint__difficult-level_item">6</button>
+            </div>
+            <div class="sprint__card_score">
+                0
+            </div>
+            <div class="sprint__card_timer"><div class="timer-progress"></div></div>
+            <div class="sprint__card-inner">
+                <div class="sprint__card_combo">
+                    <div class="sprint__card_combo_item"></div>
+                    <div class="sprint__card_combo_item"></div>
+                    <div class="sprint__card_combo_item"></div>
+                    <span class="sprint__card_combo_multy">+10</span>
+                </div>
+                <div class="sprint__card_header-russian">allow</div>
+                <div class="sprint__card_header-english">позволять</div>
+                <div class="sprint__card_buttons-container-inner sprint__card_buttons-container">
+                    <button class="sprint__card-button false">Неверно</button>
+                    <button class="sprint__card-button true">Верно</button>
+                </div>
+            </div>
+            <div class="sprint__card_buttons-container">
+                <button class="sprint__card-button-left">←</button>
+                <button class="sprint__card-button-right">→</button>
+            </div>
+        </article>
     </section>
 </body>
 </html>
