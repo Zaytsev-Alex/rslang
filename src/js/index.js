@@ -8,6 +8,8 @@ class SprintGame {
         this.combo = 1;
         this.progress = 0;
         this.countAnswers = 0;
+        this.words = [];
+        this.pages = [];
         if (difficultLevel !== undefined) {
             this.difficultLevel = difficultLevel;
         } else {
@@ -98,15 +100,15 @@ class SprintGame {
         sprintCardCombo.appendChild(sprintCardComboMulty);
         sprintCardInner.appendChild(sprintCardCombo);
 
-        const sprintCardHeaderRussian = document.createElement('div');
-        sprintCardHeaderRussian.classList.add('sprint__card_header-russian');
-        sprintCardHeaderRussian.textContent = 'Временно';
-        sprintCardInner.appendChild(sprintCardHeaderRussian);
-
         const sprintCardHeaderEnglish = document.createElement('div');
         sprintCardHeaderEnglish.classList.add('sprint__card_header-english');
         sprintCardHeaderEnglish.textContent = 'Temporary';
         sprintCardInner.appendChild(sprintCardHeaderEnglish);
+
+        const sprintCardHeaderRussian = document.createElement('div');
+        sprintCardHeaderRussian.classList.add('sprint__card_header-russian');
+        sprintCardHeaderRussian.textContent = 'Временно';
+        sprintCardInner.appendChild(sprintCardHeaderRussian);
 
         const sprintCardButtonsContainerInner = document.createElement('div');
         sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container-inner');
@@ -153,14 +155,25 @@ class SprintGame {
         return this;
     }
 
-    async getWords(page) {
-        const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${this.difficultLevel}`);
-        const json = await response.json();
+    async getWords() {
+        let json;
+        try {
+            const page = this.getPage();
+            if (page !== null) {
+                const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${this.getPage()}&group=${this.difficultLevel}`);
+                json = await response.json();
+    
+                this.words.concat(json);
+            }
+        } catch(e) {
+            console.error(e);
+        }
         return json;
     }
 
     timer() {
-        const progress = document.querySelector('.sprint__card .timer-progress');
+        const progress = this.container.querySelector('.sprint__card_timer .timer-progress');
+        console.log(progress)
         this.progress = 0;
         const addProgress = () => {
             this.progress += 1;
@@ -172,6 +185,47 @@ class SprintGame {
             }
         }
         addProgress();
+    }
+
+    getPage() {
+        let randomPage = Math.floor(Math.random() * 30);
+        let check = 0;
+        while (this.pages.includes(randomPage) && check < 30) {
+            randomPage = Math.floor(Math.random() * 30);
+            check += 1;
+        }
+        if (check > 29) {
+            randomPage = null;
+        }
+        this.pages.push(randomPage);
+        return randomPage;
+    }
+
+    loaderIndicatorHide() {
+        this.container.querySelector('.sprint__card_loader').classList.add('sprint__card_loader-hide');
+        return this;
+    }
+
+    loaderIndicator() {
+        const sprintLoader = document.createElement('div');
+        sprintLoader.classList.add('sprint__card_loader');
+
+        const sprintSpinner = document.createElement('img');
+        sprintSpinner.setAttribute('src', '../img/spinner.gif');
+        sprintSpinner.classList.add('sprint__card_spinner');
+
+        sprintLoader.appendChild(sprintSpinner);
+        this.container.appendChild(sprintLoader);
+        return this;
+    }
+
+    startGame() {
+        this.loaderIndicator(); 
+        this.getWords().then((data) => {
+            this.loaderIndicatorHide();
+            this.timer();
+            console.log(data);
+        })
     }
 }
 
@@ -195,10 +249,8 @@ const switchDifficultLevelHolder = () => {
 const startSprintGame = () => {
     myGame.hidePromoPageSprint();
     myGame.showSprintCard();
+    myGame.startGame();
     switchDifficultLevelHolder();
-    const randomPage= Math.floor(Math.random() * 30);
-    myGame.getWords(randomPage).then(console.log);
-    myGame.timer();
 }
 
 const startButtonHolderSprint = () => {
