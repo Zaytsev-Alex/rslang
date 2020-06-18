@@ -4,10 +4,14 @@ import '../css/style.scss';
 class SprintGame {
     constructor(container, difficultLevel) {
         this.container = container;
+        this.score = 0;
+        this.combo = 1;
+        this.progress = 0;
+        this.countAnswers = 0;
         if (difficultLevel !== undefined) {
             this.difficultLevel = difficultLevel;
         } else {
-            this.difficultLevel = 1;
+            this.difficultLevel = 0;
         }
     }
 
@@ -37,6 +41,7 @@ class SprintGame {
 
         sprintPromo.appendChild(sprintPromoContainer);
         this.container.appendChild(sprintPromo);
+        return this;
     }
 
     hidePromoPageSprint() {
@@ -47,41 +52,132 @@ class SprintGame {
             promoPage.classList.remove('sprint__promo-opacity');
             promoPage.remove();
         }, 100);
-        return this.container;
+        return this;
+    }
+
+    showSprintCard() {
+        const sprintCard = document.createElement('article');
+        sprintCard.classList.add('sprint__card');
+        const sprintDifficultLevelContainer = document.createElement('div');
+        sprintDifficultLevelContainer.classList.add('sprint__difficult-level');
+        for (let i = 1; i < 7; i += 1) {
+            const difficultLevelItem = document.createElement('button');
+            difficultLevelItem.classList.add('sprint__difficult-level_item');
+            if (i === 1) {
+                difficultLevelItem.classList.add('sprint__difficult-level_item-active');
+            }
+            difficultLevelItem.textContent = i;
+            sprintDifficultLevelContainer.appendChild(difficultLevelItem);
+        }
+        sprintCard.appendChild(sprintDifficultLevelContainer);
+
+        const sprintCardScore = document.createElement('div')
+        sprintCardScore.classList.add('sprint__card_score');
+        sprintCardScore.textContent = this.score;
+        sprintCard.appendChild(sprintCardScore);
+
+        const sprintCardTimer = document.createElement('div');
+        sprintCardTimer.classList.add('sprint__card_timer');
+        const sprintCardTimerProgress = document.createElement('div');
+        sprintCardTimerProgress.classList.add('timer-progress');
+        sprintCardTimer.appendChild(sprintCardTimerProgress);
+        sprintCard.appendChild(sprintCardTimer);
+
+        const sprintCardInner = document.createElement('div');
+        sprintCardInner.classList.add('sprint__card-inner');
+        const sprintCardCombo = document.createElement('div');
+        sprintCardCombo.classList.add('sprint__card_combo');
+        for (let i = 0; i < 3; i += 1) {
+            const sprintCardComboItem = document.createElement('div');
+            sprintCardComboItem.classList.add('sprint__card_combo_item');
+            sprintCardCombo.appendChild(sprintCardComboItem);
+        }
+        const sprintCardComboMulty = document.createElement('div');
+        sprintCardComboMulty.classList.add('sprint__card_combo_multy');
+        sprintCardComboMulty.textContent = `+${10 * this.combo}`;
+        sprintCardCombo.appendChild(sprintCardComboMulty);
+        sprintCardInner.appendChild(sprintCardCombo);
+
+        const sprintCardHeaderRussian = document.createElement('div');
+        sprintCardHeaderRussian.classList.add('sprint__card_header-russian');
+        sprintCardHeaderRussian.textContent = 'Временно';
+        sprintCardInner.appendChild(sprintCardHeaderRussian);
+
+        const sprintCardHeaderEnglish = document.createElement('div');
+        sprintCardHeaderEnglish.classList.add('sprint__card_header-english');
+        sprintCardHeaderEnglish.textContent = 'Temporary';
+        sprintCardInner.appendChild(sprintCardHeaderEnglish);
+
+        const sprintCardButtonsContainerInner = document.createElement('div');
+        sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container-inner');
+        sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container');
+
+        const sprintCardButtonFalse = document.createElement('button');
+        sprintCardButtonFalse.classList.add('sprint__card-button');
+        sprintCardButtonFalse.classList.add('false');
+        sprintCardButtonFalse.textContent = 'Неверно';
+        sprintCardButtonsContainerInner.appendChild(sprintCardButtonFalse);
+
+        const sprintCardButtonTrue = document.createElement('button');
+        sprintCardButtonTrue.classList.add('sprint__card-button');
+        sprintCardButtonTrue.classList.add('true');
+        sprintCardButtonTrue.textContent = 'Верно';
+        sprintCardButtonsContainerInner.appendChild(sprintCardButtonTrue);
+
+        sprintCardInner.appendChild(sprintCardButtonsContainerInner);
+
+        sprintCard.appendChild(sprintCardInner);
+
+        const sprintCardButtonsContainer = document.createElement('div');
+        sprintCardButtonsContainer.classList.add('sprint__card_buttons-container');
+
+        const sprintCardButtonLeft = document.createElement('button');
+        sprintCardButtonLeft.classList.add('sprint__card-button-left');
+        sprintCardButtonLeft.textContent = '←';
+        sprintCardButtonsContainer.appendChild(sprintCardButtonLeft);
+        
+        const sprintCardButtonRight = document.createElement('button');
+        sprintCardButtonRight.classList.add('sprint__card-button-right');
+        sprintCardButtonRight.textContent = '→';
+        sprintCardButtonsContainer.appendChild(sprintCardButtonRight);
+
+        sprintCard.appendChild(sprintCardButtonsContainer);
+
+        this.container.appendChild(sprintCard);
+
+        return this;
+    }
+
+    switchDifficultLevel(level) {
+        console.log(level-1);
+        return this;
+    }
+
+    async getWords(page) {
+        const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${this.difficultLevel}`);
+        const json = await response.json();
+        return json;
+    }
+
+    timer() {
+        const progress = document.querySelector('.sprint__card .timer-progress');
+        this.progress = 0;
+        const addProgress = () => {
+            this.progress += 1;
+            progress.style.width = `${this.progress}%`;
+            if (this.progress < 100) {
+                setTimeout(() => {
+                    addProgress();
+                }, 600);        
+            }
+        }
+        addProgress();
     }
 }
-
 
 const myGame = new SprintGame(document.querySelector('.container'));
 myGame.showPromoPage();
 
-const timer = () => {
-    const progress = document.querySelector('.sprint__card .timer-progress');
-    let width = 0;
-    const addProgress = () => {
-        width += 1;
-        progress.style.width = `${width}%`;
-        if (width < 100) {
-            setTimeout(() => {
-                addProgress();
-            }, 600);        
-        }
-    }
-    addProgress();
-}
-
-const startSprintGame = () => {
-    timer();
-    myGame.hidePromoPageSprint();
-}
-
-const startButtonHolderSprint = () => {
-    document.querySelector('.sprint__promo_start-button').addEventListener('click', startSprintGame);
-}
-
-const switchDifficultLevel = (level) => {
-    console.log(level);
-}
 
 const switchDifficultLevelHolder = () => {
     const levelsContainer = document.querySelector('.sprint__difficult-level');
@@ -91,10 +187,22 @@ const switchDifficultLevelHolder = () => {
             const level = event.target.innerText;
             levelsContainer.querySelector('.sprint__difficult-level_item-active').classList.remove('sprint__difficult-level_item-active');
             event.target.classList.add('sprint__difficult-level_item-active');
-            switchDifficultLevel(level);
+            myGame.switchDifficultLevel(level);
         }
     })
 }
-switchDifficultLevelHolder();
+
+const startSprintGame = () => {
+    myGame.hidePromoPageSprint();
+    myGame.showSprintCard();
+    switchDifficultLevelHolder();
+    const randomPage= Math.floor(Math.random() * 30);
+    myGame.getWords(randomPage).then(console.log);
+    myGame.timer();
+}
+
+const startButtonHolderSprint = () => {
+    document.querySelector('.sprint__promo_start-button').addEventListener('click', startSprintGame);
+}
 
 startButtonHolderSprint();
