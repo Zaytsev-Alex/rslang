@@ -1,12 +1,3 @@
-import '../sass/style.scss';
+import authorization from './authorization/authorization';
 
-import './createUser';
-import './loginUser';
-
-import showFirstPage from './showFirstPage';
-import pageSwitcher from './pageSwitcher';
-
-window.addEventListener('load', () => {
-  showFirstPage();
-  pageSwitcher();
-});
+authorization();

@@ -1,5 +1,5 @@
 import {
-  RSSCHOOL_API_URL, HAVE_ACCOUNT, CREATE_ACCOUNT, LOG_OUT_BUTTON,
+  RSSCHOOL_API_URL, HAVE_ACCOUNT, CREATE_ACCOUNT, LOG_OUT_BUTTON, AUTHORIZATION_FORM,
 } from './variables';
 
 const AUTHORIZATION_EMAIL = document.querySelector('#authorization-email');
@@ -32,6 +32,7 @@ async function loginUser(user) {
     localStorage.setItem('userId', data.userId);
 
     LOG_OUT_BUTTON.classList.remove('hide');
+    AUTHORIZATION_FORM.classList.add('hide');
   } else {
     window.console.warn(response);
   }
