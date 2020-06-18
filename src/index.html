@@ -9,32 +9,21 @@
   <header class="header wrapper">
     <div class="logo">RS lang</div>
     <div class="header__buttons">
-      <button type="button" class="button header__button hide" id="sign-up-button">Sign up</button>
-      <button type="button" class="button header__button hide" id="log-in-button">Log in</button>
       <button type="button" class="button header__button hide" id="log-out-button">Log out</button>
     </div>
   </header>
-
   <main class="wrapper">
-    <!-- <section class="start-screen hide">
-      <h1 class="start-screen__title">RS lang</h1>
-      <p class="start-screen__description">
-        "Click on words, collect phrases"<br>
-        Words can be drag and drop. Select tooltips in the menu.
-      </p>
-      <button type="button" class="start-screen__button button">Start</button>
-    </section> -->
-
     <section class="login-page">
-      <h1 class="login-page__title">English puzzle</h1>
+      <h1 class="login-page__title">RS lang</h1>
       <div class="form-block">
-        <form action="users" method="POST" class="registration" id="registration-form">
+        <form action="users" method="POST" class="registration hide" id="registration-form">
           <h2 class="registration__title">Registration</h2>
           <input type="email" name="email" id="registration-email" placeholder="Email" autocomplete="off" required>
           <p class="error registration__error" id="email-error"></p>
           <input type="password" name="password" id="registration-password" placeholder="password" autocomplete="off" required>
           <p class="error registration__error" id="password-error"></p>
           <button class="button registration__button" id="registration__button" type="submit">Create account</button>
+          <p class="registration__switch" id="have-account">I already have account</p>
         </form>
         <form action="#" method="POST" class="authorization hide" id="authorization-form">
           <h2 class="authorization__title">Log into your account</h2>
@@ -42,6 +31,7 @@
           <input type="password" name="password" id="authorization-password" placeholder="password" autocomplete="off" required>
           <p class="error authorization__error" id="authorization-error"></p>
           <button class="button authorization__button" id="authorization__button" type="submit">Login</button>
+          <p class="registration__switch" id="create-account">Create account</p>
         </form>
       </div>
     </section>

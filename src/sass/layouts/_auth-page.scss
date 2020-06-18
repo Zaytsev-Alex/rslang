@@ -9,9 +9,9 @@
 .login-page__title {
   @include text(4rem, 1, $text-light, 700);
   @extend %text-shadow;
-  font-family: 'Cinzel Decorative', cursive;
   text-align: center;
-  letter-spacing: 1.2rem;
+  letter-spacing: 1.2rem;  
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .form-block {
@@ -22,7 +22,7 @@
   padding: 20px;
   border-radius: 20px;
 
-  * {
+  *:not(.error) {
     width: 100%;
   }
 }
@@ -36,4 +36,11 @@
 input {
   @include text(2rem, 1.5, $text-dark);
   margin-top: 30px;
+}
+
+.registration__switch {
+  @include text(2.5rem, 1, $text-light);
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
 }

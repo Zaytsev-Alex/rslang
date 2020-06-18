@@ -1,14 +1,12 @@
 html {
   font-size: 10px;  
+  font-family: 'Open Sans', sans-serif;
 }
-
-// body {
-//   overflow: hidden;
-// }
 
 * {
   margin: 0;
   padding: 0;
+  outline: none;
 }
 
 main {
@@ -37,5 +35,6 @@ main {
 
 .error {
   @include text(2rem, 1.4, $text-error);
+  display: inline;
   position: absolute;
 }
