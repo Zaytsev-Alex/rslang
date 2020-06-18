@@ -17,23 +17,27 @@ export default function createCard() {
     <header class='card__header'></header>
     <main class='card__main'>
     <div class='card__image'></div>
+    <div class = 'card__input-container'>
+    <div class = 'answer'></div>
     <input type='text' class='card__input'>
+    </div>
     <div class='card__learn-content'>
     
-    
+    <div class = 'card__word'>
+    <span class='card__word-translate'></span>
+    <span class='card__transcription'></span>
+    </div>
     <div class='card__additional-info'>
-    
-    <div class='card__explain'></div>
     <div class='card__word-expample'></div>
+    <div class='card__explain'></div>
+    
     </div>
     </div>
     </main>
     <footer class='card__footer'></footer>
     </div>
-    <div class = 'card__word'>
-    <span class='card__word-translate'></span>
-    <span class='card__transcription'></span>
-    </div>
+
+
     <div class = 'card__buttons'>
     <button class = 'card__hard-word-btn'>Сложные</button>
     <button class = 'card__skip-word-btn'>Показать Ответ</button>
