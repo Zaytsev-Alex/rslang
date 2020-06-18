@@ -3,9 +3,12 @@ $blue_color_for_input: rgba(112, 183, 194, 0.5);
 $first_color: rgba(241, 240, 203, 0.4);
 $second_color: rgb(253, 253, 244);
 $third_color: rgba(2, 91, 126, 0.8);
+$card_text_color: rgb(91, 113, 149);
 $green_color :rgba(35, 223, 119, 0.85);
 $fourth_color: rgba(1, 75, 104, 0.8);
 $button_background: rgba(202, 235, 216, 0.4);
+$wrong_answer: rgb(218, 112, 112);
+
 *,
 *:before,
 *:after {
@@ -34,16 +37,27 @@ body {
         display: flex;
         justify-content: center;
       }
-
+      .card__image {
+        display: flex;
+        justify-content: center;
+      
       .card__img {
         border-radius: 8px;
       }
+    }
       .card__main {
         display: flex;
         flex-direction: column;
         margin: 20px 0;
       }
+      .card__input-container {
+          display: flex;
+          position: relative;
+          width: fit-content; 
+          margin: 10px auto;
+      }
       .card__input {
+        
         border: none;
         background-color: $blue_color_for_input;
         width: 0px;
@@ -51,21 +65,21 @@ body {
         font-size: 2.1rem;
         font-family: "Inconsolata", monospace;
         padding: 0 8px;
-        margin: 10px auto;
+        
         outline: none;
         color: $fourth_color;
       }
       .card__word {
         display: flex;
         justify-content: space-between;
-        margin-top: 20px;
-        padding: 0 15px;
+        
+        
 
         .card__word-translate,
         .card__transcription {
           font-weight: 700;
-          font-size: 2rem;
-          text-align: left;
+          font-size: 1.75rem;
+          
           color: $fourth_color;
         }
       }
@@ -84,7 +98,7 @@ body {
           padding: 5px 10px;
           color: $fourth_color;
           font-family: inherit;
-          font-size: 1.5rem;
+          font-size: 1rem;
           border-radius: 8px;
           display: inline-block;
           position: relative;
@@ -127,15 +141,50 @@ body {
       .card__additional-info {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        
       }
-      .card__additional-info,
+      
       .card__explain,
       .card__word-expample {
         margin-top: 10px;
+        font-size: 1.12rem;
+        font-weight: 400;
+        color: $card_text_color;
       }
     }
 
+    .answer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding: 0 8px;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        opacity: 1;
+        transition-duration: 0.5s;
+        span {
+            font-family: "Inconsolata", monospace;
+            font-size: 2.1rem;
+            transition-duration: 1s;
+            transition-delay: 1s;
+            
+        }
+        .correct {
+            color: $green_color;
+            
+        }
+        .wrong {
+            color: red;
+        }
+        .default {
+            color: $blue_color;
+        }
+    }
+    .answer--remove {
+        opacity: 0;
+    }
     .navigate {
       display: flex;
       align-items: center;
