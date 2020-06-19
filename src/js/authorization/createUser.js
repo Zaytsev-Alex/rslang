@@ -1,13 +1,12 @@
-import { RSSCHOOL_API_URL } from './variables';
+import { 
+  RSSCHOOL_API_URL, REGISTRATION_FORM, AUTHORIZATION_FORM, VALIDATE_EMAIL, VALIDATE_PASSWORD,
+} from './variables';
 
 const REGISTRATION_EMAIL = document.querySelector('#registration-email');
 const REGISTRATION_EMAIL_ERROR = document.querySelector('#email-error');
 const REGISTRATION_PASSWORD_ERROR = document.querySelector('#password-error');
 const REGISTRATION_PASSWORD = document.querySelector('#registration-password');
 const REGISTRATION_BUTTON = document.querySelector('#registration__button');
-
-const VALIDATE_EMAIL = new RegExp('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$');
-const VALIDATE_PASSWORD = new RegExp('^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!#$%&? "]).*$');
 
 async function createUser(user) {
   const response = await fetch(`${RSSCHOOL_API_URL}users`, {
@@ -20,13 +19,15 @@ async function createUser(user) {
   });
 
   if (response.status === 417) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'This email is already registered';
+    REGISTRATION_EMAIL_ERROR.textContent = 'Email уже зарегистрирован';
   } else if (response.status === 200) {
     REGISTRATION_EMAIL.value = '';
     REGISTRATION_PASSWORD.value = '';
 
-    const data = await response.json();
-    window.console.log(data);
+    REGISTRATION_FORM.classList.add('hide');
+    AUTHORIZATION_FORM.classList.remove('hide');
+    // const data = await response.json();
+    // window.console.log(data);
   } else {
     window.console.warn(response.statusText);
   }
@@ -56,5 +57,7 @@ REGISTRATION_BUTTON.addEventListener('click', (event) => {
     REGISTRATION_PASSWORD_ERROR.textContent = '';
   }
 
-  createUser(newUser);
+  if (REGISTRATION_EMAIL.value.match(VALIDATE_EMAIL) && REGISTRATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
+    createUser(newUser);
+  }  
 });

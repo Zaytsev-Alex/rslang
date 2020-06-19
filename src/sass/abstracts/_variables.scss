@@ -1,9 +1,11 @@
-$text-light: #d5dc6c;
-$text-dark: #333;
-$text-error: #00ffff;
+$text-logo: #d5dc6c;
+$text-dark: #37383c;
+$text-error: rgb(236, 29, 29);;
+$text-blue: #3053c5; 
+$text-white: #fff;
 
-$button-bg-normal: #e4d7ad;
-$button-bg-hover: #d8b441;
+$button-bg-normal: rgba(40, 195, 138, 0.7);
+$button-bg-hover: rgba(39, 182, 129, 0.7);
 $button-bg-active: #59da6a;
 
-$button-shadow: #675228;
+$block-bg: hsla(0,0%,100%,0.4);

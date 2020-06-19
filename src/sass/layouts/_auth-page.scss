@@ -7,7 +7,7 @@
 }
 
 .login-page__title {
-  @include text(4rem, 1, $text-light, 700);
+  @include text(4rem, 1, $text-logo, 700);
   @extend %text-shadow;
   text-align: center;
   letter-spacing: 1.2rem;  
@@ -18,29 +18,36 @@
   display: flex;
   flex-direction: column;
   width: 300px;
-  background-color: rgba($color: #fff, $alpha: 0.4);
+  background-color: $block-bg;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 6px;
 
-  *:not(.error) {
+  * {
     width: 100%;
   }
 }
 
+.authorization,
+.registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .registration__title,
 .authorization__title {
-  @include text(3rem, 1, $text-light);
+  @include text(1.5rem, 1, $text-dark, 700);
   text-align: center;
+  text-transform: uppercase;
 }
 
-input {
-  @include text(2rem, 1.5, $text-dark);
-  margin-top: 30px;
-}
+
 
 .registration__switch {
-  @include text(2.5rem, 1, $text-light);
+  @include text(1.3rem, 1, $text-blue);
   text-align: center;
   margin-top: 20px;
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
 }

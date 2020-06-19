@@ -3,7 +3,10 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-* {
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   outline: none;
@@ -34,7 +37,10 @@ main {
 }
 
 .error {
-  @include text(2rem, 1.4, $text-error);
-  display: inline;
-  position: absolute;
+  @include text(1.4rem, 1.4, $text-error);
+  position: static;
+  margin-top: 6px;
+  line-height: inherit;
+  min-height: 20px;
+  text-align: justify;
 }

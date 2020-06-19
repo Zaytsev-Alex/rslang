@@ -1,5 +1,6 @@
 import {
   RSSCHOOL_API_URL, HAVE_ACCOUNT, CREATE_ACCOUNT, LOG_OUT_BUTTON, AUTHORIZATION_FORM,
+  VALIDATE_EMAIL, VALIDATE_PASSWORD,
 } from './variables';
 
 const AUTHORIZATION_EMAIL = document.querySelector('#authorization-email');
@@ -26,13 +27,15 @@ async function loginUser(user) {
     HAVE_ACCOUNT.classList.add('hide');
     CREATE_ACCOUNT.classList.remove('hide');
 
-    window.console.log(data);
+    // window.console.log(data);
 
     localStorage.setItem('token', data.token);
     localStorage.setItem('userId', data.userId);
 
     LOG_OUT_BUTTON.classList.remove('hide');
     AUTHORIZATION_FORM.classList.add('hide');
+  } else if (response.status === 403) {
+    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
   } else {
     window.console.warn(response);
   }
@@ -46,5 +49,15 @@ AUTHORIZATION_BUTTON.addEventListener('click', (event) => {
     password: AUTHORIZATION_PASSWORD.value,
   };  
 
-  loginUser(user);
+  if (AUTHORIZATION_EMAIL.value.length === 0 || AUTHORIZATION_PASSWORD.value.length === 0) {
+    AUTHORIZATION_ERROR.textContent = 'Введите email и пароль';
+  } else if (!AUTHORIZATION_EMAIL.value.match(VALIDATE_EMAIL) || !AUTHORIZATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
+    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
+  } else {
+    AUTHORIZATION_ERROR.textContent = '';
+  }
+
+  if (AUTHORIZATION_EMAIL.value.match(VALIDATE_EMAIL) && AUTHORIZATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
+    loginUser(user);
+  }  
 });

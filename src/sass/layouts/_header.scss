@@ -10,14 +10,23 @@
 }
 
 .logo {
-  @include text(4rem, 1, $text-light, 700);
+  @include text(4rem, 1, $text-logo, 700);
   @extend %text-shadow;
   cursor: pointer;
-  margin-left: 50px;
+  flex-grow: 1;
+  text-align: center;
+
+  @media screen and (max-width: 400px) {
+    font-size: 3rem;
+  }
 }
 
 .header__buttons {
   display: flex;
   justify-content: flex-end;
   margin-right: 50px;
+
+  @media screen and (max-width: 400px) {
+    margin-right: 0;
+  }
 }

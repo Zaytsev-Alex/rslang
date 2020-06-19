@@ -1,39 +1,61 @@
 .button {
+  @extend %block-shadow;
   cursor: pointer;
   border: 0;
-  box-shadow: 0 0 2px 2px $button-shadow;
   outline-color: transparent;
   border-radius: 5px;  
-  transition: 0.3s;  
+  transition: 0.5s;  
   padding: 5px;
 }
 
 .registration__button,
 .authorization__button {
-  @include text(2rem, 1, $text-dark, 700);
-  height: 50px;
+  @include text(1.3rem, 1, $text-white, 700);
+  height: 40px;
   background-color: $button-bg-normal;
-  margin-top: 50px;
+  margin-top: 40px;
+  user-select: none;
+  position:relative;
+  overflow: hidden;
+  width: 54%;
 
-  &:hover {
-    background-color: $button-bg-hover;
-    color: $text-light;
+  &:hover:before {
+    left: 250px;
+    transition: .5s ease-in-out;
   }
 
-  &:active {
-    opacity: 0.9;
+  &:before {
+    content: "";
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(hsla(0, 0%, 100%, 0.1)),
+      to(hsla(0, 0%, 100%, 0.5))
+    );
+    background: linear-gradient(
+      90deg,
+      hsla(0, 0%, 100%, 0.1),
+      hsla(0, 0%, 100%, 0.5)
+    );
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: -8px;
+    left: -75px;
+    -webkit-transform: skewX(-45deg);
+    transform: skewX(-45deg);
   }
 }
 
 .header__button {
-  @include text(2rem, 1, $text-dark, 700);
+  @include text(2rem, 1, $text-white, 700);
   margin-left: 20px;
   padding: 5px;
   background-color: $button-bg-normal;
 
   &:hover {
     background-color: $button-bg-hover;
-    color: $text-light;
   }
 
   &:active {
