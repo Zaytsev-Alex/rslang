@@ -9,3 +9,214 @@
 
 @import './layouts/header';
 @import './layouts/auth-page';
+
+
+
+
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.form-block {
+    background-color: hsla(0,0%,100%,0.4);
+    border-radius: 6px;
+    width: 300px;
+}
+
+
+
+
+.registration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+        border: none;
+        border-radius: 5px;
+        padding: 7px 8px;
+        width: 100%;
+        font-size: 1.3rem;
+        margin-top: 20px;
+        color: #37383c;
+        box-shadow: 0 0 7px 2px #ada594;
+    }
+    .registration__title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: #111;
+        
+    }
+    .registration__switch {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #3053c5;
+    
+    }
+
+    .error {
+        position: static;
+        display: block;
+        width: 100%;
+        margin-top: 6px;
+        line-height: inherit;
+        font-size: 1.4rem;
+        min-height: 2rem;
+        color: rgb(236, 29, 29);
+        text-align: justify;
+
+    }
+
+    #registration-email {
+        margin-top: 35px;
+    }
+    #registration-password {
+        margin-top: 10px;
+    }
+
+    .registration__button {
+        user-select: none;
+        position:relative;
+        overflow: hidden;
+        width: 54%;
+        font-size: 1.3rem;
+        height: 40px;
+        background-color: rgba(40, 195, 138,0.7);
+        color: #fff;
+        box-shadow: 0 0 6px 3px #ada594;
+        margin-top: 40px;
+    
+    &:hover:before {
+        left: 250px;
+        transition: .5s ease-in-out;
+      }
+      &:before {
+        content: "";
+        background: -webkit-gradient(
+          linear,
+          left top,
+          right top,
+          from(hsla(0, 0%, 100%, 0.1)),
+          to(hsla(0, 0%, 100%, 0.5))
+        );
+        background: linear-gradient(
+          90deg,
+          hsla(0, 0%, 100%, 0.1),
+          hsla(0, 0%, 100%, 0.5)
+        );
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        top: -8px;
+        left: -75px;
+        -webkit-transform: skewX(-45deg);
+        transform: skewX(-45deg);
+      }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.authorization {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+        border: none;
+        border-radius: 5px;
+        padding: 7px 8px;
+        width: 100%;
+        font-size: 1.3rem;
+        margin-top: 20px;
+        color: #37383c;
+        box-shadow: 0 0 7px 2px #ada594;
+    }
+    .authorization__title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: #111;
+        
+    }
+    .registration__switch {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #3053c5;
+    
+    }
+
+    .error {
+        position: static;
+        display: block;
+        width: 100%;
+        margin-top: 6px;
+        line-height: inherit;
+        font-size: 1.4rem;
+        min-height: 2rem;
+        color: rgb(236, 29, 29);
+        text-align: justify;
+
+    }
+
+    #authorization-email,
+    #authorization-password {
+        margin-top: 35px;
+    }
+    #authorization-password {
+        margin-top: 36px;
+    }
+
+    .authorization__button {
+        user-select: none;
+        position:relative;
+        overflow: hidden;
+        width: 54%;
+        font-size: 1.3rem;
+        height: 40px;
+        background-color: rgba(40, 195, 138,0.7);
+        color: #fff;
+        box-shadow: 0 0 6px 3px #ada594;
+        margin-top: 40px;
+    
+    &:hover:before {
+        left: 250px;
+        transition: .5s ease-in-out;
+      }
+      &:before {
+        content: "";
+        background: -webkit-gradient(
+          linear,
+          left top,
+          right top,
+          from(hsla(0, 0%, 100%, 0.1)),
+          to(hsla(0, 0%, 100%, 0.5))
+        );
+        background: linear-gradient(
+          90deg,
+          hsla(0, 0%, 100%, 0.1),
+          hsla(0, 0%, 100%, 0.5)
+        );
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        top: -8px;
+        left: -75px;
+        -webkit-transform: skewX(-45deg);
+        transform: skewX(-45deg);
+      }
+    }
+}
+
+
