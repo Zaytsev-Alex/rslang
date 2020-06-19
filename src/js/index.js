@@ -2,19 +2,16 @@ import '../css/style.css';
 import '../css/style.scss';
 
 class SprintGame {
-    constructor(container, difficultLevel) {
+    constructor(container) {
         this.container = container;
         this.score = 0;
         this.combo = 1;
         this.progress = 0;
-        this.countAnswers = 0;
+        this.countAnswersStrick = 0;
+        this.index = 0;
         this.words = [];
         this.pages = [];
-        if (difficultLevel !== undefined) {
-            this.difficultLevel = difficultLevel;
-        } else {
-            this.difficultLevel = 0;
-        }
+        this.difficultLevel = 0;
     }
 
     showPromoPage() {
@@ -33,8 +30,21 @@ class SprintGame {
 
         const sprintPromoDescription = document.createElement('p');
         sprintPromoDescription.classList.add('sprint__promo_description');
-        sprintPromoDescription.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam corporis sit, quia earum velit et nulla quae, unde vero nesciunt ad ex assumenda ratione sed qui repellat tempora? Fugiat, perspiciatis!';
+        sprintPromoDescription.textContent = 'Тренировка на скорость. Определите верно ли подобран перевод для слова и нажмите соответсвующую кнопку. Ответы можно давать на клавиатурные клавиши. Выберите уровень сложности и начните тренировку.';
         sprintPromoContainer.appendChild(sprintPromoDescription);
+
+        const sprintDifficultLevelContainer = document.createElement('div');
+        sprintDifficultLevelContainer.classList.add('sprint__promo_difficult-level');
+        for (let i = 1; i < 7; i += 1) {
+            const difficultLevelItem = document.createElement('button');
+            difficultLevelItem.classList.add('sprint__promo_difficult-level_item');
+            if (i === 1) {
+                difficultLevelItem.classList.add('sprint__promo_difficult-level_item-active');
+            }
+            difficultLevelItem.textContent = i;
+            sprintDifficultLevelContainer.appendChild(difficultLevelItem);
+        }
+        sprintPromoContainer.appendChild(sprintDifficultLevelContainer);
 
         const sprintPromoStartButton = document.createElement('button');
         sprintPromoStartButton.classList.add('sprint__promo_start-button');
@@ -60,18 +70,6 @@ class SprintGame {
     showSprintCard() {
         const sprintCard = document.createElement('article');
         sprintCard.classList.add('sprint__card');
-        const sprintDifficultLevelContainer = document.createElement('div');
-        sprintDifficultLevelContainer.classList.add('sprint__difficult-level');
-        for (let i = 1; i < 7; i += 1) {
-            const difficultLevelItem = document.createElement('button');
-            difficultLevelItem.classList.add('sprint__difficult-level_item');
-            if (i === 1) {
-                difficultLevelItem.classList.add('sprint__difficult-level_item-active');
-            }
-            difficultLevelItem.textContent = i;
-            sprintDifficultLevelContainer.appendChild(difficultLevelItem);
-        }
-        sprintCard.appendChild(sprintDifficultLevelContainer);
 
         const sprintCardScore = document.createElement('div')
         sprintCardScore.classList.add('sprint__card_score');
@@ -116,12 +114,14 @@ class SprintGame {
 
         const sprintCardButtonFalse = document.createElement('button');
         sprintCardButtonFalse.classList.add('sprint__card-button');
+        sprintCardButtonFalse.classList.add('sprint__card-button-false');
         sprintCardButtonFalse.classList.add('false');
         sprintCardButtonFalse.textContent = 'Неверно';
         sprintCardButtonsContainerInner.appendChild(sprintCardButtonFalse);
 
         const sprintCardButtonTrue = document.createElement('button');
         sprintCardButtonTrue.classList.add('sprint__card-button');
+        sprintCardButtonTrue.classList.add('sprint__card-button-true');
         sprintCardButtonTrue.classList.add('true');
         sprintCardButtonTrue.textContent = 'Верно';
         sprintCardButtonsContainerInner.appendChild(sprintCardButtonTrue);
@@ -131,27 +131,20 @@ class SprintGame {
         sprintCard.appendChild(sprintCardInner);
 
         const sprintCardButtonsContainer = document.createElement('div');
-        sprintCardButtonsContainer.classList.add('sprint__card_buttons-container');
+        sprintCardButtonsContainer.classList.add('sprint__card_arrows-container');
 
-        const sprintCardButtonLeft = document.createElement('button');
-        sprintCardButtonLeft.classList.add('sprint__card-button-left');
-        sprintCardButtonLeft.textContent = '←';
-        sprintCardButtonsContainer.appendChild(sprintCardButtonLeft);
+        const sprintCardArrowLeft = document.createElement('div');
+        sprintCardArrowLeft.classList.add('sprint__card-arrow-left');
+        sprintCardButtonsContainer.appendChild(sprintCardArrowLeft);
         
-        const sprintCardButtonRight = document.createElement('button');
-        sprintCardButtonRight.classList.add('sprint__card-button-right');
-        sprintCardButtonRight.textContent = '→';
-        sprintCardButtonsContainer.appendChild(sprintCardButtonRight);
+        const sprintCardArrowRight = document.createElement('div');
+        sprintCardArrowRight.classList.add('sprint__card-arrow-right');
+        sprintCardButtonsContainer.appendChild(sprintCardArrowRight);
 
         sprintCard.appendChild(sprintCardButtonsContainer);
 
         this.container.appendChild(sprintCard);
 
-        return this;
-    }
-
-    switchDifficultLevel(level) {
-        console.log(level-1);
         return this;
     }
 
@@ -162,8 +155,9 @@ class SprintGame {
             if (page !== null) {
                 const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${this.getPage()}&group=${this.difficultLevel}`);
                 json = await response.json();
-    
-                this.words.concat(json);
+                json.forEach((e) => {
+                    this.words.push(e);
+                })
             }
         } catch(e) {
             console.error(e);
@@ -173,7 +167,6 @@ class SprintGame {
 
     timer() {
         const progress = this.container.querySelector('.sprint__card_timer .timer-progress');
-        console.log(progress)
         this.progress = 0;
         const addProgress = () => {
             this.progress += 1;
@@ -221,36 +214,124 @@ class SprintGame {
 
     startGame() {
         this.loaderIndicator(); 
-        this.getWords().then((data) => {
-            this.loaderIndicatorHide();
-            this.timer();
-            console.log(data);
+        // this.getWords().then((data) => {
+        //     this.loaderIndicatorHide();
+        //     this.timer();
+        //     console.log(data);
+        // })
+
+        this.getWords().then(() => {
+            this.getWords().then(() => {
+
+                this.words.forEach((e, idx) => {
+                    const chance = Math.floor(Math.random() * 10) > 5;
+
+                    if (chance) {
+                        let randomWord = idx;
+                        while (randomWord === idx) {
+                            randomWord = Math.floor(Math.random() * this.words.length);
+                        }
+                        console.log(this.words[randomWord], randomWord)
+                        this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
+                    }
+
+                })
+                this.nextWord(0);
+                this.answerHolder();
+                this.loaderIndicatorHide();
+                this.timer();
+                console.log(this.words);
+            })
         })
     }
-}
 
+    answerHolder() {
+        const rightAnswerButton = this.container.querySelector('.sprint__card-button-true');
+        const wrongAnswerButton = this.container.querySelector('.sprint__card-button-false');
+        rightAnswerButton.addEventListener('click', this.rightAnswerGiven.bind(this));
+        wrongAnswerButton.addEventListener('click', this.wrongAnswerGiven.bind(this));
+        return this;
+    }
+
+    rightAnswerGiven() {
+        this.addResult(!this.words[this.index].wordTranslateFalse);
+        this.index += 1;
+        this.nextWord(this.index);
+    }
+
+    wrongAnswerGiven() {
+        this.addResult(!!this.words[this.index].wordTranslateFalse);
+        this.index += 1;
+        this.nextWord(this.index);
+    }
+
+    addResult(status) {
+        if (status) {
+            this.score += 10 * this.combo;
+            this.container.querySelector('.sprint__card_score').textContent = this.score;
+            this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
+            this.countAnswersStrick += 1;
+            if (this.countAnswersStrick % 4 === 0) {
+                this.combo *= 2;
+                this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
+                    e.classList.remove('sprint__card_combo_item-active');
+                    this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
+                });
+            } else {
+                // const itemIndex = this.countAnswersStrick % 4 === 0 ? 1 : this.countAnswersStrick % 4;
+                // console.log(itemIndex)
+                this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
+                    .classList.add('sprint__card_combo_item-active');   
+            }
+        } else {
+            this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
+                e.classList.remove('sprint__card_combo_item-active');
+            });
+            this.countAnswersStrick = 0;
+            this.combo = 1;
+            this.container.querySelector('.sprint__card_combo_multy').textContent = `+10`;
+        }
+    }
+
+    nextWord(index) {
+        this.container.querySelector('.sprint__card_header-english').textContent = this.words[index].word;
+        if (this.words[index].wordTranslateFalse) {
+            this.container.querySelector('.sprint__card_header-russian').textContent = this.words[index].wordTranslateFalse;
+        } else {
+            this.container.querySelector('.sprint__card_header-russian').textContent = this.words[index].wordTranslate;
+        }
+    }
+
+    setDifficultLevel(level) {
+        this.difficultLevel = level;
+    }
+}
 const myGame = new SprintGame(document.querySelector('.container'));
 myGame.showPromoPage();
 
+const switchDifficultLevel = (level) => {
+    myGame.setDifficultLevel(level-1);
+}
 
 const switchDifficultLevelHolder = () => {
-    const levelsContainer = document.querySelector('.sprint__difficult-level');
+    const levelsContainer = document.querySelector('.sprint__promo_difficult-level');
     levelsContainer.addEventListener('click', (event) => {
-        if (event.target.classList.contains('sprint__difficult-level_item')
-        && !event.target.classList.contains('sprint__difficult-level_item-active')) {
+        if (event.target.classList.contains('sprint__promo_difficult-level_item')
+        && !event.target.classList.contains('sprint__promo_difficult-level_item-active')) {
             const level = event.target.innerText;
-            levelsContainer.querySelector('.sprint__difficult-level_item-active').classList.remove('sprint__difficult-level_item-active');
-            event.target.classList.add('sprint__difficult-level_item-active');
-            myGame.switchDifficultLevel(level);
+            levelsContainer.querySelector('.sprint__promo_difficult-level_item-active').classList.remove('sprint__promo_difficult-level_item-active');
+            event.target.classList.add('sprint__promo_difficult-level_item-active');
+            switchDifficultLevel(level);
         }
     })
 }
+
+switchDifficultLevelHolder();
 
 const startSprintGame = () => {
     myGame.hidePromoPageSprint();
     myGame.showSprintCard();
     myGame.startGame();
-    switchDifficultLevelHolder();
 }
 
 const startButtonHolderSprint = () => {
