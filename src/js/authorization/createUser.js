@@ -41,17 +41,17 @@ REGISTRATION_BUTTON.addEventListener('click', (event) => {
   };
 
   if (REGISTRATION_EMAIL.value.length === 0) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'Please enter email';
+    REGISTRATION_EMAIL_ERROR.textContent = 'Введите email';
   } else if (!REGISTRATION_EMAIL.value.match(VALIDATE_EMAIL)) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'Invalid email';
+    REGISTRATION_EMAIL_ERROR.textContent = 'Некорректный email';
   } else {
     REGISTRATION_EMAIL_ERROR.textContent = '';
   }
 
   if (REGISTRATION_PASSWORD.value.length === 0) {
-    REGISTRATION_PASSWORD_ERROR.textContent = 'You\'re gonna need a password';
+    REGISTRATION_PASSWORD_ERROR.textContent = 'Введите пароль';
   } else if (!REGISTRATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
-    REGISTRATION_PASSWORD_ERROR.textContent = 'Invalid password';
+    REGISTRATION_PASSWORD_ERROR.textContent = 'Пароль должен содержать не менее 8 символов, как минимум одну прописную букву, одну заглавную букву, одну цифру и один спецсимвол';
   } else {
     REGISTRATION_PASSWORD_ERROR.textContent = '';
   }

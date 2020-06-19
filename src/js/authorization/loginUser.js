@@ -18,7 +18,7 @@ async function loginUser(user) {
   });
 
   if (response.status === 404) {
-    AUTHORIZATION_ERROR.textContent = 'Wrong email or password';
+    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
     window.console.warn('Wrong email or password');
   } else if (response.status === 200) {
     const data = await response.json();
