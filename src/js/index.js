@@ -76,6 +76,10 @@ class SprintGame {
         sprintCardScore.textContent = this.score;
         sprintCard.appendChild(sprintCardScore);
 
+        const sprintCardErrors = document.createElement('div')
+        sprintCardErrors.classList.add('sprint__card_errors');
+        sprintCard.appendChild(sprintCardErrors);
+
         const sprintCardTimer = document.createElement('div');
         sprintCardTimer.classList.add('sprint__card_timer');
         const sprintCardTimerProgress = document.createElement('div');
@@ -107,6 +111,11 @@ class SprintGame {
         sprintCardHeaderRussian.classList.add('sprint__card_header-russian');
         sprintCardHeaderRussian.textContent = 'Временно';
         sprintCardInner.appendChild(sprintCardHeaderRussian);
+
+        const sprintCardWrongAnswer = document.createElement('div');
+        sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer');
+        sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer-hidden');
+        sprintCardInner.appendChild(sprintCardWrongAnswer);
 
         const sprintCardButtonsContainerInner = document.createElement('div');
         sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container-inner');
@@ -158,26 +167,42 @@ class SprintGame {
                 json.forEach((e) => {
                     this.words.push(e);
                 })
+                this.words.forEach((e, idx) => {
+                    const chance = Math.floor(Math.random() * 10) > 5;
+                    if (chance) {
+                        let randomWord = idx;
+                        while (randomWord === idx) {
+                            randomWord = Math.floor(Math.random() * this.words.length);
+                        }
+                        this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
+                    }
+                })
             }
         } catch(e) {
-            console.error(e);
+            document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
         }
         return json;
     }
 
     timer() {
         const progress = this.container.querySelector('.sprint__card_timer .timer-progress');
-        this.progress = 0;
         const addProgress = () => {
             this.progress += 1;
             progress.style.width = `${this.progress}%`;
             if (this.progress < 100) {
-                setTimeout(() => {
+                this.time = setTimeout(() => {
                     addProgress();
                 }, 600);        
+            } else { 
+                this.stopGame();
+                this.stopTimer();
             }
         }
         addProgress();
+    }
+
+    stopTimer() {
+        clearTimeout(this.time);
     }
 
     getPage() {
@@ -214,42 +239,22 @@ class SprintGame {
 
     startGame() {
         this.loaderIndicator(); 
-        // this.getWords().then((data) => {
-        //     this.loaderIndicatorHide();
-        //     this.timer();
-        //     console.log(data);
-        // })
 
         this.getWords().then(() => {
             this.getWords().then(() => {
-
-                this.words.forEach((e, idx) => {
-                    const chance = Math.floor(Math.random() * 10) > 5;
-
-                    if (chance) {
-                        let randomWord = idx;
-                        while (randomWord === idx) {
-                            randomWord = Math.floor(Math.random() * this.words.length);
-                        }
-                        console.log(this.words[randomWord], randomWord)
-                        this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
-                    }
-
-                })
                 this.nextWord(0);
                 this.answerHolder();
                 this.loaderIndicatorHide();
                 this.timer();
-                console.log(this.words);
             })
         })
     }
 
     answerHolder() {
-        const rightAnswerButton = this.container.querySelector('.sprint__card-button-true');
-        const wrongAnswerButton = this.container.querySelector('.sprint__card-button-false');
-        rightAnswerButton.addEventListener('click', this.rightAnswerGiven.bind(this));
-        wrongAnswerButton.addEventListener('click', this.wrongAnswerGiven.bind(this));
+        this.rightAnswerButton = this.container.querySelector('.sprint__card-button-true');
+        this.wrongAnswerButton = this.container.querySelector('.sprint__card-button-false');
+        this.rightAnswerButton.addEventListener('click', this.rightAnswerGiven.bind(this), false);
+        this.wrongAnswerButton.addEventListener('click', this.wrongAnswerGiven.bind(this), false);
         return this;
     }
 
@@ -267,6 +272,8 @@ class SprintGame {
 
     addResult(status) {
         if (status) {
+            const rightAnswerSound = new Audio('../audio/right.mp3');
+            rightAnswerSound.play();
             this.score += 10 * this.combo;
             this.container.querySelector('.sprint__card_score').textContent = this.score;
             this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
@@ -278,12 +285,17 @@ class SprintGame {
                     this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
                 });
             } else {
-                // const itemIndex = this.countAnswersStrick % 4 === 0 ? 1 : this.countAnswersStrick % 4;
-                // console.log(itemIndex)
                 this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
                     .classList.add('sprint__card_combo_item-active');   
             }
         } else {
+            const wrongAnswerSound = new Audio('../audio/wrong.mp3');
+            wrongAnswerSound.play();
+            const sprintCardWrongAnswer = document.querySelector('.sprint__card_wrong-answer');
+            sprintCardWrongAnswer.classList.remove('sprint__card_wrong-answer-hidden');
+            setTimeout(() => {
+                sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer-hidden');
+            }, 400);
             this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
                 e.classList.remove('sprint__card_combo_item-active');
             });
@@ -294,6 +306,18 @@ class SprintGame {
     }
 
     nextWord(index) {
+        if (index === this.words.length) { 
+            this.loaderIndicator();
+            this.stopTimer();
+            this.getWords().then(() => {
+                this.loaderIndicatorHide();
+                this.timer();
+            })
+        } else if (index % 20 === 0) {
+            this.getWords().then(() => {
+                this.loaderIndicatorHide();
+            })
+        }
         this.container.querySelector('.sprint__card_header-english').textContent = this.words[index].word;
         if (this.words[index].wordTranslateFalse) {
             this.container.querySelector('.sprint__card_header-russian').textContent = this.words[index].wordTranslateFalse;
@@ -304,6 +328,12 @@ class SprintGame {
 
     setDifficultLevel(level) {
         this.difficultLevel = level;
+    }
+
+    stopGame() {
+        console.log('called')
+        this.rightAnswerButton.removeEventListener('click', this.rightAnswerGiven.bind(this), false);
+        this.wrongAnswerButton.removeEventListener('click', this.wrongAnswerGiven.bind(this), false);
     }
 }
 const myGame = new SprintGame(document.querySelector('.container'));
