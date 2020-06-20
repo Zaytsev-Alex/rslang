@@ -51,6 +51,7 @@
             font-weight: 300;
             opacity: 0.8;
             text-align: center;
+            min-width: 300px;
             width: 50%;
             margin-bottom: 40px;
         }
@@ -79,6 +80,7 @@
         &_difficult-level {
             display: flex;
             flex-direction: row;
+            min-width: 300px;
             width: 40%;
             justify-content: space-evenly;
             margin-bottom: 35px;
@@ -118,12 +120,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        min-width: 300px;
         width: 50%;   
 
         &_score {
             font-size: 35px;
             font-weight: 700;
             color: #ffffff;
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
+            vertical-align: middle;
+            text-shadow: #5B2C6F 0 0 4px;
+            padding-left: 70px;
+            background: url("../img/cloud.png") no-repeat 80% 50%;
+            background-size: cover;
         }
 
         &_combo { 
@@ -165,10 +176,28 @@
             box-shadow: inset 0 0 10px #5B2C6F,
                         inset 0 0 25px #5B2C6F,
                         inset 0 0 40px #5B2C6F;
+            min-width: 300px;
+            transition: border 0.2s ease-out,
+                        box-shadow 0.3s ease-out;
+
+            &-wrong {
+                border: 2px solid #CC0033;
+                box-shadow: inset 0 0 10px #CC0033,
+                            inset 0 0 25px #CC0033,
+                            inset 0 0 40px #CC0033;
+            }
+
+            &-combo {
+                border: 2px solid #339900;
+                box-shadow: inset 0 0 10px #339900,
+                            inset 0 0 25px #339900,
+                            inset 0 0 40px #339900;
+            }
         }
 
         &_errors { 
             width: 70%;
+            min-width: 300px;
             height: 50px;
         }
 
@@ -231,6 +260,7 @@
             background-color: rgba(255, 255, 255, 0.6);
             margin: 10px 0;
             border: 3px solid #5B2C6F;
+            min-width: 300px;
 
             * {
                 width: 0%;
@@ -262,8 +292,10 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-items: center;
             width: 30%;
             margin-top: 20px;
+            min-width: 200px;
     
             * {
                 width: 50px;
@@ -272,14 +304,29 @@
             }
         }
 
-        &-arrow-left {
+        &_arrow-left {
             background: url("../img/left.png") no-repeat center center;
             background-size: cover;
         }
 
-        &-arrow-right {
+        &_arrow-right {
             background: url("../img/right.png") no-repeat center center;
             background-size: cover; 
+        }
+
+        &_speak {
+            width: 35px;
+            height: 35px;
+            background: url("../img/echo.png") no-repeat center center;
+            background-size: cover;
+            border: 0;
+            filter: invert(1);
+            cursor: pointer;
+            transition: filter 0.2s ease-out;
+
+            &:hover {
+                filter: invert(0);
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ class SprintGame {
         this.index = 0;
         this.words = [];
         this.pages = [];
+        this.ended = false;
         this.difficultLevel = 0;
     }
 
@@ -143,11 +144,15 @@ class SprintGame {
         sprintCardButtonsContainer.classList.add('sprint__card_arrows-container');
 
         const sprintCardArrowLeft = document.createElement('div');
-        sprintCardArrowLeft.classList.add('sprint__card-arrow-left');
+        sprintCardArrowLeft.classList.add('sprint__card_arrow-left');
         sprintCardButtonsContainer.appendChild(sprintCardArrowLeft);
+
+        const sprintCardSpeakButton = document.createElement('button');
+        sprintCardSpeakButton.classList.add('sprint__card_speak');
+        sprintCardButtonsContainer.appendChild(sprintCardSpeakButton);
         
         const sprintCardArrowRight = document.createElement('div');
-        sprintCardArrowRight.classList.add('sprint__card-arrow-right');
+        sprintCardArrowRight.classList.add('sprint__card_arrow-right');
         sprintCardButtonsContainer.appendChild(sprintCardArrowRight);
 
         sprintCard.appendChild(sprintCardButtonsContainer);
@@ -177,6 +182,7 @@ class SprintGame {
                         this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
                     }
                 })
+                document.querySelector('.sprint__card_errors').textContent = '';
             }
         } catch(e) {
             document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
@@ -245,6 +251,7 @@ class SprintGame {
                 this.nextWord(0);
                 this.answerHolder();
                 this.loaderIndicatorHide();
+                this.speakWordHolder();
                 this.timer();
             })
         })
@@ -255,6 +262,14 @@ class SprintGame {
         this.wrongAnswerButton = this.container.querySelector('.sprint__card-button-false');
         this.rightAnswerButton.addEventListener('click', this.rightAnswerGiven.bind(this), false);
         this.wrongAnswerButton.addEventListener('click', this.wrongAnswerGiven.bind(this), false);
+        document.addEventListener('keydown', (event) => {
+            if (!this.ended && event.code === 'ArrowLeft') {
+                this.wrongAnswerGiven();
+            }
+            if (!this.ended && event.code === 'ArrowRight') {
+                this.rightAnswerGiven();
+            }
+        })
         return this;
     }
 
@@ -272,30 +287,40 @@ class SprintGame {
 
     addResult(status) {
         if (status) {
-            const rightAnswerSound = new Audio('../audio/right.mp3');
-            rightAnswerSound.play();
             this.score += 10 * this.combo;
             this.container.querySelector('.sprint__card_score').textContent = this.score;
             this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
             this.countAnswersStrick += 1;
             if (this.countAnswersStrick % 4 === 0) {
+                const comboSound = new Audio('../audio/combo.mp3');
+                comboSound.play();
                 this.combo *= 2;
                 this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
                     e.classList.remove('sprint__card_combo_item-active');
                     this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
                 });
+                const sprintCardInner = document.querySelector('.sprint__card-inner');
+                sprintCardInner.classList.add('sprint__card-inner-combo');
+                setTimeout(() => {
+                    sprintCardInner.classList.remove('sprint__card-inner-combo');
+                }, 300);
             } else {
                 this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
                     .classList.add('sprint__card_combo_item-active');   
+                const rightAnswerSound = new Audio('../audio/right.mp3');
+                rightAnswerSound.play();
             }
         } else {
             const wrongAnswerSound = new Audio('../audio/wrong.mp3');
             wrongAnswerSound.play();
             const sprintCardWrongAnswer = document.querySelector('.sprint__card_wrong-answer');
             sprintCardWrongAnswer.classList.remove('sprint__card_wrong-answer-hidden');
+            const sprintCardInner = document.querySelector('.sprint__card-inner');
+            sprintCardInner.classList.add('sprint__card-inner-wrong');
             setTimeout(() => {
                 sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer-hidden');
-            }, 400);
+                sprintCardInner.classList.remove('sprint__card-inner-wrong');
+            }, 300);
             this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
                 e.classList.remove('sprint__card_combo_item-active');
             });
@@ -331,9 +356,21 @@ class SprintGame {
     }
 
     stopGame() {
-        console.log('called')
         this.rightAnswerButton.removeEventListener('click', this.rightAnswerGiven.bind(this), false);
         this.wrongAnswerButton.removeEventListener('click', this.wrongAnswerGiven.bind(this), false);
+        this.speakWordButton.removeEventListener('click', this.speakWord.bind(this), false);
+        this.ended = true;
+    }
+
+    speakWordHolder() {
+        this.speakWordButton = this.container.querySelector('.sprint__card_speak');
+        this.speakWordButton.addEventListener('click', this.speakWord.bind(this), false);
+    }
+
+    speakWord() {
+        const wordSound = new Audio(`https://raw.githubusercontent.com/Zaytsev-Alex/rslang-data/master/${this.words[this.index].audio}`);
+        wordSound.play();
+        return this;
     }
 }
 const myGame = new SprintGame(document.querySelector('.container'));
