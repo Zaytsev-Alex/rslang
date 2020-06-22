@@ -1,6 +1,8 @@
 import createCard from './Cards/Card/card'
 import addCardInfo from './Cards/cardInfo'
-import { getWords } from './Api/Api'
+import {
+    getWords
+} from './Api/Api'
 
 
 
@@ -19,7 +21,7 @@ export default async function createMainContent() {
 
     const words = await getWords(1, 1);
     addCardInfo(words[currentWord]);
-
+    console.log(words);
 
 
     const inputContainer = document.querySelector('.card__input-container');
@@ -27,6 +29,11 @@ export default async function createMainContent() {
     const answer = document.querySelector('.answer');
     inputField.focus();
     const cardButtons = document.querySelector('.card__buttons');
+    const expampleTranslate = document.querySelector('.card__word-example-translate');
+    const meaningTranslate = document.querySelector('.card__explain-translate');
+    const wordExplain = document.querySelector('.card__explain');
+    const wordExample = document.querySelector('.card__word-example');
+
 
     const checkAnswer = () => {
         if (document.querySelector('.answer span') !== null) {
@@ -49,31 +56,37 @@ export default async function createMainContent() {
         word.split('').forEach((symbol, index) => {
             if (symbol === text[index]) {
                 resultString += `<span class='correct'>${symbol}</span>`
-            }
-            else {
+            } else {
                 errors += 1;
                 resultString += `<span class='wrong'>${symbol}</span>`
             }
         });
-        
+
 
         if (errors) {
-        answer.innerHTML = resultString;
-        const answerElements = answer.querySelectorAll('span');
-        setTimeout(() => { answerElements.forEach(el => el.classList.add('default')) });
-        inputField.value = '';
-        inputField.focus();
-        }
-        else {
+            answer.innerHTML = resultString;
+            const answerElements = answer.querySelectorAll('span');
+            setTimeout(() => {
+                answerElements.forEach(el => el.classList.add('default'))
+            });
+            inputField.value = '';
+            inputField.focus();
+        } else {
             answer.innerHTML = `<span style = "color:green">${words[currentWord].word}</span>`
             inputField.disabled = true;
+            wordExplain.innerHTML = `Значение: ${words[currentWord].textMeaning}`;
+            wordExample.innerHTML = `Пример: ${words[currentWord].textExample}`;
+            expampleTranslate.textContent = `${words[currentWord].textExampleTranslate}`;
+            meaningTranslate.textContent = `${words[currentWord].textMeaningTranslate}`;
             currentWord += 1;
-            setTimeout(()=> {
-            answer.innerHTML = '';
-            inputField.value = '';    
-            addCardInfo(words[currentWord]);
-            inputField.disabled = false;
-            }, 2000);
+            setTimeout(() => {
+                answer.innerHTML = '';
+                inputField.value = '';
+                expampleTranslate.textContent = '';
+                meaningTranslate.textContent = '';
+                addCardInfo(words[currentWord]);
+                inputField.disabled = false;
+            }, 10000);
         }
     }
 
@@ -87,7 +100,7 @@ export default async function createMainContent() {
         else if (event.target.closest('.card__skip-word-btn')) {
 
             inputField.disabled = false;
-            
+
         }
     });
 

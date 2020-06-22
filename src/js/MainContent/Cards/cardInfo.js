@@ -8,12 +8,12 @@ export default function addCardInfo(data) {
         img.classList.add('card__img');
         img.src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${data.image}`;
         const textInput = document.querySelector('.card__input');
-        textInput.style.width = `${data.word.length*16 + 12}px`;
+        textInput.style.width = `${data.word.length*16 + 24}px`;
         document.querySelector('.card__image').append(img);
         document.querySelector('.card__word-translate').textContent = data.wordTranslate;
         document.querySelector('.card__transcription').textContent = data.transcription;
-        document.querySelector('.card__explain').innerHTML = `Значение: ${data.textMeaning}`;
-        document.querySelector('.card__word-expample').innerHTML = `Пример: ${ data.textExample}`;
+        document.querySelector('.card__explain').innerHTML = `Значение: ${data.textMeaning.replace(/<i>\w+<\/i>/g, '...')}`;
+        document.querySelector('.card__word-example').innerHTML = `Пример: ${ data.textExample.replace(/<b>\w+<\/b>/g, '...')}`;
 
 }
 
