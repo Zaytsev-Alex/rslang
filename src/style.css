@@ -17,7 +17,7 @@ body{
 }
 .start-screen{
     width: 80%;
-    height: 50vh;
+    min-height: 50vh;
     text-align: center;
 }
 h1{
@@ -39,4 +39,40 @@ h1{
 .start-btn:hover{
     background-color: rgb(206, 170, 240);
     cursor: pointer;
+}
+.words{
+   display: flex;  
+   flex-wrap: wrap;
+   justify-content: center;
+   padding-top: 50px;
+   padding-bottom: 100px;
+   font-size: 20px;
+}
+.words div{
+    padding-left: 20px;
+    padding-bottom: 20px;
+    text-transform: lowercase;
+}
+.dont-known-btn{
+   border: 1px solid white;
+   width: 200px;
+   font-size: 20px;
+   text-transform: uppercase;
+   padding: 10px 20px;
+   margin: 0px auto;
+   opacity: 0.5;
+}
+.dont-known-btn:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+.sound-img{
+    width: 120px;
+    height: 120px;
+    background: url('img/sound.png') no-repeat;
+    margin: 0px auto;
+}
+.sound-img:hover{
+    cursor: pointer;
+    background: url('img/sound-on.png') no-repeat;
 }
