@@ -28,7 +28,7 @@ export default function createCard() {
     <span class='card__transcription'></span>
     </div>
     <div class='card__additional-info'>
-    <div class='card__word-expample'></div>
+    <div class='card__word-example'></div>
     <div class='card__word-example-translate'></div>
     <div class='card__explain'></div>
     <div class='card__explain-translate'></div>
