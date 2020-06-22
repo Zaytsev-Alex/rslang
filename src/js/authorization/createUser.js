@@ -1,6 +1,8 @@
 import { 
-  RSSCHOOL_API_URL, REGISTRATION_FORM, AUTHORIZATION_FORM, VALIDATE_EMAIL, VALIDATE_PASSWORD,
+  RSSCHOOL_API_URL, REGISTRATION_FORM, VALIDATE_EMAIL, VALIDATE_PASSWORD,
 } from './variables';
+
+import loginUser from './loginUser';
 
 const REGISTRATION_EMAIL = document.querySelector('#registration-email');
 const REGISTRATION_EMAIL_ERROR = document.querySelector('#email-error');
@@ -21,13 +23,12 @@ async function createUser(user) {
   if (response.status === 417) {
     REGISTRATION_EMAIL_ERROR.textContent = 'Email уже зарегистрирован';
   } else if (response.status === 200) {
+    loginUser(user);
+
     REGISTRATION_EMAIL.value = '';
     REGISTRATION_PASSWORD.value = '';
 
     REGISTRATION_FORM.classList.add('hide');
-    AUTHORIZATION_FORM.classList.remove('hide');
-    // const data = await response.json();
-    // window.console.log(data);
   } else {
     window.console.warn(response.statusText);
   }

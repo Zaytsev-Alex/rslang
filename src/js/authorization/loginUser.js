@@ -8,7 +8,7 @@ const AUTHORIZATION_PASSWORD = document.querySelector('#authorization-password')
 const AUTHORIZATION_ERROR = document.querySelector('#authorization-error');
 const AUTHORIZATION_BUTTON = document.querySelector('#authorization__button');
 
-async function loginUser(user) {
+export default async function loginUser(user) {
   const response = await fetch(`${RSSCHOOL_API_URL}signin`, {
     method: 'POST',
     headers: {
