@@ -1,6 +1,8 @@
 export default class SprintGame {
-    constructor(container) {
+    constructor(container, uid, token) {
         this.container = container;
+        this.userId = uid;
+        this.token = token;
         this.score = 0;
         this.combo = 1;
         this.progress = 0;
@@ -10,6 +12,7 @@ export default class SprintGame {
         this.pages = [];
         this.ended = false;
         this.difficultLevel = 0;
+        this.breakGameHolder();
     }
 
     showPromoPage() {
@@ -136,25 +139,19 @@ export default class SprintGame {
         sprintCardInner.appendChild(sprintCardHeaderRussian);
 
         const sprintCardWrongAnswer = document.createElement('div');
-        sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer');
-        sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer-hidden');
+        sprintCardWrongAnswer.classList.add('sprint__card_wrong-answer', 'sprint__card_wrong-answer-hidden');
         sprintCardInner.appendChild(sprintCardWrongAnswer);
 
         const sprintCardButtonsContainerInner = document.createElement('div');
-        sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container-inner');
-        sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container');
+        sprintCardButtonsContainerInner.classList.add('sprint__card_buttons-container-inner', 'sprint__card_buttons-container');
 
         const sprintCardButtonFalse = document.createElement('button');
-        sprintCardButtonFalse.classList.add('sprint__card-button');
-        sprintCardButtonFalse.classList.add('sprint__card-button-false');
-        sprintCardButtonFalse.classList.add('false');
+        sprintCardButtonFalse.classList.add('sprint__card-button', 'sprint__card-button-false');
         sprintCardButtonFalse.textContent = 'Неверно';
         sprintCardButtonsContainerInner.appendChild(sprintCardButtonFalse);
 
         const sprintCardButtonTrue = document.createElement('button');
-        sprintCardButtonTrue.classList.add('sprint__card-button');
-        sprintCardButtonTrue.classList.add('sprint__card-button-true');
-        sprintCardButtonTrue.classList.add('true');
+        sprintCardButtonTrue.classList.add('sprint__card-button', 'sprint__card-button-true');
         sprintCardButtonTrue.textContent = 'Верно';
         sprintCardButtonsContainerInner.appendChild(sprintCardButtonTrue);
 
@@ -343,7 +340,7 @@ export default class SprintGame {
                 sprintCardInner.classList.add('sprint__card-inner-combo');
                 setTimeout(() => {
                     sprintCardInner.classList.remove('sprint__card-inner-combo');
-                }, 300);
+                }, 500);
             } else {
                 this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
                     .classList.add('sprint__card_combo_item-active');   
@@ -491,6 +488,7 @@ export default class SprintGame {
     stopGame() {
         let statistics = '';
         const gameStatistics = this.score;
+        this.sendStatistics(this.score);
         if (localStorage.getItem('sprintStatistics')) {
             statistics = localStorage.getItem('sprintStatistics');
             const statArray = statistics.split(',');
@@ -508,6 +506,54 @@ export default class SprintGame {
         this.ended = true;
     }
 
+    async sendStatistics(statistics) {
+        let statFromBack;
+        let content;
+        try {
+            const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'withCredentials': true,
+                    'Accept': 'application/json',
+                }
+            });
+            statFromBack = await response.json();
+            console.log('JSON STAT:', JSON.stringify(statFromBack)); 
+            let statArray = [];
+            if (statFromBack.optional.sprint) {
+                statArray = statFromBack.optional.sprint.split(',');   
+            }
+            statArray.push(statistics);
+            if (statArray.length > 15) {
+                statArray.shift();
+            }
+            statFromBack.optional.sprint = statArray.join(',');
+
+            try {
+                const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
+                    method: 'PUT',
+                    headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(statFromBack)
+                });
+                content = await responseSend.json();
+            } catch(error) {
+                if (document.querySelector('.sprint__card_errors')) {
+                    document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${error}`;
+                }
+            }
+        } catch(e) {
+            if (document.querySelector('.sprint__card_errors')) {
+                document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
+            }
+        }
+        console.log(content)
+        return content;
+    }
+
     speakWordHolder() {
         this.speakWordButton = this.container.querySelector('.sprint__card_speak');
         this.speakWordButton.addEventListener('click', this.speakWord.bind(this), false);
@@ -517,5 +563,34 @@ export default class SprintGame {
         const wordSound = new Audio(`https://raw.githubusercontent.com/Zaytsev-Alex/rslang-data/master/${this.words[this.index].audio}`);
         wordSound.play();
         return this;
+    }
+
+    breakGameHolder() {
+        document.addEventListener('click', (event) => {
+            if (this.container 
+                && this.container.classList.contains('sprint') 
+                && event.target.className.indexOf('sprint') === -1) {
+                this.breakGame();
+            }
+        })
+    }
+
+    breakGame() {
+        if (!this.inded) {
+            this.stopGame();
+        }
+        if (document.querySelector('.sprint__card')) {
+            document.querySelector('.sprint__card').remove();
+        }
+        if (document.querySelector('.sprint__promo')) {
+            document.querySelector('.sprint__promo').remove();
+        }
+        if (this.container.querySelector('.sprint__statistics-container')) {
+            this.container.querySelector('.sprint__statistics-container').remove();
+        }
+        if (this.container.querySelector('.sprint__card_loader')) {
+            this.container.querySelector('.sprint__card_loader').remove();
+        }
+        this.container.classList.remove('sprint');
     }
 }
