@@ -29,7 +29,9 @@ export default function createCard() {
     </div>
     <div class='card__additional-info'>
     <div class='card__word-expample'></div>
+    <div class='card__word-example-translate'></div>
     <div class='card__explain'></div>
+    <div class='card__explain-translate'></div>
     
     </div>
     </div>
@@ -39,9 +41,17 @@ export default function createCard() {
 
 
     <div class = 'card__buttons'>
-    <button class = 'card__hard-word-btn'>Сложные</button>
+    <div class = 'card__main-buttons'>
     <button class = 'card__skip-word-btn'>Показать Ответ</button>
+    <button class = 'card__check-word-btn'>Проверить</button>
+    </div>
+    <div class = 'card__difficulty-buttons'>
+    <button class = 'card__easy-word-btn'>Легко</button>
+    <button class = 'card__hard-word-btn'>Сложно</button>
+    <button class = 'card__repeat-word-btn'>Ещё Раз</button>
     <button class = 'card__delete-word-btn'>Удалить</button>
+    </div>
+
     </div>
     </div>
     <div class='navigate navigate--next'>
