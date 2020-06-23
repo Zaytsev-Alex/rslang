@@ -57,7 +57,7 @@ export default async function createMainContent() {
     const skipButton = document.querySelector('.card__skip-word-btn');
     const cardHeader = document.querySelector('.card__header');
     const cardSpeaker = cardHeader.querySelector('.card__pronunciation');
-    cardSpeaker.classList.add('.card__pronunciation--on')
+    cardSpeaker.classList.add('card__pronunciation--on')
     
 
     const synth  = window.speechSynthesis || window.mozspeechSynthesis || window.webkitspeechSynthesis;
