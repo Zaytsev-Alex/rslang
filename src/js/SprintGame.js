@@ -263,16 +263,19 @@ export default class SprintGame {
     }
 
     loaderIndicator() {
-        const sprintLoader = document.createElement('div');
-        sprintLoader.classList.add('sprint__card_loader');
-
-        const sprintSpinner = document.createElement('img');
-        sprintSpinner.setAttribute('src', '../img/spinner.gif');
-        sprintSpinner.classList.add('sprint__card_spinner');
-
-        sprintLoader.appendChild(sprintSpinner);
-        this.container.appendChild(sprintLoader);
-        return this;
+        if (this.container.querySelector('.sprint__card_spinner')) {
+            this.container.querySelector('.sprint__card_loader').classList.remove('sprint__card_loader-hide');
+        } else {
+            const sprintLoader = document.createElement('div');
+            sprintLoader.classList.add('sprint__card_loader');
+    
+            const sprintSpinner = document.createElement('img');
+            sprintSpinner.setAttribute('src', '../img/spinner.gif');
+            sprintSpinner.classList.add('sprint__card_spinner');
+    
+            sprintLoader.appendChild(sprintSpinner);
+            this.container.appendChild(sprintLoader);
+        }
     }
 
     startGame() {
@@ -488,7 +491,10 @@ export default class SprintGame {
     stopGame() {
         let statistics = '';
         const gameStatistics = this.score;
-        this.sendStatistics(this.score);
+        this.loaderIndicator();
+        this.sendStatistics(this.score).then(() => {
+            this.loaderIndicatorHide();
+        });
         if (localStorage.getItem('sprintStatistics')) {
             statistics = localStorage.getItem('sprintStatistics');
             const statArray = statistics.split(',');
@@ -519,8 +525,10 @@ export default class SprintGame {
                 }
             });
             statFromBack = await response.json();
-            console.log('JSON STAT:', JSON.stringify(statFromBack)); 
             let statArray = [];
+            if (!statFromBack.optional) {
+                statFromBack.optional = {};
+            }
             if (statFromBack.optional.sprint) {
                 statArray = statFromBack.optional.sprint.split(',');   
             }
@@ -529,15 +537,20 @@ export default class SprintGame {
                 statArray.shift();
             }
             statFromBack.optional.sprint = statArray.join(',');
-
+            const newObj = {
+                learnedWords: statFromBack.learnedWords,
+                optional: statFromBack.optional,
+            }
             try {
                 const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
                     method: 'PUT',
                     headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Accept': 'application/json',
+                        'Authorization': `Bearer ${this.token}`,
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                        'withCredentials': 'true'
                     },
-                    body: JSON.stringify(statFromBack)
+                    body: JSON.stringify(newObj)
                 });
                 content = await responseSend.json();
             } catch(error) {
@@ -550,7 +563,6 @@ export default class SprintGame {
                 document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
             }
         }
-        console.log(content)
         return content;
     }
 
