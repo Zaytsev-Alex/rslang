@@ -1,7 +1,7 @@
 export default function createCard() {
-    const cardContainer = document.createElement('div');
-    cardContainer.classList.add('card-container');
-    cardContainer.innerHTML = `
+   const cardContainer = document.createElement('div');
+   cardContainer.classList.add('card-container');
+   cardContainer.innerHTML = `
     <div class='navigate navigate--prev'>
     <svg class="arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     viewBox="0 0 490.8 490.8" style="enable-background:new 0 0 490.8 490.8;" xml:space="preserve">
@@ -14,7 +14,8 @@ export default function createCard() {
 <g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></div>
     <div class='card'>
     <div class='card__wrapper'>
-    <header class='card__header'></header>
+    <header class='card__header'>
+    <div class ='card__pronunciation'></div></header>
     <main class='card__main'>
     <div class='card__image'></div>
     <div class = 'card__input-container'>
@@ -45,7 +46,7 @@ export default function createCard() {
     <button class = 'card__skip-word-btn'>Показать Ответ</button>
     <button class = 'card__check-word-btn'>Проверить</button>
     </div>
-    <div class = 'card__difficulty-buttons'>
+    <div class = 'card__difficulty-buttons visability-hidden'>
     <button class = 'card__easy-word-btn'>Легко</button>
     <button class = 'card__hard-word-btn'>Сложно</button>
     <button class = 'card__repeat-word-btn'>Ещё Раз</button>
@@ -65,5 +66,5 @@ export default function createCard() {
    c4.164,4.165,4.164,10.917,0,15.083L135.685,487.544C133.685,489.551,130.967,490.68,128.133,490.68z"/>
 <g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></div>
     `;
-    return cardContainer;
+   return cardContainer;
 }
