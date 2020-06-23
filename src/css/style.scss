@@ -35,17 +35,46 @@ body {
     justify-content: center;
 
     .card {
-      min-width: 550px;
-      max-width: 600px;
+      width: 500px;
       min-height: 600px;
+      
       .card__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px;
         border-radius: 8px;
+
         background-color: $second_color;
         -webkit-box-shadow: 0px 0px 15px 3px $blue_color;
         -moz-box-shadow: 0px 0px 15px 3px $blue_color;
         box-shadow: 0px 0px 15px 3px $blue_color;
+
+      }
+
+      .card__header {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 10px;
+        .card__pronunciation {
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+           &.card__pronunciation--on {
+            background-image: url(/../img/speaker_on.svg)
+           }
+           &.card__pronunciation--off {
+            background-image: url(/../img/speaker_off.svg)
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        } 
       }
       .card__image {
         display: flex;
@@ -53,15 +82,16 @@ body {
 
         .card__img {
           border-radius: 8px;
-          height: 260px;
-          width: 390px;
+          height: 240px;
+          width: 370px;
         }
       }
       .card__main {
         display: flex;
         flex-direction: column;
-        margin: 20px 0;
-        padding: 0 30px;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        width: 500px;
       }
       .card__input-container {
         display: flex;
@@ -83,13 +113,13 @@ body {
       }
       .card__word {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
 
         .card__word-translate,
         .card__transcription {
           font-weight: 700;
-          font-size: 1.5rem;
-
+          font-size: 1.2rem;
+          margin-right: 10px;
           color: $fourth_color;
         }
       }
@@ -169,9 +199,20 @@ body {
       .card__word-example-translate,
       .card__explain-translate {
         margin-top: 10px;
-        font-size: 1rem;
+        font-size: 0.8rem;
         font-weight: 400;
         color: $card_text_color;
+      }
+      .card__explain {
+        i {
+          font-style: normal;
+          font-weight: 700;
+        }
+      }
+
+      .card__word-example-translate,
+      .card__explain-translate {
+        font-style: italic;
       }
     }
 
@@ -231,6 +272,34 @@ body {
         width: 3rem;
         height: 3rem;
         transition: 0.45s;
+      }
+    }
+  }
+  .visability-hidden {
+    visibility: hidden;
+  }
+
+  .progress {
+    width: 600px;
+   
+    position: absolute;
+    bottom: 33px;
+    left: 50%;
+    margin-left: -300px; 
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    .progress__row {
+      width: 90%;
+      border-radius: 8px;
+      background-color: rgba(128, 128, 128, 0.6);
+      height: 100%;
+      .progress__current {
+        height: 100%;
+        width: 0%;
+        background-color: green;
+        border-radius: 8px;
+        transition: 0.5s;
       }
     }
   }
