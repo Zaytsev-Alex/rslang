@@ -3,19 +3,8 @@ import addCardInfo from './Cards/cardInfo'
 import {
     getWords
 } from './Api/Api'
+import { addTranslate, playAudio, createProgressField } from '../Utils/Utils'
 
-
-const createProgressField = () => {
-    const progressField = document.createElement('div');
-    progressField.classList.add('progress');
-    progressField.innerHTML = `
-    <div class = 'progress__start-value'></div>
-    <div class = 'progress__row'>
-    <div class = 'progress__current'></div>
-    </div>
-    <div class = 'progress__end-value'></div> `;
-    return progressField;
-}
 
 
 export default async function createMainContent() {
@@ -28,10 +17,10 @@ export default async function createMainContent() {
 
     main.append(mainWrapper);
     const card = createCard();
-    
+
     mainWrapper.append(card);
     document.body.append(main);
-    
+
     const words = await getWords(1, 1);
     addCardInfo(words[currentWord]);
     console.log(words);
@@ -57,15 +46,29 @@ export default async function createMainContent() {
     const skipButton = document.querySelector('.card__skip-word-btn');
     const cardHeader = document.querySelector('.card__header');
     const cardSpeaker = cardHeader.querySelector('.card__pronunciation');
+    const translateCheckbox = document.querySelector('.flip-switch input');
     cardSpeaker.classList.add('card__pronunciation--on')
-    
-
-    const synth  = window.speechSynthesis || window.mozspeechSynthesis || window.webkitspeechSynthesis;
-    const message =  new SpeechSynthesisUtterance();
+    let showTranslate = true;
+    let pronunciationStatus = true;
+    const synth = window.speechSynthesis || window.mozspeechSynthesis || window.webkitspeechSynthesis;
+    const message = new SpeechSynthesisUtterance();
     message.volume = 1;
     message.lang = 'en';
-    message.rate = 1; 
+    message.rate = 1;
 
+    const createNextCard = () => {
+        checkButton.disabled = false;
+        skipButton.disabled = false;
+        inputField.disabled = false;
+        difficultyButtons.classList.add('visability-hidden')
+        answer.innerHTML = '';
+        inputField.value = '';
+        startValue.textContent = currentWord;
+        currentProrgess.style.width = `${startValue.textContent / endValue.textContent * 100}%`;
+        expampleTranslate.textContent = '';
+        meaningTranslate.textContent = '';
+        addCardInfo(words[currentWord]);
+    }
 
     const checkAnswer = () => {
         if (document.querySelector('.answer span') !== null) {
@@ -93,7 +96,10 @@ export default async function createMainContent() {
                 resultString += `<span class='wrong'>${symbol}</span>`
             }
         });
-
+        let wordTranslateAudio;
+        if (pronunciationStatus) {
+            wordTranslateAudio = playAudio(words[currentWord].audio);
+        }
 
         if (errors) {
             answer.innerHTML = resultString;
@@ -110,29 +116,41 @@ export default async function createMainContent() {
             skipButton.disabled = true;
             answer.innerHTML = `<span style = "color:green">${words[currentWord].word}</span>`
             inputField.disabled = true;
+
             difficultyButtons.classList.remove('visability-hidden');
             wordExplain.innerHTML = `Значение: ${words[currentWord].textMeaning}`;
             wordExample.innerHTML = `Пример: ${words[currentWord].textExample}`;
-            expampleTranslate.textContent = `${words[currentWord].textExampleTranslate}`;
-            meaningTranslate.textContent = `${words[currentWord].textMeaningTranslate}`;
-            currentWord += 1;
-            setTimeout(() => {
-                checkButton.disabled = false;
-                skipButton.disabled = false;
-                inputField.disabled = false;
-                difficultyButtons.classList.add('visability-hidden')
-                answer.innerHTML = '';
-                inputField.value = ''; 
-                startValue.textContent = currentWord;
-                currentProrgess.style.width = `${startValue.textContent/endValue.textContent*100}%`;
-                expampleTranslate.textContent = '';
-                meaningTranslate.textContent = '';
-                addCardInfo(words[currentWord]);
-                
-                
-            }, 3000);
+            if (showTranslate) {
+                addTranslate(words[currentWord].textExampleTranslate, words[currentWord].textMeaningTranslate);
+                if (pronunciationStatus) {
+                    wordTranslateAudio.onended = () => {
+                        const exampleTranslateAudio = playAudio(words[currentWord].audioExample);
+                        exampleTranslateAudio.onended = () => {
+                            const meaningTranslateAudio = playAudio(words[currentWord].audioMeaning);
+                            meaningTranslateAudio.onended = () => {
+                                currentWord += 1;
+                                createNextCard();
+                            }
+                        }
+                    }
+                }
+                else {
+                    currentWord += 1;
+                    setTimeout(createNextCard, 10000);
+                }
+
+            }
+            else {
+                setTimeout(() => {
+                    currentWord += 1;
+                    createNextCard();
+                }, 3000);
+            }
         }
+
     }
+
+
 
 
 
@@ -150,8 +168,22 @@ export default async function createMainContent() {
     });
     cardHeader.addEventListener('click', (event) => {
         if (event.target === cardSpeaker) {
+            pronunciationStatus = !pronunciationStatus;
             cardSpeaker.classList.toggle('card__pronunciation--off');
             cardSpeaker.classList.toggle('card__pronunciation--on');
+        }
+        else if (event.target.closest('label')) {
+            if (!translateCheckbox.checked) {
+                expampleTranslate.classList.remove('set-opacity');
+                meaningTranslate.classList.remove('set-opacity');
+                showTranslate = true;
+
+            }
+            else {
+                expampleTranslate.classList.add('set-opacity');
+                meaningTranslate.classList.add('set-opacity');
+                showTranslate = false;
+            }
         }
     })
 
