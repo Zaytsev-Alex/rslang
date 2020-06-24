@@ -1,80 +1,74 @@
-import createCard from './Cards/Card/card'
-import addCardInfo from './Cards/cardInfo'
+import './Template/mainTemplate'
 import {
     getWords
 } from './Api/Api'
-import { addTranslate, playAudio, createProgressField } from '../Utils/Utils'
-
+import {
+    addTranslate,
+    playAudio,
+    addCardInfo
+} from '../Utils/Utils'
+import {
+    CARD_HEADER,
+    CURRENT_PROGRESS,
+    START_VALUE,
+    END_WALUE,
+    INPUT_CONTAINER,
+    INPUT_FIELD,
+    ANSWER,
+    CARD_BUTTONS,
+    EXAMPLE_TRANSLATE,
+    MEANING_TRANSLATE,
+    WORD_EXPLAIN,
+    WORD_EXAMPLE,
+    DIFFICULTY_BUTTONS,
+    CHECK_BUTTON,
+    SKIP_BUTTON,
+    CARD_SPEAKER,
+    TRANSLATE_CHECKBOX,
+    NAVIGATE_NEXT
+} from '../Variables/variables'
 
 
 export default async function createMainContent() {
-
-    const main = document.createElement('main');
     let currentWord = 0;
-    main.classList.add('main');
-    const mainWrapper = document.createElement('div');
-    mainWrapper.classList.add('main__wrapper');
-
-    main.append(mainWrapper);
-    const card = createCard();
-
-    mainWrapper.append(card);
-    document.body.append(main);
-
     const words = await getWords(1, 1);
     addCardInfo(words[currentWord]);
     console.log(words);
 
-    const progressField = createProgressField();
-    const currentProrgess = progressField.querySelector('.progress__current');
-    const startValue = progressField.querySelector('.progress__start-value');
-    const endValue = progressField.querySelector('.progress__end-value');
-    startValue.textContent = currentWord;
-    endValue.textContent = words.length;
-    mainWrapper.append(progressField);
-    const inputContainer = document.querySelector('.card__input-container');
-    const inputField = mainWrapper.querySelector('.card__input');
-    const answer = document.querySelector('.answer');
-    inputField.focus();
-    const cardButtons = document.querySelector('.card__buttons');
-    const expampleTranslate = document.querySelector('.card__word-example-translate');
-    const meaningTranslate = document.querySelector('.card__explain-translate');
-    const wordExplain = document.querySelector('.card__explain');
-    const wordExample = document.querySelector('.card__word-example');
-    const difficultyButtons = document.querySelector('.card__difficulty-buttons');
-    const checkButton = document.querySelector('.card__check-word-btn');
-    const skipButton = document.querySelector('.card__skip-word-btn');
-    const cardHeader = document.querySelector('.card__header');
-    const cardSpeaker = cardHeader.querySelector('.card__pronunciation');
-    const translateCheckbox = document.querySelector('.flip-switch input');
-    cardSpeaker.classList.add('card__pronunciation--on')
+    INPUT_FIELD.focus();
+    START_VALUE.textContent = currentWord;
+    END_WALUE.textContent = words.length;
+
+
     let showTranslate = true;
     let pronunciationStatus = true;
-    
+
     const createNextCard = () => {
-        checkButton.disabled = false;
-        skipButton.disabled = false;
-        inputField.disabled = false;
-        difficultyButtons.classList.add('visability-hidden')
-        answer.innerHTML = '';
-        inputField.value = '';
-        startValue.textContent = currentWord;
-        currentProrgess.style.width = `${startValue.textContent / endValue.textContent * 100}%`;
-        expampleTranslate.textContent = '';
-        meaningTranslate.textContent = '';
+        CHECK_BUTTON.disabled = false;
+        SKIP_BUTTON.disabled = false;
+        INPUT_FIELD.disabled = false;
+        NAVIGATE_NEXT.disabled = true;
+        NAVIGATE_NEXT.classList.add('visability-hidden');
+        DIFFICULTY_BUTTONS.classList.add('visability-hidden')
+        ANSWER.innerHTML = '';
+        INPUT_FIELD.value = '';
+        START_VALUE.textContent = currentWord;
+        CURRENT_PROGRESS.style.width = `${START_VALUE.textContent / END_WALUE.textContent * 100}%`;
+        EXAMPLE_TRANSLATE.textContent = '';
+        MEANING_TRANSLATE.textContent = '';
         addCardInfo(words[currentWord]);
     }
 
     const checkAnswer = () => {
         if (document.querySelector('.answer span') !== null) {
-            answer.classList.add('answer--remove');
+            ANSWER.classList.add('answer--remove');
             setTimeout(() => {
-                answer.innerHTML = '';
-                answer.classList.remove('answer--remove');
+                ANSWER.innerHTML = '';
+                ANSWER.classList.remove('answer--remove');
             }, 500)
         }
 
-        inputField.focus();
+        INPUT_FIELD.focus();
     };
 
 
@@ -82,7 +76,7 @@ export default async function createMainContent() {
         event.preventDefault();
         let errors = 0;
         let resultString = '';
-        const text = inputField.value;
+        const text = INPUT_FIELD.value;
         word.split('').forEach((symbol, index) => {
             if (symbol === text[index]) {
                 resultString += `<span class='correct'>${symbol}</span>`
@@ -97,22 +91,23 @@ export default async function createMainContent() {
         }
 
         if (errors) {
-            answer.innerHTML = resultString;
-            const answerElements = answer.querySelectorAll('span');
+            ANSWER.innerHTML = resultString;
+            const answerElements = ANSWER.querySelectorAll('span');
             setTimeout(() => {
                 answerElements.forEach(el => el.classList.add('default'))
             });
-            inputField.value = '';
-            inputField.focus();
+            INPUT_FIELD.value = '';
+            INPUT_FIELD.focus();
         } else {
-            checkButton.disabled = true;
-            skipButton.disabled = true;
-            answer.innerHTML = `<span style = "color:green">${words[currentWord].word}</span>`
-            inputField.disabled = true;
-
-            difficultyButtons.classList.remove('visability-hidden');
-            wordExplain.innerHTML = `Значение: ${words[currentWord].textMeaning}`;
-            wordExample.innerHTML = `Пример: ${words[currentWord].textExample}`;
+            CHECK_BUTTON.disabled = true;
+            SKIP_BUTTON.disabled = true;
+            ANSWER.innerHTML = `<span style = "color:green">${words[currentWord].word}</span>`
+            INPUT_FIELD.disabled = true;
+            DIFFICULTY_BUTTONS.classList.remove('visability-hidden');
+            WORD_EXPLAIN.innerHTML = `Значение: ${words[currentWord].textMeaning}`;
+            WORD_EXAMPLE.innerHTML = `Пример: ${words[currentWord].textExample}`;
+            NAVIGATE_NEXT.disabled = false;
+            NAVIGATE_NEXT.classList.remove('visability-hidden');
             if (showTranslate) {
                 addTranslate(words[currentWord].textExampleTranslate, words[currentWord].textMeaningTranslate);
                 if (pronunciationStatus) {
@@ -121,19 +116,16 @@ export default async function createMainContent() {
                         exampleTranslateAudio.onended = () => {
                             const meaningTranslateAudio = playAudio(words[currentWord].audioMeaning);
                             meaningTranslateAudio.onended = () => {
-                                currentWord += 1;
-                                createNextCard();
+
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     currentWord += 1;
                     setTimeout(createNextCard, 10000);
                 }
 
-            }
-            else {
+            } else {
                 setTimeout(() => {
                     currentWord += 1;
                     createNextCard();
@@ -143,46 +135,40 @@ export default async function createMainContent() {
 
     }
 
-
-
-
-
-
-
-
-    cardButtons.addEventListener('click', (event) => {
+    CARD_BUTTONS.addEventListener('click', (event) => {
         if (event.target.closest('.card__check-word-btn')) checkWord(event, words[currentWord].word);
         else if (event.target.closest('.card__skip-word-btn')) {
 
-            inputField.value = words[currentWord].word;
+            INPUT_FIELD.value = words[currentWord].word;
             checkWord(event, words[currentWord].word);
 
         }
     });
-    cardHeader.addEventListener('click', (event) => {
-        if (event.target === cardSpeaker) {
+    CARD_HEADER.addEventListener('click', (event) => {
+        if (event.target === CARD_SPEAKER) {
             pronunciationStatus = !pronunciationStatus;
-            cardSpeaker.classList.toggle('card__pronunciation--off');
-            cardSpeaker.classList.toggle('card__pronunciation--on');
-        }
-        else if (event.target.closest('label')) {
-            if (!translateCheckbox.checked) {
-                expampleTranslate.classList.remove('set-opacity');
-                meaningTranslate.classList.remove('set-opacity');
+            CARD_SPEAKER.classList.toggle('card__pronunciation--off');
+            CARD_SPEAKER.classList.toggle('card__pronunciation--on');
+        } else if (event.target.closest('label')) {
+            if (!TRANSLATE_CHECKBOX.checked) {
+                EXAMPLE_TRANSLATE.classList.remove('set-opacity');
+                MEANING_TRANSLATE.classList.remove('set-opacity');
                 showTranslate = true;
 
-            }
-            else {
-                expampleTranslate.classList.add('set-opacity');
-                meaningTranslate.classList.add('set-opacity');
+            } else {
+                EXAMPLE_TRANSLATE.classList.add('set-opacity');
+                MEANING_TRANSLATE.classList.add('set-opacity');
                 showTranslate = false;
             }
         }
     })
 
+    NAVIGATE_NEXT.addEventListener('click', () => {
+        currentWord += 1;
+        createNextCard();
+    });
 
-
-    inputContainer.addEventListener('click', checkAnswer);
+    INPUT_CONTAINER.addEventListener('click', checkAnswer);
     document.addEventListener('keydown', checkAnswer);
 
 
