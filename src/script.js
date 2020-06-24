@@ -57,7 +57,7 @@ window.onload = () => {
                     audio.src = `https://d2fmfepycn0xw0.cloudfront.net?gender=male&accent=british&text=${data[randWords+n-1].word}`;
                     audio.autoplay = true;
                     oneWord.classList.remove('opacity-no');
-
+                    oneWord.classList.add('opacity-on');
                    }
                    sound();
                    soundImg.addEventListener('click', sound);
@@ -82,14 +82,55 @@ window.onload = () => {
                 }
                 const engWord = document.createElement('p');
                 engWord.classList.add('eng-word');
+                const engImg = document.createElement('img');
+                engImg.classList.add('eng-img');
+                const url2 = `https://dictionary.skyeng.ru/api/public/v1/words/search?search=${data[randWords+randWord-1].word}`;
+                fetch(url2)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        engImg.src = `${data[0].meanings[0].imageUrl}`;
+                    });
                 engWord.innerText = `${data[randWords+randWord-1].word}`;
                 soundImg.after(engWord);
+                soundImg.after(engImg);
                  });
 
             const dontKnownBtn = document.createElement('div');
             dontKnownBtn.classList.add('dont-known-btn');
             startScreen.append(dontKnownBtn);
             dontKnownBtn.innerText = "don't known";
+
+            let clickDontKnown = function (){
+                for(let m = 0; m < 4; m += 1){
+                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                }
+                const right = document.createElement('img');
+                right.src = "src/img/right.png";
+                let dontWord = document.getElementsByClassName('opacity-on')[0];
+                dontWord.innerText = dontWord.innerText.slice(2);
+                dontWord.prepend(right);
+
+
+
+                const engWord = document.createElement('p');
+                engWord.classList.add('eng-word');
+                const engImg = document.createElement('img');
+                engImg.classList.add('eng-img');
+                
+                const url2 = `https://dictionary.skyeng.ru/api/public/v1/words/search?search=${data[randWords+randWord-1].word}`;
+                fetch(url2)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        engImg.src = `${data[0].meanings[0].imageUrl}`;
+                   
+                    });
+                engWord.innerText = `${data[randWords+randWord-1].word}`;
+                soundImg.after(engWord);
+                soundImg.after(engImg);
+                
+            }
+
+            dontKnownBtn.addEventListener('click', clickDontKnown);
 
         });
 

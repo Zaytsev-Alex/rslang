@@ -93,5 +93,10 @@ h1{
 }
 .eng-word{
     font-size: 50px;
-    padding-top: 40px;
+}
+.eng-img{
+    margin-top: 40px;
+    width: 120px;
+    height: auto;
+    border-radius: 20%;
 }
