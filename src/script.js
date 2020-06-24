@@ -20,6 +20,10 @@ window.onload = () => {
     let level = 0;
 
     let startGame = function(){
+        const indicator = document.createElement('div');
+        mainBlock.prepend(indicator);
+        indicator.classList.add('indicator');
+
         startScreen.innerHTML = "";
         const soundImg = document.createElement('div');
         soundImg.classList.add('sound-img');
@@ -45,18 +49,42 @@ window.onload = () => {
                const oneWord = document.createElement('div');
                oneWord.innerText = `${n}. ${data[randWords+n-1].wordTranslate}`;
                words.append(oneWord);
+               oneWord.classList.add('opacity-no');
 
                if(n === randWord){
                    let sound = function(){
                     let audio = new Audio();
                     audio.src = `https://d2fmfepycn0xw0.cloudfront.net?gender=male&accent=british&text=${data[randWords+n-1].word}`;
                     audio.autoplay = true;
+                    oneWord.classList.remove('opacity-no');
+
                    }
                    sound();
                    soundImg.addEventListener('click', sound);
+
                }
                
             }
+
+            words.addEventListener('click', (event) => {
+                let num = event.target.innerText[0];
+                for(let m = 0; m < 4; m += 1){
+                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                }
+                if(randWord === +num){
+                    event.target.innerText = event.target.innerText.slice(2);
+                    const right = document.createElement('img');
+                    right.src = "src/img/right.png";
+                    event.target.prepend(right);
+                    
+                }else{
+                    event.target.style.textDecoration = "line-through";
+                }
+                const engWord = document.createElement('p');
+                engWord.classList.add('eng-word');
+                engWord.innerText = `${data[randWords+randWord-1].word}`;
+                soundImg.after(engWord);
+                 });
 
             const dontKnownBtn = document.createElement('div');
             dontKnownBtn.classList.add('dont-known-btn');
