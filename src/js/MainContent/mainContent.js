@@ -50,12 +50,7 @@ export default async function createMainContent() {
     cardSpeaker.classList.add('card__pronunciation--on')
     let showTranslate = true;
     let pronunciationStatus = true;
-    const synth = window.speechSynthesis || window.mozspeechSynthesis || window.webkitspeechSynthesis;
-    const message = new SpeechSynthesisUtterance();
-    message.volume = 1;
-    message.lang = 'en';
-    message.rate = 1;
-
+    
     const createNextCard = () => {
         checkButton.disabled = false;
         skipButton.disabled = false;
@@ -109,8 +104,6 @@ export default async function createMainContent() {
             });
             inputField.value = '';
             inputField.focus();
-            message.text = `${words[currentWord].word}`;
-            synth.speak(message);
         } else {
             checkButton.disabled = true;
             skipButton.disabled = true;
