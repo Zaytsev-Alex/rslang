@@ -84,7 +84,6 @@ body {
         .card__img {
           border-radius: 8px;
           height: 240px;
-          width: 400px;
         }
       }
       .card__main {
@@ -251,6 +250,9 @@ body {
       display: flex;
       align-items: center;
       width: 2.5rem;
+      outline: none;
+      border: none;
+      background-color: inherit;
       &:hover {
         cursor: pointer;
 
