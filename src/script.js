@@ -24,19 +24,47 @@ window.onload = () => {
 
     let level = 0;
 
-    let startGame = function(){
+    const levelBlock = document.createElement('div');
+
+    const selectLevel = function(){
+        startScreen.innerHTML = "";
+        const titleLevel = document.createElement('h2');
+        startScreen.append(titleLevel);
+        startScreen.append(levelBlock);
+        titleLevel.innerText = "Select level";
+        levelBlock.classList.add('level-block');
+
+        for(let k = 0; k < 6; k += 1){
+            const levelDiv = document.createElement('div');
+            levelDiv.innerText = `${k}`;
+            levelBlock.append(levelDiv);
+
+            levelDiv.addEventListener('click', (event) => {
+                level = +(event.target.innerText);
+        });
+
+        }
+
+    }
+
+
+    const startGame = function(){
         const indicator = document.createElement('div');
         mainBlock.prepend(indicator);
         indicator.classList.add('indicator');
 
-        let nextGame = function (){
+        const yourLevel = document.createElement('h3');
+        yourLevel.innerText = `Your level: ${level}`;
+        
+        const nextGame = function (){
 
         startScreen.innerHTML = "";
+        startScreen.prepend(yourLevel);
         const soundImg = document.createElement('div');
         soundImg.classList.add('sound-img');
         startScreen.append(soundImg);
 
-        let page = Math.floor(0 + Math.random() * (29 + 1 - 0));
+        const page = Math.floor(0 + Math.random() * (29 + 1 - 0));
         
 
         const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${level}`;
@@ -48,18 +76,18 @@ window.onload = () => {
             words.classList.add('words');
             startScreen.append(words);
 
-            let randWord = Math.floor(1 + Math.random() * (5 + 1 - 1));
-            let randWords = Math.floor(0 + Math.random() * (15 + 1 - 0));
+            const randWord = Math.floor(1 + Math.random() * (5 + 1 - 1));
+            const randWords = Math.floor(0 + Math.random() * (15 + 1 - 0));
 
-            for ( let n = 1; n < 6; n++){ 
+            for ( let n = 1; n < 6; n += 1){ 
                const oneWord = document.createElement('div');
                oneWord.innerText = `${n}. ${data[randWords+n-1].wordTranslate}`;
                words.append(oneWord);
                oneWord.classList.add('opacity-no');
 
                if(n === randWord){
-                   let sound = function(){
-                    let audio = new Audio();
+                   const sound = function(){
+                    const audio = new Audio();
                     audio.src = `https://d2fmfepycn0xw0.cloudfront.net?gender=male&accent=british&text=${data[randWords+n-1].word}`;
                     audio.autoplay = true;
                     oneWord.classList.remove('opacity-no');
@@ -84,7 +112,7 @@ window.onload = () => {
 
             words.addEventListener('click', (event) => {
                 if (countClick === 0){
-                    let num = event.target.innerText[0];
+                    const num = event.target.innerText[0];
                 for(let m = 0; m < 4; m += 1){
                     document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
                 }
@@ -125,14 +153,14 @@ window.onload = () => {
 
             
 
-            let clickDontKnown = function (){
+            const clickDontKnown = function (){
                 if (countClick === 0){
                     for(let m = 0; m < 4; m += 1){
                         document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
                     }
                     const right = document.createElement('img');
                     right.src = "src/img/right.png";
-                    let dontWord = document.getElementsByClassName('opacity-on')[0];
+                    const dontWord = document.getElementsByClassName('opacity-on')[0];
                     dontWord.innerText = dontWord.innerText.slice(2);
                     dontWord.prepend(right);
     
@@ -161,8 +189,7 @@ window.onload = () => {
                     dontKnownBtn.style.background = "url('src/img/arrow.png') no-repeat";
                     dontKnownBtn.style.backgroundPosition = "center";
 
-                }else{
-                    if (indicator.style.width === "100%"){
+                }else if (indicator.style.width === "100%"){
                         dontKnownBtn.style.background = "none";
                         startScreen.innerHTML = "";
                         result.innerText = `Your result
@@ -176,7 +203,8 @@ window.onload = () => {
                              rightAnswer = 0;
                              wrongAnswer = 0;
                              indWidth = 20;
-                             startGame();
+                             levelBlock.innerHTML = "";
+                             selectLevel();
                         });
                         
                     }else{
@@ -186,8 +214,6 @@ window.onload = () => {
                         indWidth += 10;
                         nextGame();
                     }
-                    
-                }
                 
             }
 
@@ -202,8 +228,12 @@ window.onload = () => {
         
     }
 
-    startBtn.addEventListener('click', startGame);
-    
 
+    startBtn.addEventListener('click', selectLevel);
+    levelBlock.addEventListener('click', (event) => {
+        if(event.target.innerText.length === 1){
+            startGame();
+        }
+});
 
 }
