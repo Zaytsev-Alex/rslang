@@ -1,16 +1,9 @@
-$text-logo: #d5dc6c;
-$text-dark: #37383c;
-$text-error: rgb(236, 29, 29);;
-$text-blue: #3053c5;
 $text-white: #fff;
+$main-page-yellow: #d3c265;
+$main-page-red: #c68174;
+$main-page-blue: #909cc4;
+$main-page-light: #d1ccc4;
 
-$button-bg-normal: rgba(40, 195, 138, 0.7);
-$button-bg-hover: rgba(39, 182, 129, 0.7);
-$button-bg-active: #59da6a;
-
-$block-bg: hsla(0,0%,100%,0.4); 
-$background: #fefefe;
-$text: #4b507a;
 
 .main-page {
     display: flex;
@@ -56,7 +49,7 @@ $text: #4b507a;
         min-width: 200px;
         border-radius: 25px;
         transition: 0.25s ease-in;
-        background-color: #d3c265;
+        background-color: $main-page-yellow;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,.16), 0 0 1px 0 rgba(0,0,0,.12);
         position: relative;
         min-width: 300px;
@@ -80,13 +73,13 @@ $text: #4b507a;
         }
 
         &:nth-child(2n) {
-            background-color: #c68174;
+            background-color: $main-page-red;
         }
 
 
         &:nth-child(3n) {
             width: 30%;
-            background-color: #909cc4;
+            background-color: $main-page-blue;
 
             @media screen and (max-width: 680px) {
                 width: 80%;
@@ -95,7 +88,7 @@ $text: #4b507a;
 
         &:nth-child(7n) {
             width: 40%;
-            background-color: #d1ccc4;
+            background-color: $main-page-light;
 
             @media screen and (max-width: 680px) {
                 width: 80%;
