@@ -17,6 +17,45 @@ window.onload = () => {
     startScreen.append(startBtn);
     startBtn.innerText = "start";
 
+    const statistics = document.createElement('div');
+    statistics.classList.add('statistics');
+    statistics.innerText = "Statistics";
+    startScreen.append(statistics);
+
+    if(localStorage.getItem('gameTable') === null){
+        localStorage.setItem('gameTable', 0);
+        localStorage.setItem('rightTable', 0);
+        localStorage.setItem('wrongTable', 0);
+    }
+    
+
+    statistics.addEventListener('click', () => {
+    startScreen.innerHTML = "";
+    const table = document.createElement('table');
+    startScreen.append(table);
+    
+    table.innerHTML = `<caption>Statistics</caption>
+    <tr>
+    <td>Game</td><td>Right</td><td>Wrong</td>
+    </tr>
+    <tr>
+    <td>${localStorage.getItem('gameTable')}</td>
+    <td>${localStorage.getItem('rightTable')}</td>
+    <td>${localStorage.getItem('wrongTable')}</td>
+    </tr>
+    `
+    
+    const backBtn = document.createElement('div');
+    backBtn.classList.add('dont-known-btn');
+    backBtn.innerText = "Back";
+    startScreen.append(backBtn);
+
+    backBtn.addEventListener('click', () => {
+        location.reload();
+    });
+
+    });
+
     let countClick = 0;
     let indWidth = 20;
     let rightAnswer = 0;
@@ -151,7 +190,6 @@ window.onload = () => {
                 
                  });
 
-            
 
             const clickDontKnown = function (){
                 if (countClick === 0){
@@ -163,8 +201,6 @@ window.onload = () => {
                     const dontWord = document.getElementsByClassName('opacity-on')[0];
                     dontWord.innerText = dontWord.innerText.slice(2);
                     dontWord.prepend(right);
-    
-    
     
                     const engWord = document.createElement('p');
                     engWord.classList.add('eng-word');
@@ -192,11 +228,15 @@ window.onload = () => {
                 }else if (indicator.style.width === "100%"){
                         dontKnownBtn.style.background = "none";
                         startScreen.innerHTML = "";
-                        result.innerText = `Your result
+                        result.innerText = `Your result:
                         Right ${rightAnswer}/${wrongAnswer} Wrong`;
                         startScreen.append(result);
                         startScreen.append(dontKnownBtn);
                         dontKnownBtn.innerText = "restart";
+                        startScreen.append(statistics);
+                        localStorage.setItem('gameTable', +(localStorage.getItem('gameTable')) + 1);
+                        localStorage.setItem('rightTable', +(localStorage.getItem('rightTable')) + rightAnswer);
+                        localStorage.setItem('wrongTable', +(localStorage.getItem('wrongTable')) + wrongAnswer);
                         dontKnownBtn.addEventListener('click', () => {
                              countClick = 0;
                              indicator.style.width = '10%';
@@ -218,6 +258,18 @@ window.onload = () => {
             }
 
             dontKnownBtn.addEventListener('click', clickDontKnown);
+
+            // document.addEventListener('keydown', (event) => {
+            //     if(event.code === 'Enter' && countClick === 1){
+            //         dontKnownBtn.style.opacity = "1";
+            //     }
+            // });
+            // document.addEventListener('keyup', (event) => {
+            //     if(event.code === 'Enter' && countClick === 1){
+            //         dontKnownBtn.style.opacity = "0.5";
+            //         clickDontKnown();
+            //     }
+            // });
 
         });
 

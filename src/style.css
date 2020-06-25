@@ -126,3 +126,29 @@ h3{
     height: auto;
     border-radius: 20%;
 }
+.statistics{
+    font-size: 26px;
+    padding-top: 30px;
+    opacity: 0.7;
+    width: 120px;
+    margin: 0px auto;
+}
+.statistics:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+td{
+    padding: 5px;
+    border: 1px solid white;
+}
+table{
+    border: 1px solid white;
+    width: 50%;
+    text-align: center;
+    margin: 0px auto;
+    margin-bottom: 40px;
+}
+caption{
+    font-size: 30px;
+    padding-bottom: 20px;
+}
