@@ -10,6 +10,14 @@ const REGISTRATION_PASSWORD_ERROR = document.querySelector('#password-error');
 const REGISTRATION_PASSWORD = document.querySelector('#registration-password');
 const REGISTRATION_BUTTON = document.querySelector('#registration__button');
 
+const ERRORS = {
+  alreadyReg: 'Email уже зарегистрирован',
+  writeEmail: 'Введите email',
+  wrongEmail: 'Некорректный email',
+  writePassword: 'Введите пароль',
+  rulesPassword: 'Пароль должен содержать не менее 8 символов, как минимум одну прописную букву, одну заглавную букву, одну цифру и один спецсимвол',
+}
+
 async function createUser(user) {
   const response = await fetch(`${RSSCHOOL_API_URL}users`, {
     method: 'POST',
@@ -21,7 +29,7 @@ async function createUser(user) {
   });
 
   if (response.status === 417) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'Email уже зарегистрирован';
+    REGISTRATION_EMAIL_ERROR.textContent = ERRORS.alreadyReg;
   } else if (response.status === 200) {
     loginUser(user);
 
@@ -43,17 +51,17 @@ REGISTRATION_BUTTON.addEventListener('click', (event) => {
   };
 
   if (REGISTRATION_EMAIL.value.length === 0) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'Введите email';
+    REGISTRATION_EMAIL_ERROR.textContent = ERRORS.writeEmail;
   } else if (!REGISTRATION_EMAIL.value.match(VALIDATE_EMAIL)) {
-    REGISTRATION_EMAIL_ERROR.textContent = 'Некорректный email';
+    REGISTRATION_EMAIL_ERROR.textContent = ERRORS.wrongEmail;
   } else {
     REGISTRATION_EMAIL_ERROR.textContent = '';
   }
 
   if (REGISTRATION_PASSWORD.value.length === 0) {
-    REGISTRATION_PASSWORD_ERROR.textContent = 'Введите пароль';
+    REGISTRATION_PASSWORD_ERROR.textContent = ERRORS.writePassword;
   } else if (!REGISTRATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
-    REGISTRATION_PASSWORD_ERROR.textContent = 'Пароль должен содержать не менее 8 символов, как минимум одну прописную букву, одну заглавную букву, одну цифру и один спецсимвол';
+    REGISTRATION_PASSWORD_ERROR.textContent = ERRORS.rulesPassword;
   } else {
     REGISTRATION_PASSWORD_ERROR.textContent = '';
   }

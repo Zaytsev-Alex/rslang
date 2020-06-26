@@ -8,6 +8,11 @@ const AUTHORIZATION_PASSWORD = document.querySelector('#authorization-password')
 const AUTHORIZATION_ERROR = document.querySelector('#authorization-error');
 const AUTHORIZATION_BUTTON = document.querySelector('#authorization__button');
 
+const ERRORS = {
+  wrongEmailOrPassword: 'Неверный email или пароль',
+  writeEmailAndPassword: 'Введите email и пароль',
+}
+
 export default async function loginUser(user) {
   const response = await fetch(`${RSSCHOOL_API_URL}signin`, {
     method: 'POST',
@@ -19,7 +24,7 @@ export default async function loginUser(user) {
   });
 
   if (response.status === 404) {
-    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
+    AUTHORIZATION_ERROR.textContent = ERRORS.wrongEmailOrPassword;
     window.console.warn('Wrong email or password');
   } else if (response.status === 200) {
     const data = await response.json();
@@ -35,7 +40,7 @@ export default async function loginUser(user) {
     LOG_OUT_BUTTON.classList.remove('hide');
     AUTHORIZATION_FORM.classList.add('hide');
   } else if (response.status === 403) {
-    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
+    AUTHORIZATION_ERROR.textContent = ERRORS.wrongEmailOrPassword;
   } else {
     window.console.warn(response);
   }
@@ -50,9 +55,9 @@ AUTHORIZATION_BUTTON.addEventListener('click', (event) => {
   };  
 
   if (AUTHORIZATION_EMAIL.value.length === 0 || AUTHORIZATION_PASSWORD.value.length === 0) {
-    AUTHORIZATION_ERROR.textContent = 'Введите email и пароль';
+    AUTHORIZATION_ERROR.textContent = ERRORS.writeEmailAndPassword;
   } else if (!AUTHORIZATION_EMAIL.value.match(VALIDATE_EMAIL) || !AUTHORIZATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
-    AUTHORIZATION_ERROR.textContent = 'Неверный email или пароль';
+    AUTHORIZATION_ERROR.textContent = ERRORS.wrongEmailOrPassword;
   } else {
     AUTHORIZATION_ERROR.textContent = '';
   }
