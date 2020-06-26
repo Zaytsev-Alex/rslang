@@ -1,0 +1,88 @@
+@media screen and (max-width: 920px) {
+    .about-team {
+        .column-layout-6 {
+            width: calc(50% - 30px);
+        }
+
+        .column-layout {
+            margin: 0 -15px;
+        }
+    }
+
+    .header-content {
+        flex-direction: column;
+    }
+
+    .nav {
+        width: 100%;
+    }
+
+}
+
+
+@media screen and (max-width: 680px) {
+    .app-intro-options {
+        .column-layout-12 {
+            width: 100%;
+        }
+
+        .column-layout {
+            margin: 0;
+        }
+    }
+
+    .about-team {
+        .column-layout-12 {
+            width: 100%;
+        }
+
+        .column-layout {
+            margin: 0;
+        }
+    }
+
+    .nav-menu {
+        position  : absolute;
+        top       : 162px;
+        left      : -90%;
+        height    : 100vh;
+        width     : 90%;
+        background: linear-gradient(135deg, #ff4b1f, #1fddff);
+        transition: left 0.5s cubic-bezier(0.1, 0.1, 0.25, 1.0);
+        z-index   : 3;
+        color     : white;
+
+        &_open {
+            left: 0;
+        }
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .btn-container {
+        display: block;
+    }
+
+    .nav-bar {
+        padding-top: 40px;
+
+        &__item {
+            padding-bottom: 35px;
+            color         : white;
+            font-size     : 2.5rem;
+        }
+    }
+
+    .footer {
+        &-container {
+            flex-direction: column;
+        }
+
+        .team-github-info {
+            padding-left: 0;
+
+        }
+    }
+}
