@@ -12,6 +12,7 @@ $text-blue: #3053c5;
 $button-bg-normal: rgba(40, 195, 138, 0.7);
 $button-bg-hover: rgba(39, 182, 129, 0.7);
 $button-bg-active: #59da6a;
+$text-error: rgb(236, 29, 29);
 
 .container {
   width: 100%;
@@ -129,6 +130,10 @@ $button-bg-active: #59da6a;
           left: 10px;
           transition: width 50ms ease;
           transform-origin: 0% 0%;
+        }
+
+        &.error {
+            border-color: $text-error;
         }
       }
 
