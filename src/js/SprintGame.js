@@ -492,7 +492,13 @@ export default class SprintGame {
         let statistics = '';
         const gameStatistics = this.score;
         this.loaderIndicator();
-        this.sendStatistics(this.score).then(() => {
+        let guessedCount = 0;
+        for (let i = 0; i < this.index; i += 1) {
+            if (this.words[i].guessed) {
+                guessedCount += 1;
+            }
+        }
+        this.sendStatistics(this.score, this.index, guessedCount).then(() => {
             this.loaderIndicatorHide();
         });
         if (localStorage.getItem('sprintStatistics')) {
@@ -512,7 +518,7 @@ export default class SprintGame {
         this.ended = true;
     }
 
-    async sendStatistics(statistics) {
+    async sendStatistics(statistics, length, guessedCount) {
         let statFromBack;
         let content;
         try {
@@ -533,7 +539,11 @@ export default class SprintGame {
                 statArray = statFromBack.optional.sprint.split(',');   
             }
             statArray.push(statistics);
-            if (statArray.length > 15) {
+            statArray.push(length);
+            statArray.push(guessedCount);
+            if (statArray.length > 30) {
+                statArray.shift();
+                statArray.shift();
                 statArray.shift();
             }
             statFromBack.optional.sprint = statArray.join(',');
