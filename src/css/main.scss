@@ -1,0 +1,242 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+$text-white: #fff;
+$text-logo: #d5dc6c;
+$text-dark: #37383c;
+$text-blue: #3053c5; 
+$button-bg-normal: rgba(40, 195, 138, 0.7);
+$button-bg-hover: rgba(39, 182, 129, 0.7);
+$button-bg-active: #59da6a;
+
+.container {
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(2px);
+}
+
+.settings {
+  box-sizing: border-box;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 20px;
+  background: url("../img/nature.jpg") no-repeat center center;
+  background-size: cover;
+  font-size: 1.2rem;
+  color: $text-dark;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__new-words-quantity,
+  &__cards-quantity {
+    appearance: none;
+    width: 10rem;
+    height: 0.25rem;
+    outline: none;
+    border-radius: 0.5rem;
+    background-color: $text-dark;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1.5rem;
+      height: 1.5rem;
+      background-color: $text-dark;
+      border: 0.25rem solid $button-bg-normal;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  &__cards-output,
+  &__new-words-output {
+    display: inline-block;
+    position: relative;
+    width: 35px;
+    color: $text-white;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: $text-dark;
+    padding: 5px 10px;
+    margin-left: 20px;
+
+    &:after {
+      position: absolute;
+      top: 8px;
+      left: -7px;
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-right: 7px solid #2c3e50;
+      border-bottom: 7px solid transparent;
+      content: "";
+    }
+  }
+
+  &__checkbox {
+    vertical-align: middle;
+    text-align: center;
+
+    label {
+      display: inline-block;
+      color: $text-dark;
+      cursor: pointer;
+      position: relative;
+      margin-top: 13px;
+
+      span {
+        display: inline-block;
+        position: relative;
+        background-color: transparent;
+        width: 25px;
+        height: 25px;
+        transform-origin: center;
+        border: 2px solid $button-bg-normal;
+        border-radius: 50%;
+        vertical-align: -6px;
+        margin-right: 10px;
+        transition: background-color 150ms 200ms,
+                    transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
+
+        &:before {
+          content: "";
+          width: 0px;
+          height: 2px;
+          border-radius: 2px;
+          background: $button-bg-normal;
+          position: absolute;
+          transform: rotate(45deg);
+          top: 13px;
+          left: 9px;
+          transition: width 50ms ease 50ms;
+          transform-origin: 0% 0%;
+        }
+
+        &:after {
+          content: "";
+          width: 0;
+          height: 2px;
+          border-radius: 2px;
+          background: $button-bg-normal;
+          position: absolute;
+          transform: rotate(305deg);
+          top: 16px;
+          left: 10px;
+          transition: width 50ms ease;
+          transform-origin: 0% 0%;
+        }
+      }
+
+      &:hover {
+        span {
+          &:before {
+            width: 5px;
+            transition: width 100ms ease;
+          }
+
+          &:after {
+            width: 10px;
+            transition: width 150ms ease 100ms;
+          }
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      display: none;
+
+      &:checked {
+        + label {
+          span {
+            background-color: $text-white;
+            transform: scale(1.25);
+
+            &:after {
+              width: 10px;
+              background: $button-bg-active;
+              transition: width 150ms ease 100ms;
+            }
+
+            &:before {
+              width: 5px;
+              background: $button-bg-active;
+              transition: width 150ms ease 100ms;
+            }
+          }
+
+          &:hover {
+            span {
+              background-color: $text-white;
+              transform: scale(1.25);
+
+              &:after {
+                width: 10px;
+                background: $button-bg-hover;
+                transition: width 150ms ease 100ms;
+              }
+
+              &:before {
+                width: 5px;
+                background: $button-bg-hover;
+                transition: width 150ms ease 100ms;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-hor {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 13px;
+  }
+
+  form {
+      background: $text-white;
+      padding: 30px 25px;
+      border-radius: 20px;
+  }
+
+  &__submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  &__submit {
+    outline:none;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius:40px;
+    background: #fff;
+    border: 2px solid $button-bg-normal;
+    color: $button-bg-normal;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 1.1rem;
+    font-weight: 400;
+
+    &:hover {
+        color: $text-white;
+        background: $button-bg-hover;
+      }
+      &:active {
+        letter-spacing: 3px ;
+      }
+      &:after {
+        content:"Применить";
+      }
+  }
+}

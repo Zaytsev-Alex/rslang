@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container settings">
+        <form action="">
+            <label for="settings__new-words-quantity">Укажите количество слов, которые вы хотите изучать за день</label>
+            <div class="settings-hor">
+                <input type="range" id="settings__new-words-quantity" class="settings__new-words-quantity" min="5" max="100" value="20">
+                <output class="settings__new-words-output">20</output>
+            </div>
+
+            <label for="settings__cards-quantity">Укажите максимальное число карточек за день</label>
+            <div class="settings-hor">
+                <input type="range" id="settings__cards-quantity" class="settings__cards-quantity" min="5" max="100" value="20">
+                <output class="settings__cards-output">20</output>
+            </div>
+
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__translate" class="settings__translate">
+                <label for="settings__translate"><span></span>Отображать перевод слова?</label>
+            </div>
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__meaning" class="settings__meaning">
+                <label for="settings__meaning"><span></span>Отображать предложение с объяснением значения слова?</label>
+            </div>  
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__example" class="settings__example">
+                <label for="settings__example"><span></span>Отображать предложение с примером употребления слова?</label>
+            </div>
+
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__transcription" class="settings__transcription">
+                <label for="settings__transcription"><span></span>Отображать транскрипцию слова?</label>
+            </div>
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__image" class="settings__image">
+                <label for="settings__image"><span></span>Отображать картинку-ассоциацию слова?</label>
+            </div>
+
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__show-answer" class="settings__show-answer">
+                <label for="settings__show-answer"><span></span>Отображать кнопку "Показать ответ"?</label>
+            </div>
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__show-delete" class="settings__show-delete">
+                <label for="settings__show-delete"><span></span>Отображать кнопку "Удалить"?</label>
+            </div>
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__show-hard" class="settings__show-hard">
+                <label for="settings__show-hard"><span></span>Возможность поместить слово в раздел сложные "Сложные"?</label>
+            </div>
+            <div class="settings-hor settings__checkbox">
+                <input type="checkbox" id="settings__show-difficult" class="settings__show-difficult">
+                <label for="settings__show-difficult"><span></span>Отображать кнопки "Снова", "Трудно", "Хорошо", "Легко"?</label>
+            </div>
+            <div class="settings__submit-container">
+                <button class="settings__submit"></button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
