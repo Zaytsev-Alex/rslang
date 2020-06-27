@@ -12,6 +12,11 @@ window.onload = () => {
     startScreen.append(titleGame);
     titleGame.innerText = "Audio Call";
 
+    const levelBlock = document.createElement('div');    
+    const titleLevel = document.createElement('h2');
+    startScreen.append(titleLevel);
+    startScreen.append(levelBlock);
+
     const startBtn = document.createElement('div');
     startBtn.classList.add('start-btn');
     startScreen.append(startBtn);
@@ -63,13 +68,7 @@ window.onload = () => {
 
     let level = 0;
 
-    const levelBlock = document.createElement('div');
-
-    const selectLevel = function(){
-        startScreen.innerHTML = "";
-        const titleLevel = document.createElement('h2');
-        startScreen.append(titleLevel);
-        startScreen.append(levelBlock);
+        
         titleLevel.innerText = "Select level";
         levelBlock.classList.add('level-block');
 
@@ -77,19 +76,22 @@ window.onload = () => {
             const levelDiv = document.createElement('div');
             levelDiv.innerText = `${k}`;
             levelBlock.append(levelDiv);
-
-            levelDiv.addEventListener('click', (event) => {
-                level = +(event.target.innerText);
-        });
-
+            if (k === 0){
+                levelDiv.classList.add('active');
+            }
         }
-
-    }
-
+        levelBlock.addEventListener('click', (event) => {
+            level = +(event.target.innerText);
+            levelBlock.querySelectorAll('div.active').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+    });
+        
 
     const startGame = function(){
+        const indicatorBlock = document.createElement('div');
+        indicatorBlock.classList.add('indicatorBlock');
+
         const indicator = document.createElement('div');
-        mainBlock.prepend(indicator);
         indicator.classList.add('indicator');
 
         const yourLevel = document.createElement('h3');
@@ -99,6 +101,8 @@ window.onload = () => {
 
         startScreen.innerHTML = "";
         startScreen.prepend(yourLevel);
+        startScreen.prepend(indicatorBlock);
+        indicatorBlock.append(indicator);
         const soundImg = document.createElement('div');
         soundImg.classList.add('sound-img');
         startScreen.append(soundImg);
@@ -281,11 +285,11 @@ window.onload = () => {
     }
 
 
-    startBtn.addEventListener('click', selectLevel);
-    levelBlock.addEventListener('click', (event) => {
-        if(event.target.innerText.length === 1){
-            startGame();
-        }
-});
+    startBtn.addEventListener('click', startGame);
+//     levelBlock.addEventListener('click', (event) => {
+//         if(event.target.innerText.length === 1){
+//             startGame();
+//         }
+// });
 
 }
