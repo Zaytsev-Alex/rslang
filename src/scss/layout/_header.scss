@@ -1,8 +1,5 @@
 .header {
-    padding   : 20px 0;
-   // position  : fixed;
-   // width     : 100%;
-   // background: url('../assets/images/bg2.png');
+
    background: linear-gradient(135deg, rgba(255,75,31,1) 0%, rgba(31,221,255,1) 100%);
 
     &-content {
@@ -19,5 +16,4 @@
 
 .header__item {
     flex-grow : 1;
-    flex-basis: 50%;
 }
