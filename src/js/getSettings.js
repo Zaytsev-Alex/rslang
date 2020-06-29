@@ -1,7 +1,8 @@
 const getSettings = async () => {
-    const userId = '5ef73fb72f8ea50017c8bda2';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjczZmI3MmY4ZWE1MDAxN2M4YmRhMiIsImlhdCI6MTU5MzI2MjAzNiwiZXhwIjoxNTkzMjc2NDM2fQ.CNoTVNAlEO4gGGHgJQCvF9Jjsy0q7hI7J9U5ksoubJw';
+    const userId = '5ef9dbf1a0d86400172933dd';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjlkYmYxYTBkODY0MDAxNzI5MzNkZCIsImlhdCI6MTU5MzQzMzA5NywiZXhwIjoxNTkzNDQ3NDk3fQ.wOFiVm6WMD_wtOo5nuIFHkQVkV0nRudFBv0UUlT4y1k';
     let settingsFromBack;
+    const errorField = document.querySelector('.settings__error');
     try {
         const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
             method: 'GET',
@@ -12,8 +13,13 @@ const getSettings = async () => {
             }
         });
         settingsFromBack = await response.json();
+        if (errorField) {
+            errorField.textContent = '';
+        }
     } catch(e) {
-        console.error(e);
+        if (errorField) {
+            errorField.textContent = '';
+        }
     }
     return settingsFromBack;
 }

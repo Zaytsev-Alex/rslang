@@ -1,6 +1,10 @@
 import { settingsSendIndicator, settingsSendIndicatorHide } from './settingsLoadIndicator';
 import changeSettings from './changeSettings';
 
+const messeges = {
+    choose: 'Пожалуйста, отметьте как минимум один из выделенных пунктов',
+}
+
 const changeSettingsHolder = () => {
     const submitButton = document.querySelector('.settings__submit');
     submitButton.addEventListener('click', (event) => {
@@ -14,13 +18,16 @@ const changeSettingsHolder = () => {
         group.forEach((e) => {
             check += e.checked;
         });
+        const errorField = document.querySelector('.settings__error');
         if (check) {
             group.forEach(e => e.parentElement.querySelector('span').classList.remove('error'));
+            errorField.textContent = '';
             settingsSendIndicator();
             changeSettings(group).then(() => {
                 settingsSendIndicatorHide();
             })
         } else {
+            errorField.textContent = messeges.choose;
             group.forEach(e => e.parentElement.querySelector('span').classList.add('error'));
         }
     });

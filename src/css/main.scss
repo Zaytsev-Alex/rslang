@@ -15,14 +15,14 @@ $text-error: rgb(236, 29, 29);
 .container {
   width: 100%;
   height: 100vh;
-  backdrop-filter: blur(2px);
 }
 
 .settings {
   box-sizing: border-box;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
   padding: 20px;
-  background: url("../img/nature.jpg") no-repeat center center;
+  background: url("../img/nature.jpg") no-repeat center center scroll;
+  background-attachment: scroll;
   background-size: cover;
   font-size: 1.2rem;
   color: $text-dark;
@@ -87,11 +87,14 @@ $text-error: rgb(236, 29, 29);
       color: $text-dark;
       cursor: pointer;
       position: relative;
-      margin-top: 13px;
+      text-align: left;
+      margin-left: 10px;
+      margin-left: 40px;
 
       span {
         display: inline-block;
-        position: relative;
+        position: absolute;
+        left: -45px;
         background-color: transparent;
         width: 25px;
         height: 25px;
@@ -286,6 +289,12 @@ $text-error: rgb(236, 29, 29);
     &_spinner {
       background-color: transparent;
     }
+  }
+
+  &__error {
+    width: 100%;
+    margin-top: 15px;
+    color: $text-error;
   }
 }
 

@@ -1,8 +1,8 @@
 import getSettings from './getSettings';
 
 const changeSettings = async (grp) => {
-    const userId = '5ef73fb72f8ea50017c8bda2';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjczZmI3MmY4ZWE1MDAxN2M4YmRhMiIsImlhdCI6MTU5MzI2MjAzNiwiZXhwIjoxNTkzMjc2NDM2fQ.CNoTVNAlEO4gGGHgJQCvF9Jjsy0q7hI7J9U5ksoubJw';
+    const userId = '5ef9dbf1a0d86400172933dd';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjlkYmYxYTBkODY0MDAxNzI5MzNkZCIsImlhdCI6MTU5MzQzMzA5NywiZXhwIjoxNTkzNDQ3NDk3fQ.wOFiVm6WMD_wtOo5nuIFHkQVkV0nRudFBv0UUlT4y1k';
     const newWordsQuantity = document.querySelector('.settings__new-words-quantity').value;
     const cardsQuantity = document.querySelector('.settings__cards-quantity').value;
     const oldSettings = await getSettings();
@@ -45,7 +45,7 @@ const changeSettings = async (grp) => {
     newSettings.optional.showDifficult = showDifficult;
 
     let responseSendAnswer;
-
+    const errorField = document.querySelector('.settings__error');
     try {
         const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
             method: 'PUT',
@@ -58,8 +58,9 @@ const changeSettings = async (grp) => {
                 body: JSON.stringify(newSettings)
         });
         responseSendAnswer = await responseSend.json();
+        errorField.textContent = '';
     } catch(e) {
-        console.error(e);
+        errorField.textContent = `Whoops: ${e}`;
     }
     return responseSendAnswer;
 }

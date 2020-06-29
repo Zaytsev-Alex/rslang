@@ -208,6 +208,10 @@ const showSettings = async () => {
     settingsHor10.appendChild(label8);
     form.appendChild(settingsHor10);
 
+    const errorField = document.createElement('div');
+    errorField.classList.add('settings__error');
+    form.appendChild(errorField);
+
     const submitContainer = document.createElement('div');
     submitContainer.classList.add('settings__submit-container');
     const submitButton = document.createElement('button');
