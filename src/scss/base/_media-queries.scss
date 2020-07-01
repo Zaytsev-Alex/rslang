@@ -1,4 +1,8 @@
 @media screen and (max-width: 920px) {
+    html {
+        font-size: 8px;
+    }
+
     .about-team {
         .column-layout-6 {
             width: calc(50% - 30px);
@@ -12,7 +16,12 @@
 
 
 @media screen and (max-width: 680px) {
-        
+
+
+    html {
+        font-size: 6px;
+    }
+
     .app-intro-options {
         .column-layout-12 {
             width: 100%;
@@ -35,14 +44,18 @@
 
     .header {
         padding: 0;
+
         &__nav {
             order: -1;
         }
     }
 
     .nav-menu {
+        display       : flex;
+        flex-direction: column;
+        justify-content: flex-start;
         position  : absolute;
-        top       : 86px;
+        top       : 92px;
         left      : -60%;
         height    : 100vh;
         width     : 60%;
@@ -61,7 +74,7 @@
     }
 
     .btn-container {
-        display: block;
+        display   : block;
         text-align: start;
     }
 
