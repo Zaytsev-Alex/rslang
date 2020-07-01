@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English puzzle</title>
+</head>
+<body>
+  <header class="header wrapper">
+      <div class="logo">RS lang</div>
+      <div class="header__buttons">
+        <button type="button" class="button header__button hide" id="sign-up-button">Sign up</button>
+        <button type="button" class="button header__button hide" id="log-in-button">Log in</button>
+        <button type="button" class="button header__button hide" id="log-out-button">Выйти</button>
+      </div>
+  </header>
+
+
+
+  <main class="wrapper">
+    <section class="start-screen hide">
+      <h1 class="start-screen__title">English puzzle</h1>
+      <p class="start-screen__description">
+        Нажимайте на слова и собирайте фразы<br>
+        Слова можно перетаскивать. Можете выбирать подсказки.
+      </p>
+      <button type="button" class="start-screen__button button">Старт</button>
+    </section>
+
+
+    <section class="login-page hide">
+      <h1 class="login-page__title">English puzzle</h1>
+      <div class="form-block">
+        <form action="users" method="POST" class="registration" id="registration-form">
+          <h2 class="registration__title">Registration</h2>
+          <input type="email" name="email" id="registration-email" placeholder="Email" autocomplete="off" required>
+          <p class="error registration__error" id="email-error"></p>
+          <input type="password" name="password" id="registration-password" placeholder="password" autocomplete="off" required>
+          <p class="error registration__error" id="password-error"></p>
+          <button class="button registration__button" id="registration__button" type="submit">Create account</button>
+        </form>
+
+        <form action="#" method="POST" class="authorization hide" id="authorization-form">
+          <h2 class="authorization__title">Log into your account</h2>
+          <input type="email" name="email" id="authorization-email" placeholder="Email" autocomplete="off" required>
+          <input type="password" name="password" id="authorization-password" placeholder="password" autocomplete="off" required>
+          <p class="error authorization__error" id="authorization-error"></p>
+          <button class="button authorization__button" id="authorization__button" type="submit">Login</button>
+        </form>
+      </div>
+    </section>
+
+
+    <section class="main-page hide">
+      <div class="main-page__bar">
+        <label for="groups">Сложность</label>
+        <select name="groups" id="groups">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+        <label for="rounds">Раунд</label>
+        <select name="rounds" id="rounds"></select>
+        <div class="main-page__buttons">
+          <button class="button" id="refresh-button" type="button">⭮</button>
+          <button class="button button-hint" id="translate-button" type="button">Перевод</button>
+          <button class="button button-hint" id="audio-button" type="button">Произношение</button>
+          <button class="button button-hint" id="picture-button" type="button">✐</button>
+          <button class="button" id="play-audio" type="button">⯈</button>
+        </div>        
+      </div>
+
+      <div class="main-page__translate">
+        <p class="text-translate"></p>
+        <audio type="audio/mpeg"></audio>
+      </div>      
+
+      <div class="main-page__puzzle"></div>    
+      
+      <div class="main-page__current">
+        <p class="picture-title hide"></p>
+        <ul class="current-string"></ul>
+      </div>
+
+      <footer class="footer">
+        <button type="button" class="button footer__button" id="donotknow-button">Я не знаю</button>
+        <button type="button" class="button footer__button hide" id="check-button">Проверка</button>
+        <button type="button" class="button footer__button hide" id="continue-button">Продолжить</button>
+      </footer>      
+    </section>
+
+    <section class="result-page hide">
+      <div class="result-page__picture"></div>
+      <div class="result-page__description"></div>
+      <div class="result-page__stat">
+        <div class="i-dont-know">
+          <div class="stat-title i-dont-know__title">
+            <p class="stat-title__text i-dont-know__title-text">Я не знаю</p>
+            <div class="stat-title__number" id="i-dont-know__number"></div>
+          </div>
+          <ul class="stat-list" id="i-dont-know-list"></ul>
+        </div>
+        <div class="i-know">
+          <div class="stat-title i-know__title">
+            <p class="stat-title__text i-know__title-text">Я знаю</p>
+            <div class="stat-title__number" id="i-know__number"></div>
+          </div>
+          <ul class="stat-list" id="i-know-list"></ul>
+        </div>
+      </div>
+      <div class="result-page__buttons">
+        <button type="button" class="button result__button" id="result-continue-button">Продолжить</button>
+        <button type="button" class="button result__button" id="result-stat-button">Статистика</button>
+      </div>
+
+      <div class="statistics hide">
+        <p class="statistics__title">Статистика:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Количество игр</th>
+              <th>Правильно</th>
+              <th>Не правильно</th>
+            </tr>
+          </thead>
+
+          <tfoot>
+            <tr>
+              <td>Итого:</td>
+              <td id="all-count-games"></td>
+              <td id="all-right"></td>
+              <td id="all-wrong"></td>
+            </tr>
+          </tfoot>    
+
+          <tbody></tbody>                
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

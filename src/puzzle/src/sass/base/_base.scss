@@ -1,0 +1,47 @@
+html {
+  font-size: 10px;  
+  font-family: 'Cormorant Upright', serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+main {
+  background: url(../img/start-bg.jpeg) center center no-repeat;
+  background-size: cover;
+  height: 100vh;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+  }
+}
+
+.wrapper {
+  padding: 0 50px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.error {
+  @include text(2rem, 1.4, $text-error);
+  position: absolute;
+}
+  

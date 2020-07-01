@@ -18,7 +18,7 @@ const ERRORS = {
   rulesPassword: 'Пароль должен содержать не менее 8 символов, как минимум одну прописную букву, одну заглавную букву, одну цифру и один спецсимвол',
 }
 
-async function createUser(user) {
+export default async function createUser(user) {
   const response = await fetch(`${RSSCHOOL_API_URL}users`, {
     method: 'POST',
     headers: {

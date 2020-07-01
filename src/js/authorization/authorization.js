@@ -1,6 +1,6 @@
 import '../../sass/style.scss';
 
-import './generateHTML';
+// import './generateHTML';
 import './createUser'
 import './loginUser';
 

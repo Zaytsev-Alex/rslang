@@ -1,0 +1,39 @@
+
+.footer {
+   background: linear-gradient(135deg, rgba(29,67,80,1) 0%, rgba(164,57,49,1) 100%);
+    padding: 30px 0;
+    color: white;
+    &-inner {
+        flex: 0 0 auto;
+       // position: absolute;
+        width: 100%;
+    }
+    &-container {
+        justify-content: space-around;
+        align-items: center;
+        .course-info {
+            font-size: 3rem;
+        }
+    }
+    &__item {
+        flex-basis: 50%;
+        flex-grow:1;
+    }
+    .team-github-info {
+        padding-left: 20%;
+    }
+    .gh-teammate-info {
+        padding: 10px 0;
+        font-size: 2rem;
+        color: white;
+        font-family: Yellowtail,cursive;
+    }
+    .gh-account-name {
+        justify-content: flex-start;
+        span {
+            padding-left: 10px;
+            color: white
+        }
+    }
+}
+

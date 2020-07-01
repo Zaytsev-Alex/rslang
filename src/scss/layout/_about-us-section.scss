@@ -1,0 +1,23 @@
+.about-team {
+    font-size       : 2rem;
+    background-color: #f2f2f2;
+    box-shadow      : 0px 6px 0px 0px #ffffff;
+    text-align      : justify;
+    padding         : 30px 0;
+    margin-bottom   : 5px;
+
+    &__title {
+        font-size              : 3rem;
+        padding-top            : 20px;
+        background             : -webkit-linear-gradient(45deg, #0b2349 33%, #0d61bc 66%, #8aa9d6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+.person-name {
+    font-size              : 2.5rem;
+    background             : -webkit-linear-gradient(45deg, #0b2349 33%, #0d61bc 66%, #8aa9d6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,27 @@
+.start-screen {
+  position: absolute;
+  width: 700px;
+  height: 300px;
+  top: calc(100%/2 - 150px);
+  left: calc(100%/2 - 350px);
+  // padding: 0 50px;
+}
+
+.start-screen__title {
+  @include text(4rem, 1, $text-light, 700);
+  @extend %text-shadow;
+  font-family: 'Cinzel Decorative', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2rem;
+  text-align: center;
+  margin: 0;
+  }
+
+.start-screen__description {
+  @include text(2.5rem, 1.5, $text-light);
+  @extend %text-shadow;
+  
+  text-align: center;
+  padding: 50px;
+  
+}

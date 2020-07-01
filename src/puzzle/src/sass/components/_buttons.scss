@@ -1,0 +1,120 @@
+.button {
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 0 2px 2px $button-shadow;
+  outline-color: transparent;
+  border-radius: 5px;  
+  transition: 0.3s;  
+  padding: 5px;
+  user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.start-screen__button {
+  @include text(2rem, 1, $text-light, 700);
+  @extend %text-shadow;
+  background: linear-gradient(45deg, #15541f, #dea73b);
+  font-family: 'Cinzel Decorative', cursive;
+  width: 200px;
+  height: 50px;
+  margin-left: calc(100%/2 - 100px);
+  margin-top: 20px;      
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scaleX(1.2) scaleY(1.1);
+  }
+}
+
+.registration__button,
+.authorization__button {
+  @include text(2rem, 1, $text-dark, 700);
+  height: 50px;
+  background-color: $button-bg-normal;
+  margin-top: 50px;
+
+  &:hover {
+    background-color: $button-bg-hover;
+    color: $text-light;
+  }
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.header__button {
+  @include text(2rem, 1, $text-dark, 700);
+  margin-left: 20px;
+  padding: 5px;
+  background-color: $button-bg-normal;
+
+  &:hover {
+    background-color: $button-bg-hover;
+  }
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.button-hint {
+  padding: 5px;
+  background-color: $button-bg-normal;
+  
+  &_active {
+    background-color: $button-bg-active;
+  }
+
+  &:hover {
+    background-color: $button-bg-hover;
+  }
+
+  &:active {
+    transform: scaleY(1.1);
+  }
+}
+
+.main-page__bar button {
+  margin: 0 10px;
+}
+
+.footer__button {
+  @include text(2rem, 1, $text-dark, 700);
+  margin: 0 10px;
+  padding: 5px;
+
+  &:hover {
+    background-color: $button-bg-hover;
+  }
+}
+
+#refresh-button,
+#play-audio {
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  transition: 0.6s;
+
+  &:hover {
+    background-color: $button-bg-hover;
+  }
+}
+
+.result-page button {
+  @include text(2rem, 1, $text-dark, 700);
+  margin-right: 20px;
+  background-color: $button-bg-normal;
+  opacity: 0.8;
+
+  &:hover {
+    background-color: $button-bg-hover;
+    opacity: 1;
+  }
+}

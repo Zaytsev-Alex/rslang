@@ -1,0 +1,18 @@
+@import '~normalize.css';
+
+@import './abstracts/mixins';
+@import './abstracts/variables';
+@import './abstracts/placeholders';
+
+@import './base/base';
+@import './base/fonts';
+
+@import './layouts/header';
+@import './layouts/start-screen';
+@import './layouts/login-page';
+@import './layouts/main-page';
+@import './layouts/footer';
+@import './layouts/result-page';
+
+@import './components/buttons';
+@import './components/scroll';

@@ -1,0 +1,19 @@
+.header {
+
+   background: linear-gradient(135deg, rgba(255,75,31,1) 0%, rgba(31,221,255,1) 100%);
+
+    &-content {
+        @include flex(space-between);
+    }
+}
+
+.header-inner {
+    position: fixed;
+    width: 100%;
+    top:0;
+    left:0;
+}
+
+.header__item {
+    flex-grow : 1;
+}
