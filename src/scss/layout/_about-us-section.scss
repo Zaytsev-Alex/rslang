@@ -21,3 +21,11 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.gh-account-name {
+    justify-content: flex-start;
+    span {
+        padding-left: 10px;
+        color: rgba(77,77,105,.877);
+    }
+}
