@@ -1,5 +1,7 @@
 
-import '../scss/style.scss';
+import '../scss/intro_page/style.scss';
+
+import '../scss/authorization_page/style.scss';
 
 import menuButtonHandler from './components/nav-menu';
 
