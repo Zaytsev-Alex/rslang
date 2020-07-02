@@ -3,6 +3,7 @@
 }
 
 html {
+    scroll-behavior: smooth;
     font-size  : $reference-font-size;
     font-family: $page-font-family;
     color      : rgba(77, 77, 105, 0.877);
