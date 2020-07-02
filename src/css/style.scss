@@ -130,7 +130,8 @@ body {
           display: flex;
           justify-content: center;
         }
-      .card__difficulty-buttons {
+      .card__difficulty-buttons,
+      .card__additional-buttons {
         display: flex;
         justify-content: center;
         margin-top: 20px;
@@ -140,7 +141,9 @@ body {
         .card__hard-word-btn,
         .card__delete-word-btn,
         .card__easy-word-btn,
-        .card__repeat-word-btn
+        .card__repeat-word-btn,
+        .card__weak-word-btn,
+        .card__medium-word-btn
          {
           outline: none;
           user-select: none;
