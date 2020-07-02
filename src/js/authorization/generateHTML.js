@@ -1,6 +1,8 @@
-const HTMLTemplate = document.createElement('div');
+export default function generateHtml() {
 
-HTMLTemplate.innerHTML = `<header class="header wrapper">
+  const HTMLTemplate = document.createElement('div');
+
+  HTMLTemplate.innerHTML = `<header class="header wrapper">
 <div class="logo">RS lang</div>
 <div class="header__buttons">
   <button type="button" class="button header__button hide" id="log-out-button">Выйти</button>
@@ -31,4 +33,5 @@ HTMLTemplate.innerHTML = `<header class="header wrapper">
 </section>
 </main>`;
 
-document.body.append(HTMLTemplate);
+  document.body.append(HTMLTemplate);
+}

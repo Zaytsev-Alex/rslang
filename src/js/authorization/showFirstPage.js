@@ -1,8 +1,8 @@
-import {
-  CREATE_ACCOUNT, LOG_OUT_BUTTON, REGISTRATION_FORM,
-} from './variables';
-
 export default function showFirstPage() {
+  const REGISTRATION_FORM = document.querySelector('#registration-form');
+
+  const CREATE_ACCOUNT = document.querySelector('#create-account');
+ const LOG_OUT_BUTTON = document.querySelector('#log-out-button');
   if (localStorage.getItem('token')) {
     LOG_OUT_BUTTON.classList.remove('hide');
   } else {
