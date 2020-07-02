@@ -1,3 +1,4 @@
+   export default function createMainTemplate() {
    const MAIN = document.createElement('main');
    MAIN.classList.add('main');
    MAIN.innerHTML = `
@@ -42,14 +43,20 @@
 
            <div class='card__buttons'>
                <div class='card__main-buttons'>
+                   
                    <button class='card__skip-word-btn'>Показать Ответ</button>
                    <button class='card__check-word-btn'>Проверить</button>
+                   
                </div>
                <div class='card__difficulty-buttons visability-hidden'>
-                   <button class='card__easy-word-btn'>Легко</button>
-                   <button class='card__hard-word-btn'>Сложно</button>
-                   <button class='card__repeat-word-btn'>Ещё Раз</button>
-                   <button class='card__delete-word-btn'>Удалить</button>
+                   <button class='card__easy-word-btn', difficulty='easy'>Легко</button>
+                   <button class='card__medium-word-btn', difficulty='medium'>Хорошо</button>
+                   <button class='card__hard-word-btn', difficulty='hard'>Трудно</button>
+                   <button class='card__repeat-word-btn'>Снова</button>
+               </div>
+               <div class='card__additional-buttons visability-hidden'>
+                   <button class='card__weak-word-btn', difficulty='complicated'>Сложные</button>
+                   <button class='card__delete-word-btn' difficulty='deleted'>Удалить</button>
                </div>
 
            </div>
@@ -91,3 +98,4 @@
 </div>
 `;
    document.body.append(MAIN);
+}
