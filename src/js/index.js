@@ -12,5 +12,5 @@ import authorization from './authorization/authorization';
 menuButtonEvent(menuButtonHandler);
 
 
-authorization();
+document.querySelector('.start-learning__link').addEventListener('click', authorization);
 
