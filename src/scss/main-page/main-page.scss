@@ -1,16 +1,14 @@
-$text-white: #fff;
-$main-page-yellow: #d3c265;
-$main-page-red: #c68174;
-$main-page-blue: #909cc4;
-$main-page-light: #d1ccc4;
-
-
 .main-page {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    padding-top: 40px;
+    position: relative;
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: url("../img/nature.jpg") no-repeat center center;
+    background: url(../../assets/images/nature.jpg) no-repeat center center;
     background-size: cover;    
 
     @media screen and (max-width: 680px) {
@@ -19,6 +17,17 @@ $main-page-light: #d1ccc4;
     }
 
     &__item {
+
+        font-size: 1.5rem;
+
+        @media screen and (max-width: 920px){
+            font-size: 2rem;
+        }
+
+        
+        @media screen and (max-width: 680px){
+            font-size: 3rem;
+        }
 
         .alternative-content{
             visibility: hidden;
@@ -44,8 +53,8 @@ $main-page-light: #d1ccc4;
         cursor: pointer;
         text-align: center;
         box-sizing: border-box;
-        margin: 1em;
-        padding: 1em 2em;
+        margin: 1rem;
+        padding: 1rem 2rem;
         min-width: 200px;
         border-radius: 25px;
         transition: 0.25s ease-in;
@@ -68,8 +77,12 @@ $main-page-light: #d1ccc4;
         h2 {
             text-transform: uppercase;
             font-weight: 400;
-            font-size: 1.5rem;
-            color: $text-white
+            font-size: 2rem;
+            color: $text-white;
+            
+            @media screen and (max-width: 680px){
+                font-size: 3rem;
+            }
         }
 
         &:nth-child(2n) {

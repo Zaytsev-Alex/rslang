@@ -1,15 +1,14 @@
 import mainPageHide from './mainPageHide';
-import showSprintGame from './showSprintGame';
 
 const mainPageItemHolders = () => {
-    const container = document.querySelector('.container');
+    const container = document.querySelector('main');
     container.querySelector('.main-page__item-main').addEventListener('click', () => {
         mainPageHide();
         console.log('вызов основного приложения');
     })
     container.querySelector('.main-page__item-sprint').addEventListener('click', () => {
         mainPageHide();
-        showSprintGame();
+        console.log('вызов спринта');
     })
     container.querySelector('.main-page__item-audio').addEventListener('click', () => {
         mainPageHide();

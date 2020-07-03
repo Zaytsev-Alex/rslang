@@ -1,10 +1,15 @@
 import mainPageDescription from './mainPageDescription';
 import maingPageShowInfoHolder from './maingPageShowInfoHolder';
 import mainPageItemHolders from './mainPageItemHolders';
+import basicHeaderHolder from './basicHeader';
 
 const showMainPage = () => {
-    const container = document.querySelector('.container');
-    container.classList.add('main-page');
+    const main = document.querySelector('main');
+    main.classList.add('main-page');
+    const container = document.createElement('section');
+    container.classList.add('container');
+    document.querySelectorAll('.basic-header a').forEach(e => e.classList.remove('basic-header__item-active'));
+    document.querySelector('.basic-header__item_main-page').classList.add('basic-header__item-active');
 
     for (let i = 0; i < mainPageDescription.length; i += 1) {
         const mainPageItem = document.createElement('article');
@@ -41,9 +46,11 @@ const showMainPage = () => {
         container.appendChild(mainPageItem);
     }
 
+    main.appendChild(container);
     
     mainPageItemHolders();
     maingPageShowInfoHolder();
+    basicHeaderHolder();
 }
 
 export { showMainPage as default };

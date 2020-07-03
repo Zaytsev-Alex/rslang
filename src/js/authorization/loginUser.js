@@ -2,6 +2,9 @@ import {
   RSSCHOOL_API_URL, VALIDATE_EMAIL, VALIDATE_PASSWORD,
 } from './variables';
 
+import showMainPage from '../main-page/showMainPage';
+import clearContainer from '../clear';
+import showBasicLayout from '../showBasicLayout';
 
 
 export default function insertLoginUserCode() {
@@ -37,17 +40,17 @@ export default function insertLoginUserCode() {
       window.console.warn('Wrong email or password');
     } else if (response.status === 200) {
       const data = await response.json();
-
       HAVE_ACCOUNT.classList.add('hide');
       CREATE_ACCOUNT.classList.remove('hide');
-
-      // window.console.log(data);
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
 
       LOG_OUT_BUTTON.classList.remove('hide');
       AUTHORIZATION_FORM.classList.add('hide');
+      clearContainer(document.body);
+      showBasicLayout();
+      showMainPage();
     } else if (response.status === 403) {
       AUTHORIZATION_ERROR.textContent = ERRORS.wrongEmailOrPassword;
     } else {
