@@ -1,0 +1,40 @@
+.start-offer-inner {
+    padding-top      : 142px;
+    //background : linear-gradient(180deg, rgba(224, 234, 252, 1) 0%, rgba(207, 222, 243, 1) 100%);
+   // background       : url('../assets/images/bg2.png');
+   background: linear-gradient(135deg, rgba(255,75,31,1) 0%, rgba(31,221,255,1) 100%);
+    background-size  : cover;
+    background-repeat: no-repeat;
+}
+
+
+.start-offer {
+    min-height : 400px;
+    padding-top: 100px;
+}
+
+.start-learning-title {
+    font-size: 3rem;
+    background: -webkit-linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.start-learning__link {
+    min-height      : 40px;
+    min-width       : 90px;
+    line-height     : 3.5;
+    text-align      : center;
+    font-size       : 15px;
+    border-radius   : 8px;
+    padding         : 0 10px;
+    vertical-align  : middle;
+    display         : inline-block;
+    margin          : 15px 0;
+    background-color: complement($color: rgb(137, 195, 214));
+
+    &:active {
+        
+        transform : scale(0.9);
+    }
+}
