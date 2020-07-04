@@ -19,6 +19,12 @@ const showBasicLayout = () => {
     settings.classList.add('basic-header__item', 'basic-header__item_settings');
     settings.textContent = 'Настройки';
     container.appendChild(settings);
+
+    const logout = document.createElement('div');
+    logout.classList.add('basic-header__item', 'basic-header__item_logout');
+    logout.textContent = 'Выйти';
+    container.appendChild(logout);
+
     header.appendChild(container);
 
     const main = document.createElement('main');
