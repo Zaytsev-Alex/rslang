@@ -1,4 +1,4 @@
-import { RSSCHOOL_API_URL } from '../variables.js';
+import RSSCHOOL_API_URL from '../variables.js';
 
 export default async function getBackendSettings() {
   const TOKEN = localStorage.getItem('token');
@@ -15,7 +15,6 @@ export default async function getBackendSettings() {
 
   if (response.status === 404) {
     setBackendSettings();
-    console.log('status404');
   } else if (response.status === 200) {
     const data = await response.json();
 
@@ -23,8 +22,6 @@ export default async function getBackendSettings() {
     localStorage.setItem('picture-button', data.optional.puzzle.picture);
     localStorage.setItem('audio-button', data.optional.puzzle.audio);
     localStorage.setItem('translate-button', data.optional.puzzle.translate);
-
-    setBackendSettings();
   }
 }
 

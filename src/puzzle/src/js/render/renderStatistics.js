@@ -1,16 +1,15 @@
-const TBODY = document.querySelector('tbody');
-const ALL_COUNT_GAMES = document.querySelector('#all-count-games');
-const ALL_RIGHT = document.querySelector('#all-right');
-const ALL_WRONG = document.querySelector('#all-wrong');
-
 export default function renderStatistics(data) {
+  const TBODY = document.querySelector('tbody');
+  const ALL_COUNT_GAMES = document.querySelector('#all-count-games');
+  const ALL_RIGHT = document.querySelector('#all-right');
+  const ALL_WRONG = document.querySelector('#all-wrong');
   const NUMBER_DAYS = Object.entries(data.puzzle).length;
-
-  TBODY.textContent = '';
 
   let totalCountGames = 0;
   let totalRight = 0;
   let totalWrong = 0;
+
+  TBODY.textContent = '';
 
   for (let i = NUMBER_DAYS - 1; i >= 0; i -= 1) {
     TBODY.append(createTR(Object.entries(data.puzzle)[i]));

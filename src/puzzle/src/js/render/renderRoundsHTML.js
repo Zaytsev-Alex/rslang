@@ -1,10 +1,9 @@
-/* eslint-disable import/no-cycle */
 import { getTotalNumberOfWords } from '../getset/getWords.js';
 
-const GROUP = document.querySelector('#groups');
-const ROUND = document.querySelector('#rounds');
-
 export default function renderRoundsHTML(count) {
+  const GROUP = document.querySelector('#groups');
+  const ROUND = document.querySelector('#rounds');
+
   if (ROUND.innerHTML === '') {
     for (let i = 1; i <= count * 2; i += 1) {
       const OPTION = document.createElement('option');
@@ -14,6 +13,7 @@ export default function renderRoundsHTML(count) {
     }
   }
 
+
   const ROUNDS_LIST = ROUND.querySelectorAll('option');
 
   if (ROUNDS_LIST.length !== count * 2) {
@@ -22,10 +22,9 @@ export default function renderRoundsHTML(count) {
   }
 
   [document.querySelector('#rounds').value, document.querySelector('#groups').value] = JSON.parse(localStorage.getItem('player-level'));
+
+  GROUP.addEventListener('change', () => {
+    localStorage.setItem('player-level', JSON.stringify([1, GROUP.value]));
+    getTotalNumberOfWords();
+  });
 }
-
-
-GROUP.addEventListener('change', () => {
-  localStorage.setItem('player-level', JSON.stringify([1, GROUP.value]));
-  getTotalNumberOfWords();
-});

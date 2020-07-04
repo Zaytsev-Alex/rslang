@@ -1,11 +1,11 @@
-import {
-  PUZZLE_PAGE, CURRENT_STRING, CHECK_BUTTON, CONTINUE_BUTTON, DO_NOT_KNOW_BUTTON, PICTURE_TITLE,
-  REFRESH_BUTTON,
-} from '../variables.js';
-
 import renderTextTranslate from './renderTextTranslate.js';
 import audio from '../audio.js';
 import dragdrop from '../gragdrop.js';
+
+let PUZZLE_PAGE;
+let CURRENT_STRING;
+let CHECK_BUTTON;
+let DO_NOT_KNOW_BUTTON;
 
 const ALL_CORRECT_PHRASES = [];
 const ALL_RANDOM_PHRASES = [];
@@ -16,9 +16,12 @@ let PHRASE_ARRAY = '';
 let PHRASE_RANDOM_ARRAY = '';
 let NUMBER_STRING = 0;
 let CONTINUE_COUNTER = 0;
+let CRUTCH = 0;
+let CRUTCH_2 = 0;
 
 export default function renderPuzzle(data) {
-  window.console.log(data);
+  PUZZLE_PAGE = document.querySelector('.main-page__puzzle');
+  DO_NOT_KNOW_BUTTON = document.querySelector('#donotknow-button');
 
   const SELECTED_ROUND = document.querySelector('#rounds').value;
   let increase;
@@ -63,10 +66,18 @@ export default function renderPuzzle(data) {
 
   DO_NOT_KNOW_BUTTON.classList.remove('hide');
   renderCurrentString();
+
+  if (CRUTCH === 0) {
+    clickButtons();
+    CRUTCH += 1;
+  }
 }
 
 
 function renderCurrentString() {
+  CURRENT_STRING = document.querySelector('.current-string');
+  CHECK_BUTTON = document.querySelector('#check-button');
+
   for (let i = 0; i < ALL_RANDOM_PHRASES[NUMBER_STRING].length; i += 1) {
     const LI = document.createElement('li');
     LI.className = 'puzzle-item';
@@ -76,108 +87,117 @@ function renderCurrentString() {
     CURRENT_STRING.append(LI);
   }
 
+  CURRENT_STRING.addEventListener('click', (event) => {
+    const ALL_UL = PUZZLE_PAGE.querySelectorAll('ul');
+
+    if (event.target.classList.contains('puzzle-item')) {
+      event.target.classList.add('drag-el');
+      event.target.setAttribute('draggable', 'true');
+      ALL_UL[NUMBER_STRING].classList.add('drag-zone');
+      ALL_UL[NUMBER_STRING].append(event.target.closest('.puzzle-item'));
+    }
+
+    if (CURRENT_STRING.innerHTML === '' && CRUTCH_2 === 0) {
+      CHECK_BUTTON.classList.remove('hide');
+      dragdrop();
+      CRUTCH_2 += 1;
+    }
+  });
+
   renderTextTranslate(ALL_TRANSLATE_PHRASES[NUMBER_STRING]);
   audio(ALL_AUDIO_LINKS[NUMBER_STRING]);
 }
 
 
-CURRENT_STRING.addEventListener('click', (event) => {
-  const ALL_UL = PUZZLE_PAGE.querySelectorAll('ul');
+export function clickButtons() {
+  const REFRESH_BUTTON = document.querySelector('#refresh-button');
+  const CONTINUE_BUTTON = document.querySelector('#continue-button');
 
-  if (event.target.classList.contains('puzzle-item')) {
-    event.target.classList.add('drag-el');
-    event.target.setAttribute('draggable', 'true');
-    ALL_UL[NUMBER_STRING].classList.add('drag-zone');
-    ALL_UL[NUMBER_STRING].append(event.target.closest('.puzzle-item'));
-  }
+  CHECK_BUTTON.addEventListener('click', () => {
+    const ARRAY_FOR_CHECK = [];
+    const ALL_LI_ON_PAGE = PUZZLE_PAGE.querySelectorAll(`ul:nth-child(${NUMBER_STRING + 1}) li`);
 
-  if (CURRENT_STRING.innerHTML === '') {
-    CHECK_BUTTON.classList.remove('hide');
-    dragdrop();
-  }
-});
+    ALL_LI_ON_PAGE.forEach((li) => {
+      ARRAY_FOR_CHECK.push(li.innerHTML);
+    });
 
-
-CHECK_BUTTON.addEventListener('click', () => {
-  const ARRAY_FOR_CHECK = [];
-  const ALL_LI_ON_PAGE = PUZZLE_PAGE.querySelectorAll(`ul:nth-child(${NUMBER_STRING + 1}) li`);
-
-  ALL_LI_ON_PAGE.forEach((li) => {
-    ARRAY_FOR_CHECK.push(li.innerHTML);
-  });
-
-  for (let i = 0; i < ARRAY_FOR_CHECK.length; i += 1) {
-    if (ARRAY_FOR_CHECK[i] === ALL_CORRECT_PHRASES[NUMBER_STRING][i]) {
-      ALL_LI_ON_PAGE[i].classList.add('puzzle-item_correct');
-      ALL_LI_ON_PAGE[i].classList.remove('puzzle-item_wrong');
-    } else {
-      ALL_LI_ON_PAGE[i].classList.add('puzzle-item_wrong');
-      ALL_LI_ON_PAGE[i].classList.remove('puzzle-item_correct');
+    for (let i = 0; i < ARRAY_FOR_CHECK.length; i += 1) {
+      if (ARRAY_FOR_CHECK[i] === ALL_CORRECT_PHRASES[NUMBER_STRING][i]) {
+        ALL_LI_ON_PAGE[i].classList.add('puzzle-item_correct');
+        ALL_LI_ON_PAGE[i].classList.remove('puzzle-item_wrong');
+      } else {
+        ALL_LI_ON_PAGE[i].classList.add('puzzle-item_wrong');
+        ALL_LI_ON_PAGE[i].classList.remove('puzzle-item_correct');
+      }
     }
-  }
 
-  if (ARRAY_FOR_CHECK.join('') === ALL_CORRECT_PHRASES[NUMBER_STRING].join('')) {
-    CONTINUE_BUTTON.classList.remove('hide');
-    CHECK_BUTTON.classList.add('hide');
-    DO_NOT_KNOW_BUTTON.classList.add('hide');
-  }
-});
+    if (ARRAY_FOR_CHECK.join('') === ALL_CORRECT_PHRASES[NUMBER_STRING].join('')) {
+      CONTINUE_BUTTON.classList.remove('hide');
+      CHECK_BUTTON.classList.add('hide');
+      DO_NOT_KNOW_BUTTON.classList.add('hide');
+    }
+  });
 
 
-CONTINUE_BUTTON.addEventListener('click', () => {
-  CONTINUE_COUNTER += 1;
-  if (CONTINUE_COUNTER === 10) {
-    PUZZLE_PAGE.innerHTML = '';
-    CONTINUE_COUNTER = 0;
-    NUMBER_STRING = 0;
+  CONTINUE_BUTTON.addEventListener('click', () => {
+    const PICTURE_TITLE = document.querySelector('.picture-title');
+
+    CRUTCH_2 = 0;
+    CONTINUE_COUNTER += 1;
+    if (CONTINUE_COUNTER === 10) {
+      PUZZLE_PAGE.innerHTML = '';
+      CONTINUE_COUNTER = 0;
+      NUMBER_STRING = 0;
+      CONTINUE_BUTTON.classList.add('hide');
+      PICTURE_TITLE.classList.remove('hide');
+      return;
+    }
+
+    NUMBER_STRING += 1;
+    CURRENT_STRING.innerHTML = '';
     CONTINUE_BUTTON.classList.add('hide');
-    PICTURE_TITLE.classList.remove('hide');
-    return;
-  }
+    CHECK_BUTTON.classList.add('hide');
+    DO_NOT_KNOW_BUTTON.classList.remove('hide');
 
-  NUMBER_STRING += 1;
-  CURRENT_STRING.innerHTML = '';
-  CONTINUE_BUTTON.classList.add('hide');
-  CHECK_BUTTON.classList.add('hide');
-  DO_NOT_KNOW_BUTTON.classList.remove('hide');
+    PUZZLE_PAGE.querySelectorAll('.phrase').forEach((phrase) => {
+      phrase.classList.remove('drag-zone');
+    });
 
-  PUZZLE_PAGE.querySelectorAll('.phrase').forEach((phrase) => {
-    phrase.classList.remove('drag-zone');
+    PUZZLE_PAGE.querySelectorAll('.drag-el').forEach((item) => {
+      item.classList.remove('drag-el');
+      item.removeAttribute('draggable');
+    });
+
+    renderCurrentString();
   });
 
-  PUZZLE_PAGE.querySelectorAll('.drag-el').forEach((item) => {
-    item.classList.remove('drag-el');
-    item.removeAttribute('draggable');
+
+  DO_NOT_KNOW_BUTTON.addEventListener('click', () => {
+    const ALL_UL = PUZZLE_PAGE.querySelectorAll('ul');
+
+    CURRENT_STRING.innerHTML = '';
+    ALL_UL[NUMBER_STRING].innerHTML = '';
+
+    CHECK_BUTTON.classList.remove('hide');
+    DO_NOT_KNOW_BUTTON.classList.add('hide');
+
+    for (let i = 0; i < ALL_CORRECT_PHRASES[NUMBER_STRING].length; i += 1) {
+      const LI = document.createElement('li');
+      LI.className = 'puzzle-item drag-el';
+      LI.setAttribute('draggable', 'true');
+      LI.innerHTML = ALL_CORRECT_PHRASES[NUMBER_STRING][i];
+      LI.style.height = `${PUZZLE_PAGE.clientHeight / 10}px`;
+      LI.style.width = `${PUZZLE_PAGE.clientWidth / ALL_CORRECT_PHRASES[NUMBER_STRING].length}px`;
+      ALL_UL[NUMBER_STRING].classList.add('drag-zone');
+      ALL_UL[NUMBER_STRING].append(LI);
+    }
+
+    dragdrop();
   });
 
-  renderCurrentString();
-});
 
-
-DO_NOT_KNOW_BUTTON.addEventListener('click', () => {
-  const ALL_UL = PUZZLE_PAGE.querySelectorAll('ul');
-
-  CURRENT_STRING.innerHTML = '';
-  ALL_UL[NUMBER_STRING].innerHTML = '';
-
-  CHECK_BUTTON.classList.remove('hide');
-  DO_NOT_KNOW_BUTTON.classList.add('hide');
-
-  for (let i = 0; i < ALL_CORRECT_PHRASES[NUMBER_STRING].length; i += 1) {
-    const LI = document.createElement('li');
-    LI.className = 'puzzle-item drag-el';
-    LI.setAttribute('draggable', 'true');
-    LI.innerHTML = ALL_CORRECT_PHRASES[NUMBER_STRING][i];
-    LI.style.height = `${PUZZLE_PAGE.clientHeight / 10}px`;
-    LI.style.width = `${PUZZLE_PAGE.clientWidth / ALL_CORRECT_PHRASES[NUMBER_STRING].length}px`;
-    ALL_UL[NUMBER_STRING].classList.add('drag-zone');
-    ALL_UL[NUMBER_STRING].append(LI);
-  }
-
-  dragdrop();
-});
-
-
-REFRESH_BUTTON.addEventListener('click', () => {
-  NUMBER_STRING = 0;
-});
+  REFRESH_BUTTON.addEventListener('click', () => {
+    NUMBER_STRING = 0;
+    CONTINUE_COUNTER = 0;
+  });
+}
