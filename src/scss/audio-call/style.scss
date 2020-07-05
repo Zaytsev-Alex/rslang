@@ -13,7 +13,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: url(../../assets/images/background.jpg);
+	background: url(../../assets/images/background2.jpg);
 	background-size: cover;
 }
 .start-screen {
@@ -49,6 +49,7 @@ h3 {
 			cursor: pointer;
 			opacity: 1;
 			border: 1px solid white;
+			transition: 0.5s linear;
 		}
 	}
 	.active {
@@ -70,6 +71,7 @@ h3 {
 	&:hover {
 		background-color: rgb(163, 224, 199);
 		cursor: pointer;
+		transition: 0.5s linear;
 	}
 }
 .indicator {
@@ -103,6 +105,7 @@ h3 {
 		&:hover {
 			cursor: pointer;
 			opacity: 0.5;
+			transition: 0.5s linear;
 		}
 	}
 }
@@ -123,6 +126,7 @@ h3 {
 	&:hover {
 		cursor: pointer;
 		opacity: 1;
+		transition: 0.5s linear;
 	}
 }
 .sound-img {
@@ -133,6 +137,7 @@ h3 {
 	&:hover {
 		cursor: pointer;
 		background: url(../../assets/images/sound-on.png) no-repeat;
+		transition: 0.5s linear;
 	}
 }
 .right {
@@ -156,6 +161,7 @@ h3 {
 	&:hover {
 		cursor: pointer;
 		opacity: 1;
+		transition: 0.5s linear;
 	}
 }
 td {
