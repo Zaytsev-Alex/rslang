@@ -26,10 +26,8 @@ export default function getNewToken() {
       .then((data) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('refreshToken', data.refreshToken);
+
+        console.log('Получен новый токен');
       })
   }
 }
-
-
-
-
