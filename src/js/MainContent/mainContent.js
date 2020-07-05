@@ -25,8 +25,8 @@ export default async function createMainContent() {
         successfulAttempts: 0,
         unsuccessfulAttempts: 0,
     }
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmRjYTIxOGU2NGViMDAxN2M1NWE1MiIsImlhdCI6MTU5MzY5MDY3NCwiZXhwIjoxNTkzNzA1MDc0fQ.NP6JJI13Kex8FJdfLHFFcwowhp59PNflr2ZcxhOunj0`;
-    const userId = `5efdca218e64eb0017c55a52`;
+    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUwOGZmNjM1YWVjMDAxNzY0ZDUxZSIsImlhdCI6MTU5MzcwNzk5MiwiZXhwIjoxNTkzNzIyMzkyfQ.5ZFdike1oTIMHYf3zDHfv63I1sQKfgCPf2DmbG3BnF0`;
+    const userId = `5efe08ff635aec001764d51e`;
 
 
     createMainTemplate();
@@ -116,21 +116,21 @@ export default async function createMainContent() {
         let wordDifficulty = difficulty;
         // eslint-disable-next-line dot-notation
         const wordId = `${words[currentMode][wordPosition]['_id']}`;
+        let nextDate = new Date();
         let lastDate = new Date();
-        let currentDate = new Date();
         if (mode === 'learn') {
             if (wordDifficulty === '') {
                 if (CURRENT_WORD_STAT.unsuccessfulAttempts === 0) wordDifficulty = 'easy';
                 else if (CURRENT_WORD_STAT.unsuccessfulAttempts < 7) wordDifficulty = 'medium';
                 else wordDifficulty = 'hard';
             }
-            lastDate.setDate(lastDate.getDate() + repeatPeriod[wordDifficulty]);
-            lastDate = lastDate.toLocaleDateString("ru-Ru", {
+            nextDate.setDate(nextDate.getDate() + repeatPeriod[wordDifficulty]);
+            nextDate = nextDate.toLocaleDateString("ru-Ru", {
                 "year": "numeric",
                 "month": "numeric",
                 "day": "numeric"
             });
-            currentDate = currentDate.toLocaleDateString("ru-Ru", {
+            lastDate = lastDate.toLocaleDateString("ru-Ru", {
                 "year": "numeric",
                 "month": "numeric",
                 "day": "numeric"
@@ -143,8 +143,8 @@ export default async function createMainContent() {
                     "optional":
                     {
                         wordStat: CURRENT_WORD_STAT,
-                        lastDate,
-                        currentDate
+                        nextDate,
+                        lastDate
                     }
                 }
             }
@@ -181,21 +181,21 @@ export default async function createMainContent() {
                 userWord.difficulty = wordDifficulty;
             }
             if (wordDifficulty !== 'deleted') {
-                lastDate.setDate(lastDate.getDate() + repeatPeriod[wordDifficulty]);
+                nextDate.setDate(nextDate.getDate() + repeatPeriod[wordDifficulty]);
             }
+            nextDate = nextDate.toLocaleDateString("ru-Ru", {
+                "year": "numeric",
+                "month": "numeric",
+                "day": "numeric"
+            });
             lastDate = lastDate.toLocaleDateString("ru-Ru", {
                 "year": "numeric",
                 "month": "numeric",
                 "day": "numeric"
             });
-            currentDate = currentDate.toLocaleDateString("ru-Ru", {
-                "year": "numeric",
-                "month": "numeric",
-                "day": "numeric"
-            });
             userWord.optional.wordStat = finalWordStat;
-            userWord.optional.currentDate = currentDate;
-            userWord.optional.nextDate = lastDate;
+            userWord.optional.lastDate = lastDate;
+            userWord.optional.nextDate = nextDate;
             //    console.log(finalWordStat)
             //    console.log(optionalWordArg)
             //    console.log(words[currentMode][wordPosition].userWord.optional, 'OPTIONAL CHANGE OR NOT');
@@ -204,7 +204,7 @@ export default async function createMainContent() {
             await updateUserWord(userId, wordId, userWord, token);
         }
     }
-
+    let wordTranslateAudio;
     function checkWord(event, word) {
         event.preventDefault();
         let errors = 0;
@@ -218,9 +218,10 @@ export default async function createMainContent() {
                 resultString += `<span class='wrong'>${symbol}</span>`
             }
         });
-        let wordTranslateAudio;
+        // let wordTranslateAudio;
         if (pronunciationStatus) {
             wordTranslateAudio = playAudio(words[currentMode][wordPosition].audio);
+            wordTranslateAudio.play();
         }
         CURRENT_WORD_STAT.totalAttempts += 1;
         if (errors) {
@@ -249,10 +250,11 @@ export default async function createMainContent() {
                 addTranslate(words[currentMode][wordPosition].textExampleTranslate, words[currentMode][wordPosition].textMeaningTranslate);
                 if (pronunciationStatus) {
                     wordTranslateAudio.onended = () => {
-                        const exampleTranslateAudio = playAudio(words[currentMode][wordPosition].audioExample);
-                        exampleTranslateAudio.onended = () => {
-                            const meaningTranslateAudio = playAudio(words[currentMode][wordPosition].audioMeaning);
-                            meaningTranslateAudio.onended = () => {
+                        wordTranslateAudio.src  = `https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioExample}`;
+                        wordTranslateAudio.play();
+                        wordTranslateAudio.onended = () => {
+                            wordTranslateAudio.src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioMeaning})`;
+                            wordTranslateAudio.onended = () => {
                             }
                         }
                     }
@@ -286,6 +288,8 @@ export default async function createMainContent() {
                 await setWordToBackEnd(currentMode, event.target.getAttribute('difficulty'));
 
             }
+            wordTranslateAudio.pause();
+            wordTranslateAudio.currentTime = 0;
             wordPosition += 1;
             createNextCard();
         }
@@ -318,7 +322,11 @@ export default async function createMainContent() {
     });
 
     INPUT_CONTAINER.addEventListener('click', checkAnswer);
-    document.addEventListener('keydown', checkAnswer);
+    document.addEventListener('keyup', (event) => {
+        if (event.code === 'Enter') {
+            checkWord(event, words[currentMode][wordPosition].word);
+        }
+    });
 
 
 
