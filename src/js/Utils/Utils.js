@@ -1,17 +1,12 @@
-
-
 export function addTranslate(textExampleTranslate, textMeaningTranslate) {
     document.querySelector('.card__word-example-translate').textContent = textExampleTranslate;
     document.querySelector('.card__explain-translate').textContent = textMeaningTranslate;
 }
 
-export function playAudio(audioSrc) {
-    const src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${audioSrc}`;
+export function createAudio() {
     const audio = new Audio();
-    audio.src = src;
     audio.preload = 'auto';
     audio.controls = false;
-    audio.play();
     return audio;
 }
 

@@ -9,7 +9,7 @@ import {
 } from './Api/Api'
 import {
     addTranslate,
-    playAudio,
+    createAudio,
     addCardInfo,
     shuffleArray
 } from '../Utils/Utils'
@@ -18,14 +18,20 @@ import {
 
 export default async function createMainContent() {
     let wordPosition = 0;
-    // eslint-disable-next-line no-unused-vars
     let currentMode = 'learn';
     const CURRENT_WORD_STAT = {
         totalAttempts: 0,
         successfulAttempts: 0,
         unsuccessfulAttempts: 0,
     }
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUwOGZmNjM1YWVjMDAxNzY0ZDUxZSIsImlhdCI6MTU5MzcwNzk5MiwiZXhwIjoxNTkzNzIyMzkyfQ.5ZFdike1oTIMHYf3zDHfv63I1sQKfgCPf2DmbG3BnF0`;
+    const GAME_STAT = {
+        totalAttempts: 0,
+        successfulAttempts: 0,
+        unsuccessfulAttempts: 0,
+        correctAnswerSeries: 0
+    }
+
+    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmUwOGZmNjM1YWVjMDAxNzY0ZDUxZSIsImlhdCI6MTU5Mzk2MjIwMywiZXhwIjoxNTkzOTc2NjAzfQ.92FlPQimBDOUZ4ANuD1Yf_oXuVQyFUN_v0fO3VVreYw`;
     const userId = `5efe08ff635aec001764d51e`;
 
 
@@ -61,6 +67,14 @@ export default async function createMainContent() {
 
 
 
+    const SETTINGS_FROM_BACK = {
+    example: false,
+    explanation: true,
+    translate: false
+    }
+
+    const player = createAudio();
+    let tracks = [];
 
 
     INPUT_FIELD.focus();
@@ -69,6 +83,7 @@ export default async function createMainContent() {
 
     let showTranslate = true;
     let pronunciationStatus = true;
+    
     const repeatPeriod = {
         easy: 3,
         medium: 2,
@@ -82,6 +97,16 @@ export default async function createMainContent() {
             currentMode = 'train';
             words.train = shuffleArray(shuffleArray(words.train));
         }
+        tracks = [];
+        if (SETTINGS_FROM_BACK.translate) {
+            tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audio}`);
+        }
+        if (SETTINGS_FROM_BACK.example) {
+            tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioExample}`);
+        }
+        if (SETTINGS_FROM_BACK.explanation) {
+            tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioMeaning}`);
+        }
         NAVIGATE_NEXT.classList.add('visability-hidden');
         DIFFICULTY_BUTTONS.classList.add('visability-hidden');
         ADDITIONAL_BUTTONS.classList.add('visability-hidden');
@@ -89,6 +114,15 @@ export default async function createMainContent() {
         SKIP_BUTTON.disabled = false;
         INPUT_FIELD.disabled = false;
         NAVIGATE_NEXT.disabled = true;
+        GAME_STAT.unsuccessfulAttempts += CURRENT_WORD_STAT.unsuccessfulAttempts;
+        GAME_STAT.successfulAttempts += CURRENT_WORD_STAT.successfulAttempts;
+        GAME_STAT.totalAttempts += CURRENT_WORD_STAT.totalAttempts;
+        if (CURRENT_WORD_STAT.unsuccessfulAttempts === 0) {
+            GAME_STAT.correctAnswerSeries += 1;
+        }
+        else {
+            GAME_STAT.correctAnswerSeries = 0;
+        }
         CURRENT_WORD_STAT.unsuccessfulAttempts = 0;
         CURRENT_WORD_STAT.successfulAttempts = 0;
         CURRENT_WORD_STAT.totalAttempts = 0;
@@ -204,10 +238,24 @@ export default async function createMainContent() {
             await updateUserWord(userId, wordId, userWord, token);
         }
     }
-    let wordTranslateAudio;
+
+
+    if (SETTINGS_FROM_BACK.translate) {
+        tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audio}`);
+    }
+    if (SETTINGS_FROM_BACK.example) {
+        tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioExample}`);
+    }
+    if (SETTINGS_FROM_BACK.explanation) {
+        tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioMeaning}`);
+    }
+    
+    
+    
     function checkWord(event, word) {
         event.preventDefault();
         let errors = 0;
+        let currentAudio = 0;
         let resultString = '';
         const text = INPUT_FIELD.value;
         word.split('').forEach((symbol, index) => {
@@ -218,11 +266,6 @@ export default async function createMainContent() {
                 resultString += `<span class='wrong'>${symbol}</span>`
             }
         });
-        // let wordTranslateAudio;
-        if (pronunciationStatus) {
-            wordTranslateAudio = playAudio(words[currentMode][wordPosition].audio);
-            wordTranslateAudio.play();
-        }
         CURRENT_WORD_STAT.totalAttempts += 1;
         if (errors) {
             CURRENT_WORD_STAT.unsuccessfulAttempts += 1;
@@ -249,15 +292,16 @@ export default async function createMainContent() {
             if (showTranslate) {
                 addTranslate(words[currentMode][wordPosition].textExampleTranslate, words[currentMode][wordPosition].textMeaningTranslate);
                 if (pronunciationStatus) {
-                    wordTranslateAudio.onended = () => {
-                        wordTranslateAudio.src  = `https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioExample}`;
-                        wordTranslateAudio.play();
-                        wordTranslateAudio.onended = () => {
-                            wordTranslateAudio.src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioMeaning})`;
-                            wordTranslateAudio.onended = () => {
-                            }
-                        }
+                    player.src = tracks[currentAudio];
+                    player.play();
+                    player.onended = () => {
+                        if (currentAudio < tracks.length) { 
+                            currentAudio += 1;     
+                        player.src  = tracks[currentAudio];
+                        player.play();
+                
                     }
+                }
                 } else {
                     console.log(1);
                 }
@@ -288,8 +332,8 @@ export default async function createMainContent() {
                 await setWordToBackEnd(currentMode, event.target.getAttribute('difficulty'));
 
             }
-            wordTranslateAudio.pause();
-            wordTranslateAudio.currentTime = 0;
+            player.pause();
+            player.currentTime = 0;
             wordPosition += 1;
             createNextCard();
         }
