@@ -1,4 +1,5 @@
 import mainPageHide from './mainPageHide';
+import puzzle from '../puzzle/puzzle';
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -16,6 +17,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {
         mainPageHide();
+        puzzle();
         console.log('вызов пазла');
     })
     container.querySelector('.main-page__item-savanna').addEventListener('click', () => {
