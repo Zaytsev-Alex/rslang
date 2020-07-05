@@ -5,7 +5,7 @@ import setBackendStat from '../getset/setBackendStat';
 import { setBackendSettings } from '../getset/getBackendSettings';
 
 export default function renderResults() {
-  const PUZZLE_PAGE = document.querySelector('.main-page__puzzle');
+  const PUZZLE_PAGE = document.querySelector('.puzzle-main-page__puzzle');
   const RESULT_PAGE = document.querySelector('.result-page');
   const REFRESH_BUTTON = document.querySelector('#refresh-button');
   const RESULT_CONTINUE_BUTTON = document.querySelector('#result-continue-button');

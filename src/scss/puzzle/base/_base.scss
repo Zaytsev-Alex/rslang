@@ -4,11 +4,11 @@
   height: 100vh;
   font-size: 10px;  
   font-family: 'Cormorant Upright', serif;
-
+  
   &::before {
     position: absolute;
     content: '';
-    top: 0;
+    top: 40px;
     right: 0;
     bottom: 0;
     left: 0;

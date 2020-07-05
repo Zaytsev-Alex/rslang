@@ -6,6 +6,10 @@
   overflow: hidden;
   max-width: 1000px;
   margin: 0 auto;
+
+  ul {
+    padding: 0;
+  }
 }
 
 .puzzle-main-page__bar {
@@ -33,11 +37,12 @@
 }
 
 .text-translate {
-  @include text(2rem, 1, $text-light);
+  @include text(2.5rem, 1, $text-light);
   @extend %text-shadow;
   text-align: center;
   padding: 10px 0;
   opacity: 0;
+  margin: 0;
 
   &_active {
     opacity: 1;
@@ -71,7 +76,7 @@
 }
 
 .puzzle-item {
-  @include text(1.4rem, 1, $text-light);
+  @include text(2rem, 1, $text-light);
   @extend %text-shadow;
   box-sizing: border-box;
   border: 1px solid $text-light;

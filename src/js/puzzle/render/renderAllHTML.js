@@ -45,11 +45,11 @@ export default function renderAllHTML() {
         <ul class="current-string"></ul>
       </div>
 
-      <footer class="footer">
-        <button type="button" class="button footer__button" id="donotknow-button">Я не знаю</button>
-        <button type="button" class="button footer__button hide" id="check-button">Проверка</button>
-        <button type="button" class="button footer__button hide" id="continue-button">Продолжить</button>
-      </footer>      
+      <div class="puzzle-footer">
+        <button type="button" class="button puzzle-footer__button" id="donotknow-button">Я не знаю</button>
+        <button type="button" class="button puzzle-footer__button hide" id="check-button">Проверка</button>
+        <button type="button" class="button puzzle-footer__button hide" id="continue-button">Продолжить</button>
+      </div>      
     </section>
 
     <section class="result-page hide">
