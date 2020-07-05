@@ -162,7 +162,7 @@ window.onload = () => {
                 if(randWord === +num){
                     event.target.innerText = event.target.innerText.slice(2);
                     const right = document.createElement('img');
-                    right.src = "src/img/right.png";
+                    right.src = "img/right.png";
                     event.target.prepend(right);
                     rightAnswer += 1;
                     
@@ -187,7 +187,7 @@ window.onload = () => {
                 countClick = 1;
 
                 dontKnownBtn.innerText = "";
-                dontKnownBtn.style.background = "url('src/img/arrow.png') no-repeat";
+                dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
                 dontKnownBtn.style.backgroundPosition = "center";
 
                 }
@@ -201,7 +201,7 @@ window.onload = () => {
                         document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
                     }
                     const right = document.createElement('img');
-                    right.src = "src/img/right.png";
+                    right.src = "img/right.png";
                     const dontWord = document.getElementsByClassName('opacity-on')[0];
                     dontWord.innerText = dontWord.innerText.slice(2);
                     dontWord.prepend(right);
@@ -226,7 +226,7 @@ window.onload = () => {
                     wrongAnswer += 1;
 
                     dontKnownBtn.innerText = "";
-                    dontKnownBtn.style.background = "url('src/img/arrow.png') no-repeat";
+                    dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
                     dontKnownBtn.style.backgroundPosition = "center";
 
                 }else if (indicator.style.width === "100%"){
