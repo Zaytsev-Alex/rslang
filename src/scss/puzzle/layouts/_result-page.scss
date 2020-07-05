@@ -20,18 +20,22 @@
 }
 
 .result-page__description {
-  @include text(1.7rem, 2, $text-dark, 700);
+  @include text(2rem, 2, $text-dark, 700);
   align-self: center;
 }
 
 .result-page__stat {  
-  @include text(1.7rem, 2, $text-dark);
+  @include text(2rem, 2, $text-dark);
   overflow-y: scroll;
 }
 
 .stat-title {
   margin-top: 10px;
   display: flex;
+
+  &__text {
+    margin: 0;
+  }
 }
 
 .stat-title__number {

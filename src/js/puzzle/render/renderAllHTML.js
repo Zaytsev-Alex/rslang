@@ -103,5 +103,5 @@ export default function renderAllHTML() {
     </section>
   </div>`;
 
-  document.body.append(PUZZLE);
+  document.querySelector('main').append(PUZZLE);
 }

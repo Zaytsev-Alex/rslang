@@ -1,7 +1,7 @@
 #puzzle {
   background: url(../../assets/images/puzzle/start-bg.jpeg) center center no-repeat;
   background-size: cover;
-  height: 100vh;
+  height: calc(100vh - 40px);
   font-size: 10px;  
   font-family: 'Cormorant Upright', serif;
   
