@@ -5,6 +5,7 @@ import {
 import showMainPage from '../main-page/showMainPage';
 import clearContainer from '../clear';
 import showBasicLayout from '../showBasicLayout';
+import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
 
 export default function insertCreateUserCode() {
 
@@ -25,7 +26,7 @@ export default function insertCreateUserCode() {
   }
 
   async function createUser(user) {
-
+    authorizationLoaderShow();
     const response = await fetch(`${RSSCHOOL_API_URL}users`, {
       method: 'POST',
       headers: {
@@ -71,6 +72,8 @@ export default function insertCreateUserCode() {
     } else {
       window.console.warn(response.statusText);
     }
+
+    authorizationLoaderHide();
   }
   
   REGISTRATION_BUTTON.addEventListener('click', (event) => {
