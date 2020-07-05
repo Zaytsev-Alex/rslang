@@ -12,7 +12,7 @@ import {
     createAudio,
     addCardInfo,
     shuffleArray
-} from '../Utils/Utils'
+} from './Utils/Utils'
 
 
 
@@ -361,6 +361,8 @@ export default async function createMainContent() {
 
     NAVIGATE_NEXT.addEventListener('click', async () => {
         await setWordToBackEnd(currentMode)
+        player.pause();
+        player.currentTime = 0;
         wordPosition += 1;
         createNextCard();
     });

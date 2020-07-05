@@ -16,9 +16,9 @@ export function addCardInfo(data) {
     const IMAGE_CONTAINER = document.querySelector('.card__image');
     const WORD_TRANSLATE = document.querySelector('.card__word-translate');
     const WORD_TRANSCRIPTION = document.querySelector('.card__transcription');
-    const INPUT_FIELD = document.querySelector('.card__input'); 
+    const INPUT_FIELD = document.querySelector('.card__input');
     const WORD_EXPLAIN = document.querySelector('.card__explain');
-    const WORD_EXAMPLE = document.querySelector('.card__word-example');  
+    const WORD_EXAMPLE = document.querySelector('.card__word-example');
     const img = document.querySelector('.card__img') || document.createElement('img');
     img.classList.add('card__img');
     img.src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${data.image}`;
