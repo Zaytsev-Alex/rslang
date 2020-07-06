@@ -1,8 +1,7 @@
 import getSettings from './getSettings';
+import { RSSCHOOL_API_URL } from '../authorization/variables';
 
 const changeSettings = async (grp) => {
-    const userId = '5f02e9259c3d6500177e3dec';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDJlOTI1OWMzZDY1MDAxNzdlM2RlYyIsImlhdCI6MTU5NDA0MDg3NSwiZXhwIjoxNTk0MDU1Mjc1fQ.Xfd-KEsekmKQ2e9X63P68JOhCoD8U669VuYTN3QNh74';
     const newWordsQuantity = document.querySelector('.settings__new-words-quantity').value;
     const cardsQuantity = document.querySelector('.settings__cards-quantity').value;
     const easyInterval = document.querySelector('.settings__easy-interval').value;
@@ -54,10 +53,10 @@ const changeSettings = async (grp) => {
     let responseSendAnswer;
     const errorField = document.querySelector('.settings__error');
     try {
-        const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
+        const responseSend = await fetch(`${RSSCHOOL_API_URL}users/${localStorage.getItem('userId')}/settings`, {
             method: 'PUT',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Accept': 'application/json',
                 'Content-type': 'application/json',
                 'withCredentials': 'true'
@@ -69,6 +68,7 @@ const changeSettings = async (grp) => {
     } catch(e) {
         errorField.textContent = `Whoops: ${e}`;
     }
+    console.log(responseSendAnswer)
     return responseSendAnswer;
 }
 

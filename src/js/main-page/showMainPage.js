@@ -1,7 +1,6 @@
 import mainPageDescription from './mainPageDescription';
 import maingPageShowInfoHolder from './maingPageShowInfoHolder';
 import mainPageItemHolders from './mainPageItemHolders';
-import basicHeaderHolder from './basicHeader';
 
 const showMainPage = () => {
     const main = document.querySelector('main');
@@ -47,10 +46,9 @@ const showMainPage = () => {
     }
 
     main.appendChild(container);
-    
+
     mainPageItemHolders();
     maingPageShowInfoHolder();
-    basicHeaderHolder();
 }
 
 export { showMainPage as default };

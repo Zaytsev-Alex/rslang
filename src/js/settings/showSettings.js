@@ -6,7 +6,7 @@ const showSettings = async () => {
     settingsGetIndicator();
     const settings = await getSettings();
 
-    const container = document.querySelector('.container');
+    const container = document.querySelector('main');
     container.classList.add('settings');
     const form = document.createElement('form');
 
