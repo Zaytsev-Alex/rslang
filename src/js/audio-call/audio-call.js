@@ -1,9 +1,6 @@
 
 const audioCall = () => {
 
-    // const mainBlock = document.createElement('div');
-    // mainBlock.classList.add('main');
-    // document.main.append(mainBlock);
     const mainBlock = document.querySelector('main'); 
     mainBlock.innerHTML = "";
 
@@ -19,7 +16,7 @@ const audioCall = () => {
 
     const titleGame = document.createElement('h1');
     startScreen.append(titleGame);
-    titleGame.innerText = "Audio Call";
+    titleGame.innerText = "Аудиовызов";
 
     const levelBlock = document.createElement('div');    
     const titleLevel = document.createElement('h2');
@@ -29,11 +26,11 @@ const audioCall = () => {
     const startBtn = document.createElement('div');
     startBtn.classList.add('start-btn');
     startScreen.append(startBtn);
-    startBtn.innerText = "start";
+    startBtn.innerText = "Начать";
 
     const statistics = document.createElement('div');
     statistics.classList.add('statistics');
-    statistics.innerText = "Statistics";
+    statistics.innerText = "Статистика";
     startScreen.append(statistics);
 
     if(localStorage.getItem('gameTable') === null){
@@ -48,9 +45,9 @@ const audioCall = () => {
     const table = document.createElement('table');
     startScreen.append(table);
     
-    table.innerHTML = `<caption>Statistics</caption>
+    table.innerHTML = `<caption>Статистика</caption>
     <tr>
-    <td>Game</td><td>Right</td><td>Wrong</td>
+    <td>Игры</td><td>Правильно</td><td>Неправильно</td>
     </tr>
     <tr>
     <td>${localStorage.getItem('gameTable')}</td>
@@ -61,7 +58,7 @@ const audioCall = () => {
     
     const backBtn = document.createElement('div');
     backBtn.classList.add('dont-known-btn');
-    backBtn.innerText = "Back";
+    backBtn.innerText = "Назад";
     startScreen.append(backBtn);
 
     backBtn.addEventListener('click', () => {
@@ -78,7 +75,7 @@ const audioCall = () => {
     let level = 0;
 
         
-        titleLevel.innerText = "Select level";
+        titleLevel.innerText = "Выбор уровня";
         levelBlock.classList.add('level-block');
 
         for(let k = 0; k < 6; k += 1){
@@ -88,14 +85,15 @@ const audioCall = () => {
             if (k === 0){
                 levelDiv.classList.add('active');
             }
+            /* eslint-disable */
+            levelDiv.addEventListener('click', (event) => {
+                level = +(event.target.innerText);
+                levelBlock.querySelectorAll('div.active').forEach(el => el.classList.remove('active'));
+                event.target.classList.add('active');
+            });
+            /* eslint-enable */
         }
-        levelBlock.addEventListener('click', (event) => {
-            level = +(event.target.innerText);
-            levelBlock.querySelectorAll('div.active').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
-    });
-        
-
+   
         function startGame(){
         const indicatorBlock = document.createElement('div');
         indicatorBlock.classList.add('indicatorBlock');
@@ -104,7 +102,7 @@ const audioCall = () => {
         indicator.classList.add('indicator');
 
         const yourLevel = document.createElement('h3');
-        yourLevel.innerText = `Your level: ${level}`;
+        yourLevel.innerText = `Ваш уровень: ${level}`;
         
         function nextGame(){
 
@@ -154,13 +152,13 @@ const audioCall = () => {
 
             const result = document.createElement('div');
             result.classList.add('result');
-            result.innerText = `Right ${rightAnswer}/${wrongAnswer} Wrong`;
+            result.innerText = `Правильно ${rightAnswer}/${wrongAnswer} Неправильно`;
             startScreen.append(result);
 
             const dontKnownBtn = document.createElement('div');
             dontKnownBtn.classList.add('dont-known-btn');
             startScreen.append(dontKnownBtn);
-            dontKnownBtn.innerText = "don't known";
+            dontKnownBtn.innerText = "Не знаю";
 
             words.addEventListener('click', (event) => {
                 if (countClick === 0){
@@ -249,11 +247,11 @@ const audioCall = () => {
                 }else if (indicator.style.width === "100%"){
                         dontKnownBtn.style.background = "none";
                         startScreen.innerHTML = "";
-                        result.innerText = `Your result:
-                        Right ${rightAnswer}/${wrongAnswer} Wrong`;
+                        result.innerText = `Ваш результат:
+                        Правильно ${rightAnswer}/${wrongAnswer} Неправильно`;
                         startScreen.append(result);
                         startScreen.append(dontKnownBtn);
-                        dontKnownBtn.innerText = "restart";
+                        dontKnownBtn.innerText = "Заново";
                         startScreen.append(statistics);
                         localStorage.setItem('gameTable', +(localStorage.getItem('gameTable')) + 1);
                         localStorage.setItem('rightTable', +(localStorage.getItem('rightTable')) + rightAnswer);
