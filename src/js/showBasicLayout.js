@@ -1,3 +1,5 @@
+import basicHeaderHolder from './main-page/basicHeader';
+
 const showBasicLayout = () => {
     const header = document.createElement('header');
     header.classList.add('basic-header');
@@ -30,6 +32,7 @@ const showBasicLayout = () => {
     const main = document.createElement('main');
     document.body.appendChild(header);
     document.body.appendChild(main);
+    basicHeaderHolder();
 }
 
 export { showBasicLayout as default };

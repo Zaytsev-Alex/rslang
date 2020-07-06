@@ -1,5 +1,6 @@
 import mainPageHide from './mainPageHide';
 import audioCall from '../audio-call/audio-call';
+import showSettings from '../settings/showSettings';
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -14,7 +15,6 @@ const mainPageItemHolders = () => {
     container.querySelector('.main-page__item-audio').addEventListener('click', () => {
         mainPageHide();
         audioCall();
-        console.log('вызов аудиовызова');
     })
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {
         mainPageHide();
@@ -34,11 +34,13 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
+        document.querySelector('.basic-header__item_statistics').classList.add('basic-header__item-active');
         console.log('вызов статистики');
     })
     container.querySelector('.main-page__item-setting').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов найстройки');
+        document.querySelector('.basic-header__item_settings').classList.add('basic-header__item-active');
+        showSettings();
     })
 }
 

@@ -6,6 +6,8 @@ import showMainPage from '../main-page/showMainPage';
 import clearContainer from '../clear';
 import showBasicLayout from '../showBasicLayout';
 import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
+import createDefaultStatistics from '../statistics/createDefaultStatistics';
+import createDefaultSettings from '../settings/createDefaultSettings';
 
 export default function insertCreateUserCode() {
 
@@ -56,6 +58,9 @@ export default function insertCreateUserCode() {
 
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId);
+
+        await createDefaultStatistics();
+        await createDefaultSettings();
 
         clearContainer(document.body);
         showBasicLayout();

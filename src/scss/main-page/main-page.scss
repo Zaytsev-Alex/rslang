@@ -6,10 +6,13 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+
+        @media screen and (max-width: 730px){
+            justify-content: center;
+        }
     }
+    
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: url(../../assets/images/nature.jpg) no-repeat center center;
-    background-size: cover;    
 
     @media screen and (max-width: 680px) {
         flex-direction: column;
@@ -94,16 +97,24 @@
             width: 30%;
             background-color: $main-page-blue;
 
-            @media screen and (max-width: 680px) {
+            @media screen and (max-width: 730px) {
+                width: 80%;
+            }
+        }
+
+        &:nth-child(4n) {
+            width: 50%;
+
+            @media screen and (max-width: 730px) {
                 width: 80%;
             }
         }
 
         &:nth-child(7n) {
-            width: 40%;
+            width: 64%;
             background-color: $main-page-light;
 
-            @media screen and (max-width: 680px) {
+            @media screen and (max-width: 730px) {
                 width: 80%;
             }
         }
@@ -112,7 +123,7 @@
             transform: scale(1.05);
         }
 
-        @media screen and (max-width: 680px) {
+        @media screen and (max-width: 730px) {
             width: 80%;
         }
     }
