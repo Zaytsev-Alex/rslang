@@ -33,7 +33,9 @@ $text-error: rgb(236, 29, 29);
   position: relative;
 
   &__new-words-quantity,
-  &__cards-quantity {
+  &__cards-quantity,
+  &__easy-interval,
+  &__good-interval {
     appearance: none;
     width: 10rem;
     height: 0.25rem;
@@ -53,7 +55,9 @@ $text-error: rgb(236, 29, 29);
   }
 
   &__cards-output,
-  &__new-words-output {
+  &__new-words-output,
+  &__easy-interval-output,
+  &__good-interval-output {
     display: inline-block;
     position: relative;
     width: 35px;

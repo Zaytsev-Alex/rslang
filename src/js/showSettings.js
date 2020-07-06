@@ -20,8 +20,9 @@ const showSettings = async () => {
     const newWords = document.createElement('input');
     newWords.setAttribute('type', 'range');
     newWords.setAttribute('id', 'settings__new-words-quantity');
-    newWords.setAttribute('min', '5');
-    newWords.setAttribute('max', '100');
+    newWords.setAttribute('min', '10');
+    newWords.setAttribute('max', '200');
+    newWords.setAttribute('step', '10');
     newWords.setAttribute('value', settings.wordsPerDay ? settings.wordsPerDay : '20');
     newWords.classList.add('settings__new-words-quantity');
     settingsHor.appendChild(newWords);
@@ -42,9 +43,10 @@ const showSettings = async () => {
     const cards = document.createElement('input');
     cards.setAttribute('type', 'range');
     cards.setAttribute('id', 'settings__cards-quantity');
-    cards.setAttribute('min', '5');
-    cards.setAttribute('max', '100');
-    cards.setAttribute('value', settings.optional.cardsPerDay ? settings.optional.cardsPerDay : '20');
+    cards.setAttribute('min', '50');
+    cards.setAttribute('max', '500');
+    cards.setAttribute('step', '50');
+    cards.setAttribute('value', settings.optional.spacedRepetition.cardsPerDay ? settings.optional.spacedRepetition.cardsPerDay : '50');
     cards.classList.add('settings__cards-quantity');
     settingsHor1.appendChild(cards);
 
@@ -55,13 +57,59 @@ const showSettings = async () => {
 
     form.appendChild(settingsHor1)
 
+    const labeltGood = document.createElement('label');
+    labeltGood.setAttribute('for', 'settings__good-interval');
+    labeltGood.textContent = 'Укажите интервал дней для "Хорошо"';
+    form.appendChild(labeltGood);
+
+    const settingsHorGood = document.createElement('div');
+    settingsHorGood.classList.add('settings-hor');
+    const good = document.createElement('input');
+    good.setAttribute('type', 'range');
+    good.setAttribute('id', 'settings__good-interval');
+    good.setAttribute('min', '1');
+    good.setAttribute('max', '30');
+    good.setAttribute('value', settings.optional.spacedRepetition.mediumInterval ? settings.optional.spacedRepetition.mediumInterval : '5');
+    good.classList.add('settings__good-interval');
+    settingsHorGood.appendChild(good);
+
+    const goodOutput = document.createElement('output');
+    goodOutput.classList.add('settings__good-interval-output');
+    goodOutput.textContent = good.value;
+    settingsHorGood.appendChild(goodOutput);
+
+    form.appendChild(settingsHorGood)
+
+    const labelEasy = document.createElement('label');
+    labelEasy.setAttribute('for', 'settings__easy-interval');
+    labelEasy.textContent = 'Укажите интервал дней для "Легко"';
+    form.appendChild(labelEasy);
+
+    const settingsHorEasy = document.createElement('div');
+    settingsHorEasy.classList.add('settings-hor');
+    const easy = document.createElement('input');
+    easy.setAttribute('type', 'range');
+    easy.setAttribute('id', 'settings__easy-interval');
+    easy.setAttribute('min', '1');
+    easy.setAttribute('max', '30');
+    easy.setAttribute('value', settings.optional.spacedRepetition.easyInterval ? settings.optional.spacedRepetition.easyInterval : '5');
+    easy.classList.add('settings__easy-interval');
+    settingsHorEasy.appendChild(easy);
+
+    const easyOutput = document.createElement('output');
+    easyOutput.classList.add('settings__easy-interval-output');
+    easyOutput.textContent = easy.value;
+    settingsHorEasy.appendChild(easyOutput);
+
+    form.appendChild(settingsHorEasy)
+
     const settingsHor2 = document.createElement('div');
     settingsHor2.classList.add('settings-hor', 'settings__checkbox');
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.setAttribute('id', 'settings__translate');
     checkbox.classList.add('settings__translate');
-    if (settings.optional.translate) {
+    if (settings.optional.spacedRepetition.translate) {
         checkbox.setAttribute('checked', 'checked');
     }
     settingsHor2.appendChild(checkbox);
@@ -78,7 +126,7 @@ const showSettings = async () => {
     checkbox1.setAttribute('type', 'checkbox');
     checkbox1.setAttribute('id', 'settings__meaning');
     checkbox1.classList.add('settings__meaning');
-    if (settings.optional.explanation) {
+    if (settings.optional.spacedRepetition.explanation) {
         checkbox1.setAttribute('checked', 'checked');
     }
     settingsHor3.appendChild(checkbox1);
@@ -95,7 +143,7 @@ const showSettings = async () => {
     checkbox2.setAttribute('type', 'checkbox');
     checkbox2.setAttribute('id', 'settings__example');
     checkbox2.classList.add('settings__example');
-    if (settings.optional.example) {
+    if (settings.optional.spacedRepetition.example) {
         checkbox2.setAttribute('checked', 'checked');
     }
     settingsHor4.appendChild(checkbox2);
@@ -112,7 +160,7 @@ const showSettings = async () => {
     checkbox3.setAttribute('type', 'checkbox');
     checkbox3.setAttribute('id', 'settings__transcription');
     checkbox3.classList.add('settings__transcription');
-    if (settings.optional.transcription) {
+    if (settings.optional.spacedRepetition.transcription) {
         checkbox3.setAttribute('checked', 'checked');
     }
     settingsHor5.appendChild(checkbox3);
@@ -129,7 +177,7 @@ const showSettings = async () => {
     checkbox4.setAttribute('type', 'checkbox');
     checkbox4.setAttribute('id', 'settings__image');
     checkbox4.classList.add('settings__image');
-    if (settings.optional.associate) {
+    if (settings.optional.spacedRepetition.associateImage) {
         checkbox4.setAttribute('checked', 'checked');
     }
     settingsHor6.appendChild(checkbox4);
@@ -146,7 +194,7 @@ const showSettings = async () => {
     checkbox5.setAttribute('type', 'checkbox');
     checkbox5.setAttribute('id', 'settings__show-answer');
     checkbox5.classList.add('settings__show-answer');
-    if (settings.optional.showAnswer) {
+    if (settings.optional.spacedRepetition.showAnswer) {
         checkbox5.setAttribute('checked', 'checked');
     }
     settingsHor7.appendChild(checkbox5);
@@ -163,7 +211,7 @@ const showSettings = async () => {
     checkbox6.setAttribute('type', 'checkbox');
     checkbox6.setAttribute('id', 'settings__show-delete');
     checkbox6.classList.add('settings__show-delete');
-    if (settings.optional.showDelete) {
+    if (settings.optional.spacedRepetition.showDelete) {
         checkbox6.setAttribute('checked', 'checked');
     }
     settingsHor8.appendChild(checkbox6);
@@ -180,7 +228,7 @@ const showSettings = async () => {
     checkbox7.setAttribute('type', 'checkbox');
     checkbox7.setAttribute('id', 'settings__show-hard');
     checkbox7.classList.add('settings__show-hard');
-    if (settings.optional.showHard) {
+    if (settings.optional.spacedRepetition.showHard) {
         checkbox7.setAttribute('checked', 'checked');
     }
     settingsHor9.appendChild(checkbox7);
@@ -197,7 +245,7 @@ const showSettings = async () => {
     checkbox8.setAttribute('type', 'checkbox');
     checkbox8.setAttribute('id', 'settings__show-difficult');
     checkbox8.classList.add('settings__show-difficult');
-    if (settings.optional.showDifficult) {
+    if (settings.optional.spacedRepetition.showDifficult) {
         checkbox8.setAttribute('checked', 'checked');
     }
     settingsHor10.appendChild(checkbox8);

@@ -1,15 +1,20 @@
 import getSettings from './getSettings';
 
 const changeSettings = async (grp) => {
-    const userId = '5ef9dbf1a0d86400172933dd';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjlkYmYxYTBkODY0MDAxNzI5MzNkZCIsImlhdCI6MTU5MzQzMzA5NywiZXhwIjoxNTkzNDQ3NDk3fQ.wOFiVm6WMD_wtOo5nuIFHkQVkV0nRudFBv0UUlT4y1k';
+    const userId = '5f02e9259c3d6500177e3dec';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDJlOTI1OWMzZDY1MDAxNzdlM2RlYyIsImlhdCI6MTU5NDA0MDg3NSwiZXhwIjoxNTk0MDU1Mjc1fQ.Xfd-KEsekmKQ2e9X63P68JOhCoD8U669VuYTN3QNh74';
     const newWordsQuantity = document.querySelector('.settings__new-words-quantity').value;
     const cardsQuantity = document.querySelector('.settings__cards-quantity').value;
+    const easyInterval = document.querySelector('.settings__easy-interval').value;
+    const mediumInterval = document.querySelector('.settings__good-interval').value;
     const oldSettings = await getSettings();
     const newSettings = {
         wordsPerDay: oldSettings.wordsPerDay,
         optional: oldSettings.optional ? oldSettings.optional : {},
     };
+    if (!newSettings.optional.spacedRepetition) {
+        newSettings.optional.spacedRepetition = {};
+    }
     let group = [];
     if (grp) {
         group = grp.map(e => e.checked);
@@ -27,22 +32,24 @@ const changeSettings = async (grp) => {
     const showHard = document.querySelector('.settings__show-hard').checked;
     const showDifficult = document.querySelector('.settings__show-difficult').checked;
     newSettings.wordsPerDay = newWordsQuantity;
-    newSettings.optional.cardsPerDay = cardsQuantity;
+    newSettings.optional.spacedRepetition.cardsPerDay = cardsQuantity;
+    newSettings.optional.spacedRepetition.easyInterval = easyInterval;
+    newSettings.optional.spacedRepetition.mediumInterval = mediumInterval;
     [
-        newSettings.optional.translate,
-        newSettings.optional.explanation,
-        newSettings.optional.example,
+        newSettings.optional.spacedRepetition.translate,
+        newSettings.optional.spacedRepetition.explanation,
+        newSettings.optional.spacedRepetition.example,
     ] = [
         group[0],
         group[1],
         group[2],
     ]
-    newSettings.optional.transcription = transcription;
-    newSettings.optional.associate = associate;
-    newSettings.optional.showAnswer = showAnswer;
-    newSettings.optional.showDelete = showDelete;
-    newSettings.optional.showHard = showHard;
-    newSettings.optional.showDifficult = showDifficult;
+    newSettings.optional.spacedRepetition.transcription = transcription;
+    newSettings.optional.spacedRepetition.associateImage = associate;
+    newSettings.optional.spacedRepetition.showAnswer = showAnswer;
+    newSettings.optional.spacedRepetition.showDelete = showDelete;
+    newSettings.optional.spacedRepetition.showHard = showHard;
+    newSettings.optional.spacedRepetition.showDifficult = showDifficult;
 
     let responseSendAnswer;
     const errorField = document.querySelector('.settings__error');

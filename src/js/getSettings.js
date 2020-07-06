@@ -1,6 +1,6 @@
 const getSettings = async () => {
-    const userId = '5ef9dbf1a0d86400172933dd';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjlkYmYxYTBkODY0MDAxNzI5MzNkZCIsImlhdCI6MTU5MzQzMzA5NywiZXhwIjoxNTkzNDQ3NDk3fQ.wOFiVm6WMD_wtOo5nuIFHkQVkV0nRudFBv0UUlT4y1k';
+    const userId = '5f02e9259c3d6500177e3dec';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDJlOTI1OWMzZDY1MDAxNzdlM2RlYyIsImlhdCI6MTU5NDA0MDg3NSwiZXhwIjoxNTk0MDU1Mjc1fQ.Xfd-KEsekmKQ2e9X63P68JOhCoD8U669VuYTN3QNh74';
     let settingsFromBack;
     const errorField = document.querySelector('.settings__error');
     try {
