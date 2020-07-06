@@ -1,13 +1,5 @@
-* {
-	outline: none;
-	padding: 0;
-	margin: 0;
-	text-decoration: none;
-}
-body {
-	font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
-	color: white;
-}
+
+
 .main-audio-call{
 	min-height: 100vh;
 	display: flex;
@@ -15,7 +7,8 @@ body {
 	align-items: center;
 	background: url(../../assets/images/background2.jpg);
 	background-size: cover;
-}
+	color: white;
+
 .start-screen {
 	width: 80%;
 	min-height: 50vh;
@@ -30,6 +23,7 @@ h2 {
 }
 h3 {
 	padding-bottom: 20px;
+	font-size: 18px;
 }
 .level-block {
 	display: flex;
@@ -95,7 +89,7 @@ h3 {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	padding-top: 50px;
+	padding-top: 40px;
 	padding-bottom: 20px;
 	font-size: 20px;
 	div {
@@ -145,6 +139,7 @@ h3 {
 }
 .eng-word {
 	font-size: 50px;
+	margin: 40px 0px 10px 0px;
 }
 .eng-img {
 	margin-top: 40px;
@@ -180,4 +175,5 @@ caption {
 }
 tbody{
 	font-size: 16px;
+}
 }
