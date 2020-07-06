@@ -1,4 +1,4 @@
-import '../css/style.css';
+import '../css/style.scss';
 
 import words from './data';
 import './records';
