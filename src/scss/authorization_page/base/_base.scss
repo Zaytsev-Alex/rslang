@@ -1,0 +1,29 @@
+main {
+  background: url(../../assets/images/nature.jpg) center center no-repeat;
+  background-size: cover;
+  height: 100vh;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.13);
+  }
+}
+
+
+.hide {
+  display: none !important;
+}
+
+.error {
+  @include text(1.4rem, 1.4, $text-error);
+  position: static;
+  margin-top: 6px;
+  line-height: inherit;
+  min-height: 20px;
+  text-align: justify;
+}
