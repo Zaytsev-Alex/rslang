@@ -10,6 +10,5 @@ menuButtonEvent(menuButtonHandler);
 
 events();
 
-// Первое обновление токена сразу, потом каждые 5 минут
 getNewToken();
 setInterval(getNewToken, 5 * 60 * 1000);

@@ -2,8 +2,7 @@
 
 export default function getNewToken() {
   const REFRESH_TOKEN = localStorage.getItem('refreshToken');
-  // Время окончания действия токена минус 5 минут
-  const TIME_TO_REFRESH_TOKEN = JSON.parse(atob(REFRESH_TOKEN.split('.')[1])).exp - 5 * 60 * 1000;
+  const TIME_TO_REFRESH_TOKEN = JSON.parse(atob(REFRESH_TOKEN.split('.')[1])).exp - 30 * 60 * 1000;
   const TIME_NOW = Date.now() / 1000;
 
   if (TIME_NOW > TIME_TO_REFRESH_TOKEN) {
