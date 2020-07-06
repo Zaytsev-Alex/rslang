@@ -9,7 +9,6 @@ import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
 
 
 export default function insertLoginUserCode() {
-
   const AUTHORIZATION_EMAIL = document.querySelector('#authorization-email');
   const AUTHORIZATION_PASSWORD = document.querySelector('#authorization-password');
   const AUTHORIZATION_ERROR = document.querySelector('#authorization-error');
@@ -43,6 +42,7 @@ export default function insertLoginUserCode() {
       CREATE_ACCOUNT.classList.remove('hide');
 
       localStorage.setItem('token', data.token);
+      localStorage.setItem('refreshToken', data.refreshToken);
       localStorage.setItem('userId', data.userId);
 
       AUTHORIZATION_FORM.classList.add('hide');

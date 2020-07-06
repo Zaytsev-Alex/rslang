@@ -63,7 +63,7 @@
   margin-top: 30px;
 }
 
-.statistics {
+.puzzle-statistics {
   background: white;
   position: absolute;
   width: 500px;
@@ -72,12 +72,12 @@
   padding-right: 10px;
 }
 
-.statistics__title {
+.puzzle-statistics__title {
   @include text(3rem, 2, $text-light, 700);
   text-align: center;
 }
 
-.statistics table {
+.puzzle-statistics table {
   @include text(1.7rem, 2, $text-dark);
   width: 100%;
   border: 1px solid black;

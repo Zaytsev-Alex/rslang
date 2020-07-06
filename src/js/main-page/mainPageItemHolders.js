@@ -1,5 +1,9 @@
 import mainPageHide from './mainPageHide';
+
 import puzzle from '../puzzle/puzzle';
+
+import audioCall from '../audio-call/audio-call';
+
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -13,6 +17,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-audio').addEventListener('click', () => {
         mainPageHide();
+        audioCall();
         console.log('вызов аудиовызова');
     })
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {

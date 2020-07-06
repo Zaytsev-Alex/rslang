@@ -76,8 +76,8 @@ export default function renderAllHTML() {
         <button type="button" class="button result__button" id="result-stat-button">Статистика</button>
       </div>
 
-      <div class="statistics hide">
-        <p class="statistics__title">Статистика:</p>
+      <div class="puzzle-statistics hide">
+        <p class="puzzle-statistics__title">Статистика:</p>
         <table>
           <thead>
             <tr>

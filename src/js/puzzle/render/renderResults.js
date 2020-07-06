@@ -16,7 +16,7 @@ export default function renderResults() {
   const KNOW_LIST = document.querySelector('#i-know-list');
   const I_DONT_KNOW_NUMBER = document.querySelector('#i-dont-know__number');
   const I_KNOW_NUMBER = document.querySelector('#i-know__number');
-  const STATISTICS_PAGE = document.querySelector('.statistics');
+  const STATISTICS_PAGE = document.querySelector('.puzzle-statistics');
   const ARRAY_I_KNOW = [];
   const ARRAY_I_DONT_KNOW = [];
   let CONTINUE_COUNTER = 0;
