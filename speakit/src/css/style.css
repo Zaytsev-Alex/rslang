@@ -374,7 +374,8 @@ body {
   border: 1px solid rgba(14, 30, 37, 0.7);
 }
 
-.btn-res:nth-child(1) {
+.btn-res:nth-child(1),
+.btn-res:nth-child(2) {
   margin-right: 40px;
 }
 
@@ -394,4 +395,10 @@ body {
 .results .item .translation {
   min-height: 30px;
   margin-bottom: 0;
+}
+
+.history {
+  margin-bottom: 10px;
+  overflow: auto;
+  max-height: 50vh;
 }

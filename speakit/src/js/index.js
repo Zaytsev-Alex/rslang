@@ -1,6 +1,7 @@
 import '../css/style.css';
 
 import words from './data';
+import './records';
 import translate from './translate';
 import { get, set, del } from './storage';
 import { soundIfSaidRightWord, soundIfWinGame } from './audio';
@@ -213,6 +214,21 @@ userSpeach.addEventListener('click', () => {
   showInput();
 });
 
+const clearModalContainer = () => {
+  document.querySelector('.history').classList.add('none');
+
+  const currentResults = [
+    document.querySelector('.errors'),
+    document.querySelector('.errors-item'),
+    document.querySelector('.succes'),
+    document.querySelector('.succes-item'),
+  ];
+  currentResults.forEach((item) => {
+    const node = item;
+    node.classList.remove('none');
+  });
+};
+
 document.querySelectorAll('.point').forEach((node) => {
   node.addEventListener('click', (e) => {
     const { level } = e.currentTarget.dataset;
@@ -229,6 +245,7 @@ document.querySelectorAll('.point').forEach((node) => {
     getRandomNum = Math.floor(590 * Math.random());
 
     renderWords(level);
+    clearModalContainer();
   });
 });
 
@@ -286,10 +303,12 @@ recordsBtn.addEventListener('click', () => {
 
 returnBtn.addEventListener('click', () => {
   modal.classList.add('hidden');
+  clearModalContainer();
 });
 
 window.addEventListener('click', (event) => {
   if (event.target === modal) {
     modal.classList.add('hidden');
+    clearModalContainer();
   }
 });
