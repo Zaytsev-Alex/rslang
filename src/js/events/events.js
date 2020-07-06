@@ -8,12 +8,11 @@ export function menuButtonEvent(handler) {
 }
 
 function eventHandler(event) {
-    if (event.target === document.querySelector('.start-learning__link'))
-            authorization();
-        if (event.target === document.getElementById('Registration'))
-            authorization();
-        if (event.target === document.getElementById('Enter'))
-            authorization();
+    if (event.target === document.querySelector('.start-learning__link')
+    || event.target === document.getElementById('Registration')
+    || event.target === document.getElementById('Enter')) {
+        authorization();
+    }
 
 }
 

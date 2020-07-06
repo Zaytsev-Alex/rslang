@@ -2,8 +2,10 @@ import {
   RSSCHOOL_API_URL, VALIDATE_EMAIL, VALIDATE_PASSWORD,
 } from './variables';
 
-
-import loginUser from './loginUser';
+import showMainPage from '../main-page/showMainPage';
+import clearContainer from '../clear';
+import showBasicLayout from '../showBasicLayout';
+import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
 
 export default function insertCreateUserCode() {
 
@@ -24,7 +26,7 @@ export default function insertCreateUserCode() {
   }
 
   async function createUser(user) {
-
+    authorizationLoaderShow();
     const response = await fetch(`${RSSCHOOL_API_URL}users`, {
       method: 'POST',
       headers: {
@@ -37,7 +39,31 @@ export default function insertCreateUserCode() {
     if (response.status === 417) {
       REGISTRATION_EMAIL_ERROR.textContent = ERRORS.alreadyReg;
     } else if (response.status === 200) {
-      loginUser(user);
+      
+      const loginResponse = await fetch(`${RSSCHOOL_API_URL}signin`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (loginResponse.status === 404) {
+        window.console.warn('Wrong email or password');
+      } else if (loginResponse.status === 200) {
+        const data = await loginResponse.json();
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
+
+        clearContainer(document.body);
+        showBasicLayout();
+        showMainPage();
+
+    } else {
+      window.console.warn(response);
+    }
 
       REGISTRATION_EMAIL.value = '';
       REGISTRATION_PASSWORD.value = '';
@@ -46,7 +72,10 @@ export default function insertCreateUserCode() {
     } else {
       window.console.warn(response.statusText);
     }
+
+    authorizationLoaderHide();
   }
+  
   REGISTRATION_BUTTON.addEventListener('click', (event) => {
     event.preventDefault();
 

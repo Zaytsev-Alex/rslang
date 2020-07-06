@@ -4,18 +4,15 @@ import pageSwitcher from './pageSwitcher';
 import generateHtml from './generateHTML';
 import insertCreateUserCode from './createUser';
 import insertLoginUserCode from './loginUser';
-
-function clearHtml() {
-  document.body.innerHTML = '';
-}
+import clearContainer from '../clear';
 
 export default function authorization() {
-  clearHtml();
+  clearContainer(document.body);
   generateHtml();
   insertCreateUserCode();
   insertLoginUserCode();
-  showFirstPage();
   pageSwitcher();
+  showFirstPage();
 }
 
 

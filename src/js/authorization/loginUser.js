@@ -2,6 +2,10 @@ import {
   RSSCHOOL_API_URL, VALIDATE_EMAIL, VALIDATE_PASSWORD,
 } from './variables';
 
+import showMainPage from '../main-page/showMainPage';
+import clearContainer from '../clear';
+import showBasicLayout from '../showBasicLayout';
+import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
 
 
 export default function insertLoginUserCode() {
@@ -13,8 +17,6 @@ export default function insertLoginUserCode() {
   const AUTHORIZATION_FORM = document.querySelector('#authorization-form');
   const HAVE_ACCOUNT = document.querySelector('#have-account');
   const CREATE_ACCOUNT = document.querySelector('#create-account');
-  const LOG_OUT_BUTTON = document.querySelector('#log-out-button');
-
 
   const ERRORS = {
     wrongEmailOrPassword: 'Неверный email или пароль',
@@ -22,7 +24,7 @@ export default function insertLoginUserCode() {
   }
 
   async function loginUser(user) {
-
+    authorizationLoaderShow();
     const response = await fetch(`${RSSCHOOL_API_URL}signin`, {
       method: 'POST',
       headers: {
@@ -37,22 +39,22 @@ export default function insertLoginUserCode() {
       window.console.warn('Wrong email or password');
     } else if (response.status === 200) {
       const data = await response.json();
-
       HAVE_ACCOUNT.classList.add('hide');
       CREATE_ACCOUNT.classList.remove('hide');
-
-      // window.console.log(data);
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
 
-      LOG_OUT_BUTTON.classList.remove('hide');
       AUTHORIZATION_FORM.classList.add('hide');
+      clearContainer(document.body);
+      showBasicLayout();
+      showMainPage();
     } else if (response.status === 403) {
       AUTHORIZATION_ERROR.textContent = ERRORS.wrongEmailOrPassword;
     } else {
       window.console.warn(response);
     }
+    authorizationLoaderHide();
   }
 
 
