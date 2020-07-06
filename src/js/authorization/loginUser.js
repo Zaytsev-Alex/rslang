@@ -5,6 +5,7 @@ import {
 import showMainPage from '../main-page/showMainPage';
 import clearContainer from '../clear';
 import showBasicLayout from '../showBasicLayout';
+import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
 
 
 export default function insertLoginUserCode() {
@@ -16,8 +17,6 @@ export default function insertLoginUserCode() {
   const AUTHORIZATION_FORM = document.querySelector('#authorization-form');
   const HAVE_ACCOUNT = document.querySelector('#have-account');
   const CREATE_ACCOUNT = document.querySelector('#create-account');
-  const LOG_OUT_BUTTON = document.querySelector('#log-out-button');
-
 
   const ERRORS = {
     wrongEmailOrPassword: 'Неверный email или пароль',
@@ -25,7 +24,7 @@ export default function insertLoginUserCode() {
   }
 
   async function loginUser(user) {
-
+    authorizationLoaderShow();
     const response = await fetch(`${RSSCHOOL_API_URL}signin`, {
       method: 'POST',
       headers: {
@@ -46,7 +45,6 @@ export default function insertLoginUserCode() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
 
-      LOG_OUT_BUTTON.classList.remove('hide');
       AUTHORIZATION_FORM.classList.add('hide');
       clearContainer(document.body);
       showBasicLayout();
@@ -56,6 +54,7 @@ export default function insertLoginUserCode() {
     } else {
       window.console.warn(response);
     }
+    authorizationLoaderHide();
   }
 
 
