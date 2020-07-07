@@ -1,6 +1,7 @@
 import showMainPage from './showMainPage';
 import clearContainer from '../clear';
 import showSettings from '../settings/showSettings';
+import showStatistics from '../statistics/showStatistics';
 
 const setActiveStatus = (link) => {
     const activeItem = document.querySelector('.basic-header__item-active');
@@ -31,6 +32,7 @@ const basicHeaderHolder = () => {
             clearContainer(document.querySelector('main')); 
             setActiveStatus(statistics);
             container.className = '';
+            showStatistics();
         }
     });
 

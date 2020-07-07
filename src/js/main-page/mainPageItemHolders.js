@@ -1,6 +1,7 @@
 import mainPageHide from './mainPageHide';
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
+import showStatistics from '../statistics/showStatistics';
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -35,7 +36,7 @@ const mainPageItemHolders = () => {
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
         document.querySelector('.basic-header__item_statistics').classList.add('basic-header__item-active');
-        console.log('вызов статистики');
+        showStatistics();
     })
     container.querySelector('.main-page__item-setting').addEventListener('click', () => {
         mainPageHide();
