@@ -1,6 +1,10 @@
-export function addTranslate(textExampleTranslate, textMeaningTranslate) {
+export function addTranslate(textExampleTranslate, textMeaningTranslate, isExampleShowed, isMeaningShowed) {
+    if (isExampleShowed) {
     document.querySelector('.card__word-example-translate').textContent = textExampleTranslate;
+    }
+    if (isMeaningShowed) {
     document.querySelector('.card__explain-translate').textContent = textMeaningTranslate;
+    }
 }
 
 export function createAudio() {
@@ -47,3 +51,12 @@ export function shuffleArray(array) {
     }
     return arr;
 }
+
+export function compareDates(currentDate, nextDate) {
+        const [nextDay,nextMonth, nextYear] = nextDate.split('.')
+        const [currentDay,currentMonth, currentYear] = currentDate.split('.');
+        if (new Date(Date.parse(`${currentYear}/${currentMonth}/${currentDay}`)) >= new Date(Date.parse(`${nextYear}/${nextMonth}/${nextDay}`))) {
+            return true;
+        }
+       return false;
+    }
