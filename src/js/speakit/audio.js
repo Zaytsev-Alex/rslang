@@ -5,13 +5,13 @@ const playAudio = (src) => {
 };
 
 const soundIfWinGame = () => {
-  const audioSrc = '../../audio/success.mp3';
+  const audioSrc = './audio/success.mp3';
 
   playAudio(audioSrc);
 };
 
 const soundIfSaidRightWord = () => {
-  const audioSrc = '../../audio/correct.mp3';
+  const audioSrc = './audio/correct.mp3';
 
   playAudio(audioSrc);
 };
