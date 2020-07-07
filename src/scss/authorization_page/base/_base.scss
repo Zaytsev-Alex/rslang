@@ -1,0 +1,19 @@
+main {
+  background: url(../../assets/images/nature.jpg) center center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+
+.hide {
+  display: none !important;
+}
+
+.error {
+  @include text(1.4rem, 1.4, $text-error);
+  position: static;
+  margin-top: 6px;
+  line-height: inherit;
+  min-height: 20px;
+  text-align: justify;
+}
