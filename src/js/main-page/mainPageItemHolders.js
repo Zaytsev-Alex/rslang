@@ -1,6 +1,7 @@
 import mainPageHide from './mainPageHide';
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
+import SprintGame from '../sprint/SprintGame';
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -8,9 +9,11 @@ const mainPageItemHolders = () => {
         mainPageHide();
         console.log('вызов основного приложения');
     })
-    container.querySelector('.main-page__item-sprint').addEventListener('click', () => {
+    container.querySelector('.main-page__item-sprint').addEventListener('click', (event) => {
+        event.target.classList.add('main-page__sprint-card-element');
         mainPageHide();
-        console.log('вызов спринта');
+        const sprint = new SprintGame(container);
+        sprint.showPromoPage();
     })
     container.querySelector('.main-page__item-audio').addEventListener('click', () => {
         mainPageHide();
