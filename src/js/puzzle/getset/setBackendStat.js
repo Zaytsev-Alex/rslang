@@ -8,31 +8,39 @@ export default async function setBackendStat(right, wrong) {
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');
   const TIME = getTime();
-  let prev;
-  let puzzle;
+  let opt;
+  // let puzzl;
 
+  
   try {
     const backStat = await getBackendStat();
-    prev = backStat.puzzle;
+    opt = backStat.optional;
 
-    if (backStat.puzzle.hasOwnProperty(TIME)) {
-      puzzle = Object.assign(prev, {
+    console.log(backStat);
+
+    if (opt.puzzle.hasOwnProperty(TIME)) {
+      opt = Object.assign(opt, {
         [TIME]: {
-          countGame: backStat.puzzle[TIME].countGame + 1,
-          right: backStat.puzzle[TIME].right + right,
-          wrong: backStat.puzzle[TIME].wrong + wrong,
+          countGame: opt.puzzle[TIME].countGame + 1,
+          right: opt.puzzle[TIME].right + right,
+          wrong: opt.puzzle[TIME].wrong + wrong,
         },
       });
     } else {
-      prev = backStat.puzzle;
+      opt = backStat.optional;
 
-      puzzle = Object.assign(prev, {
+      opt = Object.assign(opt, {
         [TIME]: {
           countGame: 1,
           right,
           wrong,
         },
       });
+    }
+
+    const newObj = {
+      learnedWords: backStat.learnedWords,
+      optional: opt,
     }
 
     await fetch(`${RSSCHOOL_API_URL}users/${USER_ID}/statistics`, {
@@ -43,11 +51,7 @@ export default async function setBackendStat(right, wrong) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        optional: {
-          puzzle,
-        },
-      }),
+      body: JSON.stringify(newObj)
     }).then((res) => res.json())
       .then((data) => {
         renderStatistics(data.optional);
@@ -86,6 +90,6 @@ export async function getBackendStat() {
   } else if (response.status === 200) {
     const data = await response.json();
 
-    return data.optional;
+    return data;
   }
 }
