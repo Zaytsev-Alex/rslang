@@ -55,7 +55,7 @@
                    <button class='card__repeat-word-btn'>Снова</button>
                </div>
                <div class='card__additional-buttons visability-hidden'>
-                   <button class='card__weak-word-btn', difficulty='complicated'>Сложные</button>
+                   <button class='card__complicated-word-btn', difficulty='complicated'>Сложные</button>
                    <button class='card__delete-word-btn' difficulty='deleted'>Удалить</button>
                </div>
 
