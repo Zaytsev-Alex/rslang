@@ -196,6 +196,7 @@
       background: $text-white;
       padding: 30px 25px;
       border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
 
   &__submit-container {
@@ -218,7 +219,7 @@
     text-shadow: 0;
     cursor: pointer;
     transition: all 0.25s ease;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 400;
 
     &:hover {

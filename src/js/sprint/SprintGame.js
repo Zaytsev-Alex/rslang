@@ -270,7 +270,7 @@ export default class SprintGame {
             sprintLoader.classList.add('sprint__card_loader');
     
             const sprintSpinner = document.createElement('img');
-            sprintSpinner.setAttribute('src', '../img/spinner.gif');
+            sprintSpinner.setAttribute('src', './img/spinner.gif');
             sprintSpinner.classList.add('sprint__card_spinner');
     
             sprintLoader.appendChild(sprintSpinner);
@@ -332,7 +332,7 @@ export default class SprintGame {
             this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
             this.countAnswersStrick += 1;
             if (this.countAnswersStrick % 4 === 0) {
-                const comboSound = new Audio('../../assets/audio/combo.mp3');
+                const comboSound = new Audio('./audio/combo.mp3');
                 comboSound.play();
                 this.combo *= 2;
                 this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
@@ -347,12 +347,12 @@ export default class SprintGame {
             } else {
                 this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
                     .classList.add('sprint__card_combo_item-active');   
-                const rightAnswerSound = new Audio('../../assets/audio/right.mp3');
+                const rightAnswerSound = new Audio('./audio/right.mp3');
                 rightAnswerSound.play();
             }
         } else {
             this.words[this.index].guessed = false;
-            const wrongAnswerSound = new Audio('../../assets/audio/wrong.mp3');
+            const wrongAnswerSound = new Audio('./audio/wrong.mp3');
             wrongAnswerSound.play();
             const sprintCardWrongAnswer = document.querySelector('.sprint__card_wrong-answer');
             sprintCardWrongAnswer.classList.remove('sprint__card_wrong-answer-hidden');
@@ -499,56 +499,58 @@ export default class SprintGame {
     async sendStatistics(statistics, length, guessedCount) {
         let statFromBack;
         let content;
-        try {
-            const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'withCredentials': true,
-                    'Accept': 'application/json',
-                }
-            });
-            statFromBack = await response.json();
-            let statArray = [];
-            if (!statFromBack.optional) {
-                statFromBack.optional = {};
-            }
-            if (statFromBack.optional.sprint) {
-                statArray = statFromBack.optional.sprint.split(',');   
-            }
-            statArray.push(statistics);
-            statArray.push(length);
-            statArray.push(guessedCount);
-            if (statArray.length > 30) {
-                statArray.shift();
-                statArray.shift();
-                statArray.shift();
-            }
-            statFromBack.optional.sprint = statArray.join(',');
-            const newObj = {
-                learnedWords: statFromBack.learnedWords,
-                optional: statFromBack.optional,
-            }
+        if (statistics !== 0 || length !== 0 || guessedCount !== 0) {
             try {
-                const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
-                    method: 'PUT',
+                const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
+                    method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${this.token}`,
+                        'withCredentials': true,
                         'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                        'withCredentials': 'true'
-                    },
-                    body: JSON.stringify(newObj)
+                    }
                 });
-                content = await responseSend.json();
-            } catch(error) {
-                if (document.querySelector('.sprint__card_errors')) {
-                    document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${error}`;
+                statFromBack = await response.json();
+                let statArray = [];
+                if (!statFromBack.optional) {
+                    statFromBack.optional = {};
                 }
-            }
-        } catch(e) {
-            if (document.querySelector('.sprint__card_errors')) {
-                document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
+                if (statFromBack.optional.sprint) {
+                    statArray = statFromBack.optional.sprint.split(',');   
+                }
+                statArray.push(statistics);
+                statArray.push(length);
+                statArray.push(guessedCount);
+                if (statArray.length > 30) {
+                    statArray.shift();
+                    statArray.shift();
+                    statArray.shift();
+                }
+                statFromBack.optional.sprint = statArray.join(',');
+                const newObj = {
+                    learnedWords: statFromBack.learnedWords,
+                    optional: statFromBack.optional,
+                }
+                try {   
+                    const responseSend = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/statistics`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`,
+                            'Accept': 'application/json',
+                            'Content-type': 'application/json',
+                            'withCredentials': 'true'
+                        },
+                        body: JSON.stringify(newObj)
+                    });
+                    content = await responseSend.json();
+                } catch(error) {
+                    if (document.querySelector('.sprint__card_errors')) {
+                        document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${error}`;
+                    }
+                }
+            } catch(e) {
+                if (document.querySelector('.sprint__card_errors')) {
+                    document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
+                }
             }
         }
         return content;

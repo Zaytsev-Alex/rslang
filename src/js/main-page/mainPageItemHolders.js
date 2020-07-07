@@ -9,9 +9,10 @@ const mainPageItemHolders = () => {
         mainPageHide();
         console.log('вызов основного приложения');
     })
-    container.querySelector('.main-page__item-sprint').addEventListener('click', () => {
+    container.querySelector('.main-page__item-sprint').addEventListener('click', (event) => {
+        event.target.classList.add('main-page__sprint-card-element');
         mainPageHide();
-        const sprint = new SprintGame(document.querySelector('main'));
+        const sprint = new SprintGame(container);
         sprint.showPromoPage();
     })
     container.querySelector('.main-page__item-audio').addEventListener('click', () => {

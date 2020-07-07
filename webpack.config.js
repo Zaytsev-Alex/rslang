@@ -129,7 +129,8 @@ const config = {
         use: [{
           loader: 'file-loader',
           options: {
-            outputPath: 'fonts'
+            name: '[name].[ext]',
+            outputPath: './fonts/'
           }
         }]
       }
@@ -148,6 +149,7 @@ const config = {
       // {from: './src/static', to: './'},
        {from: './src/assets/images', to: './img/'},
        {from: './src/assets/audio', to: './audio/'},
+       {from: './src/fonts', to: './fonts/'},
     ]),
   ],
 

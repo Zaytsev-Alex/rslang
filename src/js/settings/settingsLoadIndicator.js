@@ -17,7 +17,7 @@ const settingsGetIndicator = () => {
     indicator.classList.add('settings__get-indicator');
     const spinner = document.createElement('img');
     spinner.classList.add('settings__get-indicator_spinner');
-    spinner.setAttribute('src', '../img/settings-gear.gif');
+    spinner.setAttribute('src', './img/settings-gear.gif');
     indicator.appendChild(spinner);
     document.querySelector('.container').appendChild(indicator);
 }
