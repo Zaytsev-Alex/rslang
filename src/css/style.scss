@@ -142,7 +142,7 @@ body {
         .card__delete-word-btn,
         .card__easy-word-btn,
         .card__repeat-word-btn,
-        .card__weak-word-btn,
+        .card__complicated-word-btn,
         .card__medium-word-btn
          {
           outline: none;
@@ -285,7 +285,7 @@ body {
     visibility: hidden;
   }
   .display-none {
-    display: none;
+    display: none !important;
   }
   .set-opacity {
     opacity: 0;
@@ -295,7 +295,7 @@ body {
     width: 600px;
    
     position: absolute;
-    bottom: 100px;
+    bottom: 70px;
     left: 50%;
     margin-left: -300px; 
     height: 20px;
