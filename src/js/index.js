@@ -4,6 +4,7 @@ import '../scss/main-page/style.scss';
 import '../scss/audio-call/style.scss';
 import '../scss/settings/style.scss';
 import '../scss/statistics/style.scss';
+import '../scss/speakit/style.scss';
 import '../scss/sprint/style.scss';
 
 import menuButtonHandler from './components/nav-menu';
