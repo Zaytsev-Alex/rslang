@@ -68,7 +68,6 @@ const changeSettings = async (grp) => {
     } catch(e) {
         errorField.textContent = `Whoops: ${e}`;
     }
-    console.log(responseSendAnswer)
     return responseSendAnswer;
 }
 
