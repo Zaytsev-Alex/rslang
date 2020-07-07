@@ -1,8 +1,8 @@
 export default class SprintGame {
-    constructor(container, uid, token) {
+    constructor(container) {
         this.container = container;
-        this.userId = uid;
-        this.token = token;
+        this.userId = localStorage.getItem('userId');
+        this.token = localStorage.getItem('token');
         this.score = 0;
         this.combo = 1;
         this.progress = 0;
@@ -332,7 +332,7 @@ export default class SprintGame {
             this.container.querySelector('.sprint__card_combo_multy').textContent = `+${10 * this.combo}`;
             this.countAnswersStrick += 1;
             if (this.countAnswersStrick % 4 === 0) {
-                const comboSound = new Audio('../audio/combo.mp3');
+                const comboSound = new Audio('../../assets/audio/combo.mp3');
                 comboSound.play();
                 this.combo *= 2;
                 this.container.querySelectorAll('.sprint__card_combo_item').forEach((e) => {
@@ -347,12 +347,12 @@ export default class SprintGame {
             } else {
                 this.container.querySelector(`.sprint__card_combo_item:nth-of-type(${this.countAnswersStrick % 4})`)
                     .classList.add('sprint__card_combo_item-active');   
-                const rightAnswerSound = new Audio('../audio/right.mp3');
+                const rightAnswerSound = new Audio('../../assets/audio/right.mp3');
                 rightAnswerSound.play();
             }
         } else {
             this.words[this.index].guessed = false;
-            const wrongAnswerSound = new Audio('../audio/wrong.mp3');
+            const wrongAnswerSound = new Audio('../../assets/audio/wrong.mp3');
             wrongAnswerSound.play();
             const sprintCardWrongAnswer = document.querySelector('.sprint__card_wrong-answer');
             sprintCardWrongAnswer.classList.remove('sprint__card_wrong-answer-hidden');
@@ -408,9 +408,6 @@ export default class SprintGame {
         const statisticsContainrt = document.createElement('div');
         statisticsContainrt.classList.add('sprint__statistics-container');
 
-        const lastScoreStatistics = localStorage.getItem('sprintStatistics').split(',');
-        lastScoreStatistics.pop();
-        lastScoreStatistics.join(', ');
         const sprintStatistics = document.createElement('div');
         sprintStatistics.classList.add('sprint__statistics');
         
@@ -418,11 +415,6 @@ export default class SprintGame {
         score.classList.add('sprint__statistics_score');
         score.textContent = `Результат: ${this.score}`;
         sprintStatistics.appendChild(score);
-
-        const lastScore = document.createElement('p');
-        lastScore.classList.add('sprint__statistics_last-scores');
-        lastScore.textContent = `Ваши прошлые попытки: ${lastScoreStatistics}`
-        sprintStatistics.appendChild(lastScore);
 
         const knownWords = document.createElement('ul');
         knownWords.classList.add('sprint__statistics_known-words');
@@ -489,8 +481,6 @@ export default class SprintGame {
     }
 
     stopGame() {
-        let statistics = '';
-        const gameStatistics = this.score;
         this.loaderIndicator();
         let guessedCount = 0;
         for (let i = 0; i < this.index; i += 1) {
@@ -501,18 +491,6 @@ export default class SprintGame {
         this.sendStatistics(this.score, this.index, guessedCount).then(() => {
             this.loaderIndicatorHide();
         });
-        if (localStorage.getItem('sprintStatistics')) {
-            statistics = localStorage.getItem('sprintStatistics');
-            const statArray = statistics.split(',');
-            if (statArray.length === 4) {
-                statArray.shift();
-            }
-            statArray.push(gameStatistics);
-            statistics = statArray.join(',');
-        } else {
-            statistics = gameStatistics;
-        }
-        localStorage.setItem('sprintStatistics', statistics);
         this.hideSprintCard();
         this.showStatistics();
         this.ended = true;

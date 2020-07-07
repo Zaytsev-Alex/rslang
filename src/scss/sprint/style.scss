@@ -3,13 +3,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-image: url("../img/mount.jpg");
+    background-image: url("../../assets/images/mount.jpg");
     background-size: cover;  
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #5B2C6F;
 
     &__promo {
-        background-image: url("../img/monkey.svg");
+        background-image: url("../../assets/images/monkey.svg");
         background-size: cover;
         height: 100%;
         position: fixed;
@@ -35,6 +35,7 @@
         &-hide {
             display: none;
         }
+
         &_header { 
             font-size: 60px;
             letter-spacing: 13px;
@@ -132,9 +133,7 @@
             line-height: 150px;
             vertical-align: middle;
             text-shadow: #5B2C6F 0 0 4px;
-            padding-left: 70px;
-            background: url("../img/cloud.png") no-repeat 80% 50%;
-            background-size: cover;
+            text-align: center;
         }
 
         &_combo { 
@@ -208,7 +207,7 @@
             width: 48px;
             height: 48px;
             margin-top: 5px;
-            background: url("../img/wrong.png") no-repeat center center;
+            background: url("../../assets/images/wrong.png") no-repeat center center;
             background-size: cover;
             opacity: 1;
             transition: opacity 0.2s ease-out;
@@ -308,19 +307,19 @@
         }
 
         &_arrow-left {
-            background: url("../img/left.png") no-repeat center center;
+            background: url("../../assets/images/left-key.png") no-repeat center center;
             background-size: cover;
         }
 
         &_arrow-right {
-            background: url("../img/right.png") no-repeat center center;
+            background: url("../../assets/images/right-key.png") no-repeat center center;
             background-size: cover; 
         }
 
         &_speak {
             width: 35px;
             height: 35px;
-            background: url("../img/echo.png") no-repeat center center;
+            background: url("../../assets/images/echo.png") no-repeat center center;
             background-size: cover;
             border: 0;
             filter: invert(1);
@@ -348,10 +347,6 @@
             display: flex;
             flex-direction: column;;
             align-items: center;
-        }
-
-        &_last-scores {
-            margin: 10px 0;
         }
 
         &_score {
