@@ -1,3 +1,4 @@
+import {compareDates} from '../Utils/Utils'
 
 export async function getPagesNumber(group) {
     const url = `https://afternoon-falls-25894.herokuapp.com/words/count?group=${group}`;
@@ -125,22 +126,88 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
     }
     
  
-    export async function getWordsToLearn(userId, token, wordsPerPage, group) {
-        const wordsToLearnNumber = SETTINGS.newWords;
+    export async function getWordsToLearn(userId, token, newWordsToLearnNumber, wordsToRepeatNumber, group) {
+        console.log(group)
         let wordsToLearn = [];
         let wordsToTrain = [];
-       if (wordsToLearnNumber > 0) {
-         wordsToLearn = await getNewWordsToLearn(userId, token, wordsPerPage, group);
+       if (newWordsToLearnNumber > 0) {
+         wordsToLearn = await getNewWordsToLearn(userId, token, newWordsToLearnNumber, group);
          if (wordsToLearn.length === 0) {
            SETTINGS.currentGroup +=1;
-          wordsToLearn = await getNewWordsToLearn(userId, token, wordsPerPage, group);
+          wordsToLearn = await getNewWordsToLearn(userId, token, newWordsToLearnNumber, group);
          }
        }
 
-       wordsToTrain = await getWordsToTrain(userId, 25, token);
-       
-       return {'learn':wordsToLearn, 'train' : wordsToTrain};
+       wordsToTrain = await getWordsToTrain(userId, 15, token);
+
+       let filteredWordsToTrain = wordsToTrain.filter( (el) => {
+         console.log(el);
+       return compareDates(new Date().toLocaleDateString("ru-Ru", {"year": "numeric","month": "numeric","day": "numeric"}), el.userWord.optional.nextDate);
+
+       })
+       filteredWordsToTrain = filteredWordsToTrain.slice(0, wordsToRepeatNumber)
+       console.log(filteredWordsToTrain);
+       return {'learn':wordsToLearn, 'train' : filteredWordsToTrain};
     }
 
-  
+    export const getUserSettings = async ( userId,token) => {
+      const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        }
+      });
+      const settings = await rawResponse.json();
+      return settings;
+    };
+
+    export const updateUserSettings = async (userId,token, word) => {
+      const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
+        method: 'PUT',
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(word)
+      });
+      // eslint-disable-next-line no-debugger
+      debugger;
+      const content = await rawResponse.json();
+      console.log(content);
+    };
+
+
+    export const getUserStatistic = async ( userId,token) => {
+      const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        }
+      });
+      const statistic = await rawResponse.json();
+      return statistic;
+    };
+
+
+    export const updateUserStatistic = async (userId,token, statistic) => {
+      const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
+        method: 'PUT',
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'learnedWords' : statistic.learnedWords,
+      'optional' : statistic.optional})
+      });
+      const content = await rawResponse.json();
+      console.log(content);
+    };
 
