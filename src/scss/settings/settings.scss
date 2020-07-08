@@ -1,0 +1,295 @@
+.settings {
+  box-sizing: border-box;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 20px;
+  font-size: 2rem;
+  color: $text-dark;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &__new-words-quantity,
+  &__cards-quantity,
+  &__easy-interval,
+  &__good-interval {
+    appearance: none;
+    width: 200px;
+    height: 7px;
+    outline: none;
+    border-radius: 5px;
+    background-color: $text-dark;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background-color: $text-dark;
+      border: 4px solid $button-bg-normal;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  &__cards-output,
+  &__new-words-output,
+  &__easy-interval-output,
+  &__good-interval-output {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    color: $text-white;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: $text-dark;
+    padding: 5px 10px;
+    margin-left: 20px;
+
+    &:after {
+      position: absolute;
+      top: 8px;
+      left: -7px;
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-right: 7px solid #2c3e50;
+      border-bottom: 7px solid transparent;
+      content: "";
+    }
+  }
+
+  &__checkbox {
+    vertical-align: middle;
+    text-align: center;
+
+    label {
+      display: inline-block;
+      color: $text-dark;
+      cursor: pointer;
+      position: relative;
+      text-align: left;
+      margin-left: 10px;
+      margin-left: 40px;
+
+      span {
+        display: inline-block;
+        position: absolute;
+        left: -45px;
+        background-color: transparent;
+        width: 25px;
+        height: 25px;
+        transform-origin: center;
+        border: 2px solid $button-bg-normal;
+        border-radius: 50%;
+        vertical-align: -6px;
+        margin-right: 10px;
+        transition: background-color 150ms 200ms,
+                    transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
+
+        &:before {
+          content: "";
+          width: 0px;
+          height: 2px;
+          border-radius: 2px;
+          background: $button-bg-normal;
+          position: absolute;
+          transform: rotate(45deg);
+          top: 13px;
+          left: 9px;
+          transition: width 50ms ease 50ms;
+          transform-origin: 0% 0%;
+        }
+
+        &:after {
+          content: "";
+          width: 0;
+          height: 2px;
+          border-radius: 2px;
+          background: $button-bg-normal;
+          position: absolute;
+          transform: rotate(305deg);
+          top: 16px;
+          left: 10px;
+          transition: width 50ms ease;
+          transform-origin: 0% 0%;
+        }
+
+        &.error {
+            border-color: $text-error;
+        }
+      }
+
+      &:hover {
+        span {
+          &:before {
+            width: 5px;
+            transition: width 100ms ease;
+          }
+
+          &:after {
+            width: 10px;
+            transition: width 150ms ease 100ms;
+          }
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      display: none;
+
+      &:checked {
+        + label {
+          span {
+            background-color: $text-white;
+            transform: scale(1.25);
+
+            &:after {
+              width: 10px;
+              background: $button-bg-active;
+              transition: width 150ms ease 100ms;
+            }
+
+            &:before {
+              width: 5px;
+              background: $button-bg-active;
+              transition: width 150ms ease 100ms;
+            }
+          }
+
+          &:hover {
+            span {
+              background-color: $text-white;
+              transform: scale(1.25);
+
+              &:after {
+                width: 10px;
+                background: $button-bg-hover;
+                transition: width 150ms ease 100ms;
+              }
+
+              &:before {
+                width: 5px;
+                background: $button-bg-hover;
+                transition: width 150ms ease 100ms;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-hor {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 16px;
+
+      @media screen and (max-width: 510px){
+        margin-top: 22px;
+      }
+  }
+
+  form {
+      background: $text-white;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
+  &__submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  &__submit {
+    outline:none;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius:40px;
+    background: #fff;
+    border: 2px solid $button-bg-normal;
+    color: $button-bg-normal;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 1.5rem;
+    font-weight: 400;
+
+    &:hover {
+        color: $text-white;
+        background: $button-bg-hover;
+      }
+      &:active {
+        letter-spacing: 3px ;
+      }
+      &:after {
+        content:"Применить";
+      }
+  }
+
+  &__submit-loading {
+    width: 40px;
+    border-color: $text-dark;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: $button-bg-normal;
+    animation: rotating 2s 0.25s linear infinite;
+  
+    &:after {
+      content: "";
+    }
+    &:hover {
+      color: $button-bg-hover;
+      background: $text-white;
+    }
+  }
+
+  &__submit-validate {
+    font-size: 13px;
+    color: $text-white;
+    background: $button-bg-normal;
+    &:after {
+      content:  "Ok";
+    }
+  }
+
+  &__get-indicator {
+    z-index: 100;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+
+    &_spinner {
+      background-color: transparent;
+    }
+  }
+
+  &__error {
+    width: 100%;
+    margin-top: 15px;
+    color: $text-error;
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
