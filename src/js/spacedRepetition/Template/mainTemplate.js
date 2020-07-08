@@ -1,10 +1,17 @@
    export default function createMainTemplate() {
    const MAIN = document.createElement('main');
-   MAIN.classList.add('main');
+   MAIN.classList.add('spaced-repetition');
    MAIN.innerHTML = `
    <div class='main__wrapper'>
    <div class='card-container'>
        <div class='card'>
+       <div class='progress'>
+       <div class='progress__start-value'></div>
+       <div class='progress__row'>
+           <div class='progress__current'></div>
+       </div>
+       <div class='progress__end-value'></div>
+   </div>
            <div class='card__wrapper'>
                <header class='card__header'>
                    <div class='card__translate-switcher'>
@@ -88,13 +95,7 @@
                <g></g>
            </svg></button>
    </div>
-   <div class='progress'>
-       <div class='progress__start-value'></div>
-       <div class='progress__row'>
-           <div class='progress__current'></div>
-       </div>
-       <div class='progress__end-value'></div>
-   </div>
+
 </div>
 `;
    document.body.append(MAIN);

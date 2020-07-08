@@ -60,3 +60,35 @@ export function compareDates(currentDate, nextDate) {
         }
        return false;
     }
+
+  export const createStatics = (statistic) => {
+        console.log(statistic, 'statstads')
+        const stat = document.createElement('div');
+        stat.classList.add('repetition-stat');
+        const statTemplate = `<div class = 'repetition-stat__wrapper'>
+            <div class='repetition-stat__img-container'></div>
+            <div class ='repetition-stat__title'>Статистика за день</div>
+            <div class = 'total-cards'>
+             <span>Карточек завершено:</span>
+        <span>${statistic.optional.spacedRepetition.dayStat.totalWords}</span>
+    </div>
+    <div class = 'correct-answers'>
+        <span>Правильные ответы:</span>
+        <span>${statistic.optional.spacedRepetition.dayStat.successfulAttempts/(statistic.optional.spacedRepetition.dayStat.totalAttempts === 0 ? 1 : 
+            statistic.optional.spacedRepetition.dayStat.totalAttempts)}%</span>
+    </div>
+    <div class = 'new-words'>
+        <span>Новые слова:</span>
+        <span>${statistic.optional.spacedRepetition.dayStat.newWords}</span>
+    </div>
+    <div class = 'logest-series'>
+        <span>Самая длинная серия правильных ответов:</span>
+        <span>${statistic.optional.spacedRepetition.dayStat.finalCorrectAnswerSeries > statistic.optional.spacedRepetition.dayStat.correctAnswerSeries
+             ? statistic.optional.spacedRepetition.dayStat.finalCorrectAnswerSeries: statistic.optional.spacedRepetition.dayStat.correctAnswerSeries}</span>
+    </div>
+    <button type='button' class='repetition-stat__confirm-btn'>Продолжить</button>
+    </div>`;
+        stat.innerHTML = statTemplate;
+      //  stat.style.width = document.body.offsetHeight;
+       return stat;
+    }

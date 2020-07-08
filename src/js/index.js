@@ -1,11 +1,11 @@
 import "../css/style.css";
 import "../css/style.scss";
-import createMainContent from './MainContent/mainContent'
+import createSpacedRepetition from './spacedRepetition/spacedRepetition'
 
 
 
 
 
-createMainContent();
+createSpacedRepetition();
 
 
