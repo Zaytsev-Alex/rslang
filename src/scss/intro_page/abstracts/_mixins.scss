@@ -1,6 +1,0 @@
-@mixin flex ($align-h: center, $align-v: center) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: $align-h;
-    align-items: $align-v;
-}
