@@ -2,7 +2,6 @@ import mainPageHide from './mainPageHide';
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
 import showStatistics from '../statistics/showStatistics';
-import speakit from '../speakit/speakit';
 import SprintGame from '../sprint/SprintGame';
 
 const mainPageItemHolders = () => {
@@ -31,7 +30,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();
-        speakit();
+        console.log('вызов speakit');
     })
     container.querySelector('.main-page__item-our-game').addEventListener('click', () => {
         mainPageHide();
@@ -48,6 +47,4 @@ const mainPageItemHolders = () => {
         showSettings();
     })
 }
-
-
 export { mainPageItemHolders as default };
