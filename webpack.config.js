@@ -138,7 +138,8 @@ const config = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: 'fonts',
+              name: '[name].[ext]',
+              outputPath: './fonts/',
             },
           },
         ],
@@ -156,8 +157,9 @@ const config = {
     }),
     new CopyWebpackPlugin([
       // {from: './src/static', to: './'},
-      { from: './src/img', to: './img/' },
-      { from: './src/audio', to: './audio/' },
+      { from: './src/assets/images', to: './img/' },
+      { from: './src/assets/audio', to: './audio/' },
+      { from: './src/fonts', to: './fonts/' },
     ]),
   ],
 

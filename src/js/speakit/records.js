@@ -1,16 +1,6 @@
 import { get, set } from './storage';
 import getTime from './time';
 
-const recordsBtn = document.querySelector('.btn.records');
-const recordsContainer = document.querySelector('.history');
-
-const currentResults = [
-  document.querySelector('.errors'),
-  document.querySelector('.errors-item'),
-  document.querySelector('.succes'),
-  document.querySelector('.succes-item'),
-];
-
 const saveRecord = () => {
   const recordsList = get('recordsList') || [];
   const record = document.querySelector('.succes-num').textContent;
@@ -26,9 +16,17 @@ const saveRecord = () => {
 };
 
 const showRecords = () => {
+  const recordsContainer = document.querySelector('.history');
   recordsContainer.innerHTML = '';
 
   recordsContainer.classList.toggle('none');
+
+  const currentResults = [
+    document.querySelector('.errors'),
+    document.querySelector('.errors-item'),
+    document.querySelector('.succes'),
+    document.querySelector('.succes-item'),
+  ];
 
   currentResults.forEach((item) => {
     const node = item;
@@ -50,9 +48,10 @@ const showRecords = () => {
   }
 };
 
-document.querySelector('.new-game').addEventListener('click', () => {
-  saveRecord();
-  showRecords();
+window.addEventListener('click', () => {
+  const recordsBtn = document.querySelector('.btn.records');
+  document.querySelector('.new-game').addEventListener('click', () => {
+    saveRecord();
+  });
+  recordsBtn.addEventListener('click', showRecords);
 });
-
-recordsBtn.addEventListener('click', showRecords);
