@@ -2,6 +2,7 @@ import mainPageHide from './mainPageHide';
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
 import SprintGame from '../sprint/SprintGame';
+import speakit from '../speakit/speakit';
 
 const mainPageItemHolders = () => {
     const container = document.querySelector('main');
@@ -29,6 +30,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();
+        speakit();
         console.log('вызов speakit');
     })
     container.querySelector('.main-page__item-our-game').addEventListener('click', () => {
