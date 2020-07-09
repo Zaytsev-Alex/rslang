@@ -42,11 +42,11 @@ const mainPageDescription = [
         class: 'main-page__item-speakit',
     },
     {
-        header: 'Своя Игра',
+        header: 'Словарь',
         logoSrc: './img/our-game.svg',
         infoSrc: './img/info.svg',
-        description: 'Это писание своей игры. Нет своей игры - нет описания.',
-        class: 'main-page__item-our-game',
+        description: 'В словаре вы можете увидить Ваши слова, которые вы добавляли во время обучения.',
+        class: 'main-page__item-vocabulary',
     },
     {
         header: 'Статистика',
