@@ -13,6 +13,7 @@ export default class SprintGame {
         this.ended = false;
         this.difficultLevel = 0;
         this.breakGameHolder();
+        this.aggreagtedWords = false;
     }
 
     showPromoPage() {
@@ -33,6 +34,51 @@ export default class SprintGame {
         sprintPromoDescription.classList.add('sprint__promo_description');
         sprintPromoDescription.textContent = 'Тренировка на скорость. Определите верно ли подобран перевод для слова и нажмите соответсвующую кнопку. Ответы можно давать на клавиатурные клавиши. Выберите уровень сложности и начните тренировку.';
         sprintPromoContainer.appendChild(sprintPromoDescription);
+
+        const togglerP = document.createElement('p');
+        togglerP.classList.add('sprint__promo_toggle');
+        togglerP.textContent = 'Желаете ли вы использовать выученные слова во время игры? (В случае, если их будет недостаточно, будут добавлены новые слова)';
+        sprintPromoContainer.appendChild(togglerP);
+
+        const toggler = document.createElement('div');
+        toggler.classList.add('sprint__toggle');
+
+        const togglerYes = document.createElement('input');
+        togglerYes.classList.add('sprint__toggle_yes');
+        togglerYes.setAttribute('type', 'radio');
+        togglerYes.setAttribute('name', 'sprint__toggle');
+        togglerYes.setAttribute('id', 'sprint__toggle_yes');
+        toggler.appendChild(togglerYes);
+
+        const togglerNo = document.createElement('input');
+        togglerNo.classList.add('sprint__toggle_no');
+        togglerNo.setAttribute('type', 'radio');
+        togglerNo.setAttribute('name', 'sprint__toggle');
+        togglerNo.setAttribute('id', 'sprint__toggle_no');
+        togglerNo.setAttribute('checked', 'checked');
+        toggler.appendChild(togglerNo);
+
+        const toggleSwitch = document.createElement('div');
+        toggleSwitch.classList.add('sprint__toggle_switch');
+
+        const labelYes = document.createElement('label');
+        labelYes.classList.add('sprint__toggle_label');
+        labelYes.setAttribute('for', 'sprint__toggle_yes');
+        labelYes.textContent = 'Да';
+        toggleSwitch.appendChild(labelYes);
+
+        const labelNo = document.createElement('label');
+        labelNo.classList.add('sprint__toggle_label');
+        labelNo.setAttribute('for', 'sprint__toggle_no');
+        labelNo.textContent = 'Нет';
+        toggleSwitch.appendChild(labelNo);
+
+        const toggleSpan = document.createElement('span');
+        toggleSwitch.appendChild(toggleSpan);
+
+        toggler.appendChild(toggleSwitch);
+
+        sprintPromoContainer.appendChild(toggler);
 
         const sprintDifficultLevelContainer = document.createElement('div');
         sprintDifficultLevelContainer.classList.add('sprint__promo_difficult-level');
@@ -183,6 +229,22 @@ export default class SprintGame {
 
     hideSprintCard() {
         this.container.querySelector('.sprint__card').remove();
+    }
+
+    async getAggreagtedWords() {
+        const filter = '{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}';
+        const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/5f06da9c5f4f840017909721/aggregatedWords?wordsPerPage=${10}&filter=${filter}`,
+        {
+          method: 'GET',
+          withCredentials: true,
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDI4NDczMiwiZXhwIjoxNTk0Mjk5MTMyfQ.omMQIdBJ1CnxNQ811jbocv6Pgvqfcjss4z8QR9mI8AY',
+            'Accept': 'application/json',
+          }
+        });
+        const ans = rawResponse.json();
+        console.log(ans)
+        return this;
     }
 
     async getWords() {
