@@ -19,7 +19,6 @@ const createDefaultSettings = async () => {
             "showHard": true,
             "showDifficult": true,
             "group": 0,
-            "complicatedInterval": 1
           }
         }
     };

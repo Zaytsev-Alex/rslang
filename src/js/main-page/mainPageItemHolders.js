@@ -4,6 +4,7 @@ import puzzle from '../puzzle/puzzle';
 
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
+import showStatistics from '../statistics/showStatistics';
 import SprintGame from '../sprint/SprintGame';
 
 
@@ -43,7 +44,7 @@ const mainPageItemHolders = () => {
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
         document.querySelector('.basic-header__item_statistics').classList.add('basic-header__item-active');
-        console.log('вызов статистики');
+        showStatistics();
     })
     container.querySelector('.main-page__item-setting').addEventListener('click', () => {
         mainPageHide();
