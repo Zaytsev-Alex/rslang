@@ -22,6 +22,7 @@
     width: 200px;
     height: 50px;
     margin-top: 20px;      
+    margin-left: calc(100%/2 - 100px);
   
     &:hover {
       transform: scale(1.1);
