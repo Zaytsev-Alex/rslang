@@ -98,5 +98,5 @@
 
 </div>
 `;
-   document.body.append(MAIN);
+   return MAIN;
 }
