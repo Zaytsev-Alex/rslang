@@ -1,6 +1,105 @@
 import getStatistics from './getStatistics';
 import { authorizationLoaderShow as loaderShow, authorizationLoaderHide as loaderHide } from '../authorization/loader';
 
+const getGraph = (statistics) => {
+    const graph = document.createElement('div');
+    graph.classList.add('statistics__graph');
+
+    const h3 = document.createElement('h3');
+    h3.classList.add('statistics__total-count-words');
+    h3.textContent = `Всего слов изучено: ${statistics.learnedWords}`;
+    graph.appendChild(h3);
+
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('width', '400');
+    canvas.setAttribute('height', '200');
+    graph.appendChild(canvas);
+
+    const output = document.createElement('output');
+    output.classList.add('statistics__graph-output');
+    output.textContent = `${statistics.learnedWords} слов`;
+    graph.appendChild(output);
+
+    let textPercent = 0;
+    if (statistics.learnedWords) {
+        textPercent = -59.9864 + 18.0353 * Math.log(statistics.learnedWords);
+    }
+
+    const range = document.createElement('input');
+    range.setAttribute('type', 'range');
+    range.setAttribute('id', 'statistics__graph-range');
+    range.setAttribute('min', '0');
+    range.setAttribute('max', '100');
+    range.setAttribute('step', '1');
+    range.setAttribute('value', textPercent);
+    range.classList.add('statistics__graph-range');
+    graph.appendChild(range);
+ 
+    const label = document.createElement('label');
+    label.setAttribute('for', 'statistics__graph-range');
+    label.classList.add('statistics__graph-label');
+    label.textContent = `${textPercent}% любого текста.`;
+    graph.appendChild(label);
+    
+    return graph;
+}
+
+const makeCanvasGraph = () => {
+    const canvas = document.querySelector('canvas');
+    const ctx = canvas.getContext('2d');    
+    ctx.clearRect(0, 0, 400, 200);
+    ctx.beginPath();
+    ctx.moveTo(0, 200);
+    for (let x = 1; x < 428; x += 1) {
+        const y = -59.9864 + 18.0353 * Math.log(x);
+        ctx.lineTo(x - 27, 200 - y * 4);
+    }
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#59da6a';
+    ctx.fillStyle = 'rgba(40, 195, 138, 0.3)';
+    ctx.lineTo(400, 200);
+    ctx.lineTo(0, 200);
+    ctx.stroke();
+    ctx.fill();
+}
+
+const setActivePointGraph = (words) => {
+    const canvas = document.querySelector('canvas');
+    const ctx = canvas.getContext('2d');    
+    ctx.beginPath();
+    ctx.moveTo(0, 200);
+    let x = 1;
+    let y = 0;
+    while (x < words / 11.76) {
+        y = -59.9864 + 18.0353 * Math.log(x);
+        ctx.lineTo(x - 25, 200 - y * 4);
+        x += 1;
+    }
+    document.querySelector('.statistics__graph-label').textContent = `${Math.floor(y * 2)}% любого текста.`;
+    document.querySelector('.statistics__graph-output').textContent = `${Math.round(words)} слов`;
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#59da6a';
+    ctx.fillStyle = 'rgba(40, 195, 138, 0.7)';
+    ctx.lineTo(x - 26, 200);
+    ctx.lineTo(0, 200);
+    ctx.stroke();
+    ctx.fill();
+}
+
+const setActivePointGraphHolder = () => {
+    const range = document.querySelector('.statistics__graph-range');
+    range.addEventListener('change', () => {
+        let x = 0;
+        let y = 0;
+        while (y * 2 < range.value) {
+            y = -59.9864 + 18.0353 * Math.log(x);
+            x += 1;
+        }
+        makeCanvasGraph();
+        setActivePointGraph(x * 11.185);
+    })
+}
+
 const getMainStatistics = (statistics) => {
     console.log(statistics)
 
@@ -54,7 +153,6 @@ const getSprintStatistics = (statistics) => {
     sprintPercent.textContent = `Процент правильных ответов: ${sprintAvgPercent}%`;
     sprintStatisticsDescription.appendChild(sprintPercent);
     statisticsSprint.appendChild(sprintStatisticsDescription);
-    console.log(sprintArray)
     const lastGames = document.createElement('div');
     for (let i = 0; i < sprintArray.length; i += 4) {
         const p = document.createElement('p');
@@ -120,7 +218,6 @@ const showStatistics = async () => {
 
     /* Объект со статистикой */
     const statistics = await getStatistics();
-    console.log(statistics);
 
     const container = document.querySelector('main');
     container.classList.add('statistics');
@@ -128,11 +225,14 @@ const showStatistics = async () => {
     const statisticsSection = document.createElement('section');
     statisticsSection.classList.add('statistics__container');
 
+    /* График */
+    statisticsSection.appendChild(getGraph(statistics));
+
     /* Статистика основного приложения */
     statisticsSection.appendChild(getMainStatistics(statistics));
 
     /* Статистика спринт */
-    if (statistics.optional.sprint) {
+    if (statistics.optional && statistics.optional.sprint) {
         statisticsSection.appendChild(getSprintStatistics(statistics));
     }
 
@@ -146,6 +246,11 @@ const showStatistics = async () => {
     statisticsSection.appendChild(getSpeakStatistics(statistics));
 
     container.appendChild(statisticsSection);
+
+    makeCanvasGraph(statistics);
+    setActivePointGraph(statistics.learnedWords);
+    setActivePointGraphHolder();
+
     loaderHide();
 }
 
