@@ -14,8 +14,6 @@ export function createAudio() {
     return audio;
 }
 
-
-
 export function addCardInfo(data) {
     const IMAGE_CONTAINER = document.querySelector('.card__image');
     const WORD_TRANSLATE = document.querySelector('.card__word-translate');
@@ -62,7 +60,6 @@ export function compareDates(currentDate, nextDate) {
     }
 
   export const createStatics = (statistic) => {
-        console.log(statistic, 'statstads')
         const stat = document.createElement('div');
         stat.classList.add('repetition-stat');
         const statTemplate = `<div class = 'repetition-stat__wrapper'>
@@ -74,8 +71,8 @@ export function compareDates(currentDate, nextDate) {
     </div>
     <div class = 'correct-answers'>
         <span>Правильные ответы:</span>
-        <span>${statistic.optional.spacedRepetition.dayStat.successfulAttempts/(statistic.optional.spacedRepetition.dayStat.totalAttempts === 0 ? 1 : 
-            statistic.optional.spacedRepetition.dayStat.totalAttempts)}%</span>
+        <span>${Math.round(statistic.optional.spacedRepetition.dayStat.successfulAttempts/(statistic.optional.spacedRepetition.dayStat.totalAttempts === 0 ? 1 : 
+            statistic.optional.spacedRepetition.dayStat.totalAttempts)*100)}%</span>
     </div>
     <div class = 'new-words'>
         <span>Новые слова:</span>
@@ -89,6 +86,5 @@ export function compareDates(currentDate, nextDate) {
     <button type='button' class='repetition-stat__confirm-btn'>Продолжить</button>
     </div>`;
         stat.innerHTML = statTemplate;
-      //  stat.style.width = document.body.offsetHeight;
        return stat;
     }
