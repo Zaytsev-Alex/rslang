@@ -18,19 +18,21 @@ $wrong_answer: rgb(218, 112, 112);
 }
 html {
   font-size: 16px;
+  position:relative;
+  min-height: 100vh;
 }
 body {
   background: url("/../img/nature.jpg") 50% no-repeat;
   background-size: cover;
-  height: calc(100vh - 60px);
+  min-height: 100%;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
 
-  .main {
-    margin-top: 60px;
-  }
+  .spaced-repetition {
+    margin-top: 100px;
+ 
   .main__wrapper {
     margin: 0 auto;
-    max-width: 1440px;
+    max-width: 1200px;
   }
   .card-container {
     display: flex;
@@ -39,7 +41,12 @@ body {
     .card {
       width: 550px;
       // min-height: 600px;
-      
+      @media screen and (max-width: 600px) {
+        width: 400px;
+    }
+    @media screen and (max-width: 410px) {
+      width: 310px;
+  }
       .card__wrapper {
         display: flex;
         flex-direction: column;
@@ -84,6 +91,10 @@ body {
         .card__img {
           border-radius: 8px;
           height: 240px;
+          @media screen and (max-width: 410px) {
+            height: 160px;
+            
+        }
         }
       }
       .card__main {
@@ -148,7 +159,7 @@ body {
           outline: none;
           user-select: none;
           background-color: $button_background;
-          border: 1px solid #e4cccc;
+          border: none;
           padding: 5px 10px;
           color: $fourth_color;
           font-family: inherit;
@@ -205,6 +216,9 @@ body {
         font-size: 1rem;
         font-weight: 400;
         color: $card_text_color;
+        @media screen and (max-width: 410px) {
+          font-size: 0.8rem;
+      }
       }
       .card__explain {
         i {
@@ -240,10 +254,14 @@ body {
         color: $green_color;
       }
       .wrong {
-        color: red;
+        color: rgb(233, 35, 35);
       }
       .default {
         color: $blue_color;
+      }
+      .answer--correct {
+        color: $green_color;
+        border-bottom: 3px solid $green_color;
       }
     }
     .answer--remove {
@@ -292,18 +310,19 @@ body {
   }
 
   .progress {
-    width: 600px;
+    // min-width: 600px;
    
-    position: absolute;
-    bottom: 70px;
-    left: 50%;
-    margin-left: -300px; 
+    // position: absolute;
+    // bottom: 70px;
+    // left: 50%;
+    // margin-left: -300px; 
     height: 20px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 50px;
     .progress__start-value,
     .progress__end-value {
-      color: rgb(223, 191, 9);
+      color: rgb(209, 134, 100);
       font-size: 1rem;
       font-weight: bold;
       
@@ -316,7 +335,7 @@ body {
       .progress__current {
         height: 100%;
         width: 0%;
-        background-color: $green_color;
+        background-color: rgba(209, 134, 100, 0.8);
         border-radius: 8px;
         transition: 0.5s;
       }
@@ -442,6 +461,134 @@ body {
     100% {
       transform: rotateY(0deg);
     }
+  
   }
-
+  .repetition-stat {
+    position: absolute;
+    // overflow: scroll;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f2ee;
+    z-index: 6;
+    opacity:0; /*Элемент полностью прозрачный (невидимый)*/
+    transition: 1s; /*Скорость перехода состояния элемента*/
+    animation: show 1s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    
+    .repetition-stat__wrapper {
+        padding: 10px 10px;
+        width: 430px;
+        min-height: 180px;
+        border-radius: 5%;
+        margin-top: -120px;
+        // background-color: #fff;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .repetition-stat__img-container {
+          width: 150px;
+          height: 150px;
+          background-image: url(/../img/stat.svg);
+          background-position: 50%;
+          background-size: 150px;
+          background-repeat: no-repeat;
+          margin: 100px auto;
+        }
+        .repetition-stat__title {
+          text-align: center;
+          font-weight: 700;
+          font-size: 1.2rem;
+          color: rgb(5, 127, 158);
+          margin-bottom: 30px;
+        }
+        .total-cards,
+        .correct-answers,
+        .new-words,
+        .logest-series
+         {
+          display: flex;
+          justify-content: space-between;
+         
+          padding: 24px 0;
+          border-bottom: 1px solid rgba(0,0,0,.05)
+        }
+        .total-cards {
+          color: rgb(80, 162, 238);
+        }
+        .correct-answers {
+          color: #55dd90;
+        }
+        .new-words {
+          color: rgb(216, 148, 46);
+        }
+        .logest-series {
+          color: rgb(112, 57, 175);
+          & span:first-child {
+            max-width: 300px;
+          }
+        }
+        .repetition-stat__confirm-btn {  
+          outline: none;
+            user-select: none;
+            background-color: $green_color;
+            border: 1px solid #e4cccc;
+            padding: 5px 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            border-radius: 8px;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            transition: 0.2s ease-in-out;
+            margin-top: 30px;
+            &:hover {
+              background-color: $green_color;
+              cursor: pointer;
+              color: #fff;
+            }
+            &:hover:before {
+              left: 400px;
+              transition: 0.5s ease-in-out;
+            }
+            &:before {
+              content: "";
+              background: -webkit-gradient(
+                linear,
+                left top,
+                right top,
+                from(hsla(0, 0%, 100%, 0.1)),
+                to(hsla(0, 0%, 100%, 0.5))
+              );
+              background: linear-gradient(
+                90deg,
+                hsla(0, 0%, 100%, 0.1),
+                hsla(0, 0%, 100%, 0.5)
+              );
+              height: 50px;
+              width: 50px;
+              position: absolute;
+              top: -8px;
+              left: -75px;
+              -webkit-transform: skewX(-45deg);
+              transform: skewX(-45deg);
+            }
+          }
+        }
+      }
+      @keyframes show{
+        0%{
+        opacity:0;
+        }
+        100% {
+        opacity:1;
+        }
+        }
+  }
 }
+
