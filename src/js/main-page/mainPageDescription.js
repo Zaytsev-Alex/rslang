@@ -43,7 +43,7 @@ const mainPageDescription = [
     },
     {
         header: 'Словарь',
-        logoSrc: './img/our-game.svg',
+        logoSrc: './img/vocabulary.svg',
         infoSrc: './img/info.svg',
         description: 'В словаре вы можете увидить Ваши слова, которые вы добавляли во время обучения.',
         class: 'main-page__item-vocabulary',

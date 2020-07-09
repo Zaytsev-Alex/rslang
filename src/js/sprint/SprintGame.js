@@ -246,12 +246,12 @@ export default class SprintGame {
         let words; 
         try {
             const filter = '{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}';
-            const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/5f06da9c5f4f840017909721/aggregatedWords?wordsPerPage=4000&filter=${filter}`,
+            const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/aggregatedWords?wordsPerPage=4000&filter=${filter}`,
             {
               method: 'GET',
               withCredentials: true,
               headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDI4NDczMiwiZXhwIjoxNTk0Mjk5MTMyfQ.omMQIdBJ1CnxNQ811jbocv6Pgvqfcjss4z8QR9mI8AY',
+                'Authorization': `Bearer ${this.token}`,
                 'Accept': 'application/json',
               }
             });
@@ -261,7 +261,6 @@ export default class SprintGame {
                 document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
             }
         }
-        console.log(this)
         return words[0].paginatedResults;
     }
 
@@ -633,7 +632,7 @@ export default class SprintGame {
                 statArray.push(length);
                 statArray.push(guessedCount);
                 const nowDate = new Date();
-                statArray.push(`${nowDate.getDay}:${nowDate.getMonth}:${nowDate.getFullYear()}`)
+                statArray.push(`${nowDate.getDay()}:${nowDate.getMonth()}:${nowDate.getFullYear()}`)
                 if (statArray.length > 40) {
                     statArray.shift();
                     statArray.shift();
