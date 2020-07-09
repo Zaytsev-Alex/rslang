@@ -1,12 +1,5 @@
 import {compareDates} from '../Utils/Utils'
 
-export async function getPagesNumber(group) {
-    const url = `https://afternoon-falls-25894.herokuapp.com/words/count?group=${group}`;
-    const response = await fetch(url);
-    const result = await response.json();
-    console.log(result.count);
-}
-
 
 export async function getWords(group, page) {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
@@ -59,6 +52,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
 
 
   export const updateUserWord = async (userId, wordId, word, token) => {
+    try {
     const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'PUT',
       withCredentials: true,
@@ -71,6 +65,10 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
     });
     const content = await rawResponse.json();
     console.log(content);
+  }
+  catch(e) {
+    console.log('Не удалось обновить слово')
+  }
   };
 
 
@@ -87,8 +85,8 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
     return content[0].paginatedResults;
   };
   
-  export const getWordsToTrain = async (userId, wordsPerPage, token) => {
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=${wordsPerPage}&filter={"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}`,
+  export const getAgregatedWords = async (userId, wordsPerPage, token, filter) => {
+    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=${wordsPerPage}&filter=${filter}`,
     {
       method: 'GET',
       withCredentials: true,
@@ -131,6 +129,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
   };
 
   export const updateUserSettings = async (userId,token, word) => {
+    try {
     const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`, {
       method: 'PUT',
       withCredentials: true,
@@ -141,32 +140,31 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       },
       body: JSON.stringify(word)
     });
-    // eslint-disable-next-line no-debugger
-    debugger;
     const content = await rawResponse.json();
     console.log(content);
+  } catch(e) {
+    console.log('Не удалось перезаписать настройки')
+  }
   };
     
  
     export async function getWordsToLearn(userId, token, newWordsToLearnNumber, group) {
-        console.log(group)
         let wordsToLearn = [];
         let wordsToTrain = [];
        if (newWordsToLearnNumber > 0) {
          wordsToLearn = await getNewWordsToLearn(userId, token, newWordsToLearnNumber, group);
          if (wordsToLearn.length === 0) {
-           const SETTINGS = await getUserSettings(userId,token);
-           
+           const SETTINGS = await getUserSettings(userId,token);   
            SETTINGS.optional.spacedRepetition.group += 1;
            updateUserSettings(userId, token, {'wordsPerDay' : SETTINGS.wordsPerDay, 'optional' : SETTINGS.optional})
           wordsToLearn = await getNewWordsToLearn(userId, token, newWordsToLearnNumber, SETTINGS.optional.spacedRepetition.group);
 
          }
        }
-       wordsToTrain = await getWordsToTrain(userId, 15, token);
+       const filter = `{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}`;
+       wordsToTrain = await getAgregatedWords(userId, 4600, token, filter);
 
        const filteredWordsToTrain = wordsToTrain.filter( (el) => {
-         console.log(el);
        return compareDates(new Date().toLocaleDateString("ru-Ru", {"year": "numeric","month": "numeric","day": "numeric"}), el.userWord.optional.nextDate);
        })
     
@@ -192,6 +190,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
 
 
     export const updateUserStatistic = async (userId,token, statistic) => {
+      try {
       const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
         method: 'PUT',
         withCredentials: true,
@@ -205,5 +204,8 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       });
       const content = await rawResponse.json();
       console.log(content);
+    }catch(e) {
+      console.log('Не удалось записать статистику');
+    }
     };
 
