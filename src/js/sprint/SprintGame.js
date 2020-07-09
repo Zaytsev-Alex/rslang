@@ -13,7 +13,7 @@ export default class SprintGame {
         this.ended = false;
         this.difficultLevel = 0;
         this.breakGameHolder();
-        this.aggreagtedWords = false;
+        this.aggregatedWords = false;
     }
 
     showPromoPage() {
@@ -102,9 +102,8 @@ export default class SprintGame {
         this.container.appendChild(sprintPromo);
 
         this.switchDifficultLevelHolder();
+        this.aggregatedWordsToggleHolder();
         this.startGameHolder();
-
-        return this;
     }
 
     hidePromoPageSprint() {
@@ -136,6 +135,18 @@ export default class SprintGame {
                 event.target.classList.add('sprint__promo_difficult-level_item-active');
                 this.setDifficultLevel(level - 1);
             }
+        })
+    }
+
+    aggregatedWordsToggleHolder() {
+        const radioYes = this.container.querySelector('.sprint__toggle_yes')
+        const radioNo = this.container.querySelector('.sprint__toggle_no')
+        radioNo.addEventListener('change', () => {
+            this.aggregatedWords = radioYes.checked;
+        })
+
+        radioYes.addEventListener('change', () => {
+            this.aggregatedWords = radioYes.checked;
         })
     }
 
@@ -231,26 +242,57 @@ export default class SprintGame {
         this.container.querySelector('.sprint__card').remove();
     }
 
-    async getAggreagtedWords() {
-        const filter = '{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}';
-        const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/5f06da9c5f4f840017909721/aggregatedWords?wordsPerPage=${10}&filter=${filter}`,
-        {
-          method: 'GET',
-          withCredentials: true,
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDI4NDczMiwiZXhwIjoxNTk0Mjk5MTMyfQ.omMQIdBJ1CnxNQ811jbocv6Pgvqfcjss4z8QR9mI8AY',
-            'Accept': 'application/json',
-          }
-        });
-        const ans = rawResponse.json();
-        console.log(ans)
-        return this;
+    async getAggregatedWords() {
+        let words; 
+        try {
+            const filter = '{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}';
+            const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/5f06da9c5f4f840017909721/aggregatedWords?wordsPerPage=4000&filter=${filter}`,
+            {
+              method: 'GET',
+              withCredentials: true,
+              headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDI4NDczMiwiZXhwIjoxNTk0Mjk5MTMyfQ.omMQIdBJ1CnxNQ811jbocv6Pgvqfcjss4z8QR9mI8AY',
+                'Accept': 'application/json',
+              }
+            });
+            words = await rawResponse.json();
+        } catch(e) {
+            if (document.querySelector('.sprint__card_errors')) {
+                document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
+            }
+        }
+        console.log(this)
+        return words[0].paginatedResults;
     }
 
     async getWords() {
         let json;
         if (!this.ended) {
             try {
+                if (this.aggregatedWords) {
+                    const aggregatedWords = await this.getAggregatedWords();
+                    aggregatedWords.forEach((e) => {
+                        this.words.push(e);
+                    })
+                    for (let i = this.words.length - 1; i > 0; i-= 1) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [this.words[i], this.words[j]] = [this.words[j], this.words[i]];
+                    }
+                    this.aggregatedWords = false;
+                    this.words.forEach((e, idx) => {
+                        const chance = Math.floor(Math.random() * 10) > 6;
+                        if (chance) {
+                            let randomWord = idx;
+                            while (randomWord === idx) {
+                                randomWord = Math.floor(Math.random() * this.words.length);
+                            }
+                            this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
+                        }
+                    })
+
+                    return aggregatedWords;
+                } 
+
                 const page = this.getPage();
                 if (page !== null) {
                     const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${this.difficultLevel}`);
@@ -344,13 +386,21 @@ export default class SprintGame {
         this.loaderIndicator(); 
 
         this.getWords().then(() => {
-            this.getWords().then(() => {
+            if (this.words.length > 40) {
                 this.nextWord(0);
                 this.answerHolder();
                 this.loaderIndicatorHide();
                 this.speakWordHolder();
                 this.timer();
-            })
+            } else {
+                this.getWords().then(() => {
+                    this.nextWord(0);
+                    this.answerHolder();
+                    this.loaderIndicatorHide();
+                    this.speakWordHolder();
+                    this.timer();
+                })
+            }
         })
     }
 
