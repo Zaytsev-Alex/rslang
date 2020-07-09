@@ -39,7 +39,6 @@ body {
 
       .card {
         width: 550px;
-        // min-height: 600px;
         @media screen and (max-width: 600px) {
           width: 400px;
         }
@@ -305,12 +304,6 @@ body {
     }
 
     .progress {
-      // min-width: 600px;
-
-      // position: absolute;
-      // bottom: 70px;
-      // left: 50%;
-      // margin-left: -300px;
       height: 20px;
       display: flex;
       justify-content: space-between;
@@ -466,10 +459,10 @@ body {
       justify-content: center;
       background-color: #f8f2ee;
       z-index: 6;
-      opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
-      transition: 1s; /*Скорость перехода состояния элемента*/
-      animation: show 1s 1; /* Указываем название анимации, её время и количество повторов*/
-      animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+      opacity: 0; 
+      transition: 1s; 
+      animation: show 1s 1; 
+      animation-fill-mode: forwards; 
 
       .repetition-stat__wrapper {
         padding: 10px 10px;
@@ -477,7 +470,6 @@ body {
         min-height: 180px;
         border-radius: 5%;
         margin-top: -120px;
-        // background-color: #fff;
         position: relative;
         display: flex;
         flex-direction: column;
