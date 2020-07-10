@@ -84,6 +84,11 @@ const setActivePointGraph = (words) => {
     ctx.lineTo(0, 200);
     ctx.stroke();
     ctx.fill();
+    ctx.moveTo(x - 25, 200 - y * 4);
+    ctx.arc(x - 25, 200 - y * 4, 5, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.fill();
 }
 
 const setActivePointGraphHolder = () => {
