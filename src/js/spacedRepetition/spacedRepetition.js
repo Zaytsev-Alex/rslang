@@ -23,8 +23,8 @@ export default async function createSpacedRepetition() {
     let showTranslate = true;
     let pronunciationStatus = true;
     let tracks = [];
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDViNjQ0NTliZTQ3MDAxNzQ5YTYyZiIsImlhdCI6MTU5NDI3MjI2NCwiZXhwIjoxNTk0Mjg2NjY0fQ.Ag-vY7mPoQ75NV7zwNkEp9CB3iN8O9fZJh8erxVKbGc`;
-    const userId = `5f05b64459be47001749a62f`;
+    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDQxMzUxNywiZXhwIjoxNTk0NDI3OTE3fQ.G9WJDTyeXQIya4rszswsu1f6wupVAenUkT0AX2vVBAk`;
+    const userId = `5f06da9c5f4f840017909721`;
     const CURRENT_WORD_STAT = {
         totalAttempts: 0,
         successfulAttempts: 0,
@@ -138,10 +138,11 @@ export default async function createSpacedRepetition() {
             document.querySelector('.spaced-repetition').append(stat);
             return;
         }
-        addCardInfo(words[currentMode][wordPosition]);
+        
         NAVIGATE_NEXT.classList.add('visability-hidden');
         DIFFICULTY_BUTTONS.classList.add('visability-hidden');
         ADDITIONAL_BUTTONS.classList.add('visability-hidden');
+        addCardInfo(words[currentMode][wordPosition]);
         CHECK_BUTTON.disabled = false;
         SKIP_BUTTON.disabled = false;
         INPUT_FIELD.disabled = false;
@@ -212,7 +213,8 @@ export default async function createSpacedRepetition() {
                     "optional": {
                         wordStat: CURRENT_WORD_STAT,
                         nextDate,
-                        lastDate
+                        lastDate,
+                        'totalShown' : 1
                     }
                 }
             }, token);
@@ -234,11 +236,13 @@ export default async function createSpacedRepetition() {
             const {
                 userWord
             } = words[currentMode][wordPosition];
+            console.log(userWord);
             const finalWordStat = {
                 totalAttempts: userWord.optional.wordStat.totalAttempts + CURRENT_WORD_STAT.totalAttempts,
                 successfulAttempts: userWord.optional.wordStat.successfulAttempts + CURRENT_WORD_STAT.successfulAttempts,
                 unsuccessfulAttempts: userWord.optional.wordStat.unsuccessfulAttempts + CURRENT_WORD_STAT.unsuccessfulAttempts,
             }
+            userWord.optional.totalShown += 1;
             if (wordDifficulty === '') {
                 if ((finalWordStat.successfulAttempts * 100) / finalWordStat.totalAttempts >= 95) {
                     wordDifficulty = 'easy';
@@ -428,11 +432,24 @@ export default async function createSpacedRepetition() {
     })
     document.addEventListener('keyup', (event) => {
         if (document.querySelector('.spaced-repetition') !== null) { 
+           
         checkAnswer();
         if (event.code === 'Enter') {
-            if (!CHECK_BUTTON.disabled === true)
+            if (!CHECK_BUTTON.disabled === true) {
                 checkWord(event, words[currentMode][wordPosition].word);
+            }
+            if (document.querySelector('.navigate--next') !== null) {
+                if (!NAVIGATE_NEXT.classList.contains('visability-hidden') && !NAVIGATE_NEXT.classList.contains('display-none')) {
+                    const click = new Event('click', {
+                        "bubbles": true,
+                        "cancelable": false
+                    });
+                    NAVIGATE_NEXT.dispatchEvent(click);
+                }
+            
+            }
         }
+        
     }
     });
 }
