@@ -6,7 +6,7 @@
   padding: 0;
 }
 html {
-  font-size: 16px;
+  font-size: 10px;
   position: relative;
   min-height: 100vh;
 }
@@ -110,7 +110,7 @@ body {
           background-color: $blue_color_for_input;
           width: 0px;
           height: 50px;
-          font-size: 2.1rem;
+          font-size: 3.36rem;
           font-family: "Inconsolata", monospace;
           padding: 0 8px;
 
@@ -124,7 +124,7 @@ body {
           .card__word-translate,
           .card__transcription {
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 2.4rem;
             margin-right: 10px;
             color: $fourth_color;
           }
@@ -157,7 +157,7 @@ body {
             padding: 5px 10px;
             color: $fourth_color;
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 1.6rem;
             border-radius: 8px;
             display: inline-block;
             position: relative;
@@ -207,11 +207,11 @@ body {
         .card__word-example-translate,
         .card__explain-translate {
           margin-top: 10px;
-          font-size: 1rem;
+          font-size: 1.6rem;
           font-weight: 400;
           color: $card_text_color;
           @media screen and (max-width: 410px) {
-            font-size: 0.8rem;
+            font-size: 1.28rem;
           }
         }
         .card__explain {
@@ -240,7 +240,7 @@ body {
         transition-duration: 0.5s;
         span {
           font-family: "Inconsolata", monospace;
-          font-size: 2.1rem;
+          font-size: 3.36rem;
           transition-duration: 1s;
           transition-delay: 1s;
         }
@@ -264,7 +264,7 @@ body {
       .navigate {
         display: flex;
         align-items: center;
-        width: 2.5rem;
+        width: 4rem;
         outline: none;
         border: none;
         background-color: inherit;
@@ -287,8 +287,8 @@ body {
         }
         svg {
           fill: $third_color;
-          width: 3rem;
-          height: 3rem;
+          width: 4.8rem;
+          height: 4.8rem;
           transition: 0.45s;
         }
       }
@@ -311,7 +311,7 @@ body {
       .progress__start-value,
       .progress__end-value {
         color: rgb(209, 134, 100);
-        font-size: 1rem;
+        font-size: 1.6rem;
         font-weight: bold;
       }
       .progress__row {
@@ -334,6 +334,7 @@ body {
       align-items: center;
       p {
         margin-right: 10px;
+        font-size: 1.6rem;
       }
       .flip-switch {
         display: block;
@@ -404,7 +405,7 @@ body {
               color: white;
               line-height: 28px;
               font-weight: 900;
-              font-size: 1rem;
+              font-size: 1.6rem;
             }
 
             &:before {
@@ -486,7 +487,7 @@ body {
         .repetition-stat__title {
           text-align: center;
           font-weight: 700;
-          font-size: 1.2rem;
+          font-size: 1.92rem;
           color: rgb(5, 127, 158);
           margin-bottom: 30px;
         }
@@ -523,7 +524,7 @@ body {
           padding: 5px 10px;
           color: #fff;
           font-family: inherit;
-          font-size: 1rem;
+          font-size: 1.6rem;
           border-radius: 8px;
           display: inline-block;
           position: relative;
