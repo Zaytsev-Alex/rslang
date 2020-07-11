@@ -40,6 +40,7 @@ const changeRangeOutput = () => {
     const goodInterval = document.querySelector('.settings__good-interval');
     newWordsQuantity.addEventListener('change', () => {
         document.querySelector('.settings__new-words-output').textContent = newWordsQuantity.value;
+        localStorage.setItem('new-words-output', newWordsQuantity.value);
         if (newWordsQuantity.value * 2.5 > cardsQuantity.value) {
             cardsQuantity.value = newWordsQuantity.value * 2.5;
             document.querySelector('.settings__cards-output').textContent = cardsQuantity.value;
