@@ -9,39 +9,58 @@ export default async function setBackendStat(right, wrong) {
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');
   const TIME = getTime();
-  let opt;
-  let puzzle;
+  let newObj;
   
   try {
     const backStat = await getBackendStat();
-    opt = backStat.optional;
-
     console.log(backStat);
 
-    if (opt.puzzle.hasOwnProperty(TIME)) {
-      puzzle = Object.assign(puzzle, {
-        [TIME]: {
-          countGame: opt.puzzle[TIME].countGame + 1,
-          right: opt.puzzle[TIME].right + right,
-          wrong: opt.puzzle[TIME].wrong + wrong,
-        },
-      });
-    } else {
-      puzzle = { 
-        [TIME]: {
-          countGame: 1,
-          right,
-          wrong,
-        },
-      };
+    if (Object.keys(backStat.optional.puzzle).length > 9) {
+      const lastProp = Object.keys(backStat.optional.puzzle)[0];
+      delete backStat.optional.puzzle[lastProp];
     }
-    console.log(puzzle);
-    opt = Object.assign(opt, puzzle);
 
-    const newObj = {
-      learnedWords: backStat.learnedWords,
-      optional: opt,
+    if (!backStat.optional) {
+      newObj = {
+        learnedWords: backStat.learnedWords,
+        optional: {
+          puzzle: {
+            [TIME]: {
+              countGame: 1,
+              right,
+              wrong,
+            },
+          }
+        }
+      }
+    } else if (!backStat.optional.puzzle.hasOwnProperty(TIME)) {
+      newObj = {
+        learnedWords: backStat.learnedWords,
+        optional: Object.assign(backStat.optional, {
+          puzzle: Object.assign(backStat.optional.puzzle, {
+            [TIME]: {
+              countGame: 1,
+              right,
+              wrong,
+            },
+          })
+        })        
+      }
+    } else {
+      newObj = {
+        learnedWords: backStat.learnedWords,
+        optional: Object.assign(backStat.optional, {
+          puzzle: Object.assign(backStat.optional.puzzle, {
+            [TIME]: {
+              countGame: backStat.optional.puzzle[TIME].countGame + 1,
+              right: backStat.optional.puzzle[TIME].right + right,
+              wrong: backStat.optional.puzzle[TIME].wrong + wrong,
+            },
+          })
+        })       
+      }
     }
+
 
     await fetch(`${RSSCHOOL_API_URL}users/${USER_ID}/statistics`, {
       method: 'PUT',
@@ -57,7 +76,6 @@ export default async function setBackendStat(right, wrong) {
         renderStatistics(data.optional);
       });
   } catch (e) {
-    console.log(e);
     console.warn('Статистика не получена');
     createDefaultStatistics();
   }
@@ -80,7 +98,7 @@ export async function getBackendStat() {
   if (response.status === 404) {
     console.warn('Нет статистики');
   } else if (response.status === 200) {
-    const data = await response.json();
+    const data = await response.json();    
 
     return data;
   }
