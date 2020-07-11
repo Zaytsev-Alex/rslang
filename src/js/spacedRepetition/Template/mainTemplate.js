@@ -1,8 +1,7 @@
    export default function createMainTemplate() {
-   const MAIN = document.createElement('main');
-   MAIN.classList.add('spaced-repetition');
-   MAIN.innerHTML = `
-   <div class='main__wrapper'>
+   const MAIN_WRAPPER = document.createElement('div');
+   MAIN_WRAPPER.classList.add('main__wrapper')
+   MAIN_WRAPPER.innerHTML = `
    <div class='card-container'>
        <div class='card'>
        <div class='progress'>
@@ -13,7 +12,7 @@
        <div class='progress__end-value'></div>
    </div>
            <div class='card__wrapper'>
-               <header class='card__header'>
+               <div class='card__header'>
                    <div class='card__translate-switcher'>
                        <p>Перевод</p>
                        <div class="flip-switch flip-switch-text">
@@ -22,53 +21,13 @@
                        </div>
                    </div>
                    <div class='card__pronunciation card__pronunciation--on'></div>
-               </header>
-               <main class='card__main'>
+               </div>
+               <div class='card__main'>
                    <div class='card__image'></div>
                    <div class='card__input-container'>
                        <div class='answer'></div>
                        <input type='text' class='card__input'>
-                   </div>
-                   <div class='card__learn-content'>
-
-                       <div class='card__word'>
-                           <span class='card__word-translate'></span>
-                           <span class='card__transcription'></span>
-                       </div>
-                       <div class='card__additional-info'>
-                           <div class='card__word-example'></div>
-                           <div class='card__word-example-translate'></div>
-                           <div class='card__explain'></div>
-                           <div class='card__explain-translate'></div>
-
-                       </div>
-                   </div>
-               </main>
-               <footer class='card__footer'></footer>
-           </div>
-
-
-           <div class='card__buttons'>
-               <div class='card__main-buttons'>
-                   
-                   <button class='card__skip-word-btn'>Показать Ответ</button>
-                   <button class='card__check-word-btn'>Проверить</button>
-                   
-               </div>
-               <div class='card__difficulty-buttons visability-hidden'>
-                   <button class='card__easy-word-btn', difficulty='easy'>Легко</button>
-                   <button class='card__medium-word-btn', difficulty='medium'>Хорошо</button>
-                   <button class='card__hard-word-btn', difficulty='hard'>Трудно</button>
-                   <button class='card__repeat-word-btn'>Снова</button>
-               </div>
-               <div class='card__additional-buttons visability-hidden'>
-                   <button class='card__complicated-word-btn', difficulty='complicated'>Сложные</button>
-                   <button class='card__delete-word-btn' difficulty='deleted'>Удалить</button>
-               </div>
-
-           </div>
-       </div>
-       <button class='navigate navigate--next visability-hidden'>
+                       <button class='navigate navigate--next visability-hidden'>
            <svg class="arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.8 490.8"
                style="enable-background:new 0 0 490.8 490.8;" xml:space="preserve">
@@ -94,9 +53,45 @@
                <g></g>
                <g></g>
            </svg></button>
-   </div>
+                   </div>
+                   <div class='card__learn-content'>
 
-</div>
+                       <div class='card__word'>
+                           <span class='card__word-translate'></span>
+                           <span class='card__transcription'></span>
+                       </div>
+                       <div class='card__additional-info'>
+                           <div class='card__word-example'></div>
+                           <div class='card__word-example-translate'></div>
+                           <div class='card__explain'></div>
+                           <div class='card__explain-translate'></div>
+
+                       </div>
+                   </div>
+               </div>
+               <div class='card__footer'></div>
+           </div>
+           <div class='card__buttons'>
+               <div class='card__main-buttons'>
+                   
+                   <button class='card__skip-word-btn'>Показать Ответ</button>
+                   <button class='card__check-word-btn'>Проверить</button>
+                   
+               </div>
+               <div class='card__difficulty-buttons visability-hidden'>
+                   <button class='card__easy-word-btn', difficulty='easy'>Легко</button>
+                   <button class='card__medium-word-btn', difficulty='medium'>Хорошо</button>
+                   <button class='card__hard-word-btn', difficulty='hard'>Трудно</button>
+                   <button class='card__repeat-word-btn'>Снова</button>
+               </div>
+               <div class='card__additional-buttons visability-hidden'>
+                   <button class='card__complicated-word-btn', difficulty='complicated'>Сложные</button>
+                   <button class='card__delete-word-btn' difficulty='deleted'>Удалить</button>
+               </div>
+
+           </div>
+       </div>
+   </div>
 `;
-   return MAIN;
+  return MAIN_WRAPPER;
 }
