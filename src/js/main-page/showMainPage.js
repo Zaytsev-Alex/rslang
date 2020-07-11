@@ -1,5 +1,6 @@
 import mainPageDescription from './mainPageDescription';
 import maingPageShowInfoHolder from './maingPageShowInfoHolder';
+// eslint-disable-next-line import/no-cycle
 import mainPageItemHolders from './mainPageItemHolders';
 
 const showMainPage = () => {
