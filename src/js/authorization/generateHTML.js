@@ -3,7 +3,7 @@ export default function generateHtml() {
   const HTMLTemplate = document.createElement('div');
 
   HTMLTemplate.innerHTML = `
-  <main class="wrapper">
+  <main class="autorization-wrapper">
     <section class="login-page">
       <div class="form-block">
         <form action="users" method="POST" class="registration hide" id="registration-form">
