@@ -61,7 +61,6 @@ export default async function setBackendStat(right, wrong) {
       }
     }
 
-
     await fetch(`${RSSCHOOL_API_URL}users/${USER_ID}/statistics`, {
       method: 'PUT',
       withCredentials: true,

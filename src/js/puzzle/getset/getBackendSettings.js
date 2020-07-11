@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-use-before-define */
 import RSSCHOOL_API_URL from '../variables';
 
@@ -19,15 +20,21 @@ export default async function getBackendSettings() {
   } else if (response.status === 200) {
     const data = await response.json();
 
-    localStorage.setItem('player-level', JSON.stringify([data.optional.puzzle.round, data.optional.puzzle.level]));
-    localStorage.setItem('picture-button', data.optional.puzzle.picture);
-    localStorage.setItem('audio-button', data.optional.puzzle.audio);
-    localStorage.setItem('translate-button', data.optional.puzzle.translate);
+    if (data.optional.puzzle) {
+      localStorage.setItem('player-level', JSON.stringify([data.optional.puzzle.round, data.optional.puzzle.level]));
+      localStorage.setItem('picture-button', data.optional.puzzle.picture);
+      localStorage.setItem('audio-button', data.optional.puzzle.audio);
+      localStorage.setItem('translate-button', data.optional.puzzle.translate);
+    }    
+
+    return data;
   }
 }
 
 
 export async function setBackendSettings() {
+  const settings = getBackendSettings();
+
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');
   const ROUND = JSON.parse(localStorage.getItem('player-level'))[0];
@@ -45,7 +52,8 @@ export async function setBackendSettings() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      optional: {
+      wordsPerDay: settings.wordsPerDay,
+      optional: Object.assign(settings.optional, {
         puzzle: {
           round: ROUND,
           level: LEVEL,
@@ -53,7 +61,7 @@ export async function setBackendSettings() {
           audio: isAudio,
           picture: isPicture,
         },
-      },
+      })
     }),
   });
 }
