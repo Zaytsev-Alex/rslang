@@ -13,59 +13,70 @@ import {
     createAudio,
     addCardInfo,
     shuffleArray,
-    createStatics
+    createStatics,
+    createNotification
 } from './Utils/Utils'
-
+import { authorizationLoaderShow, authorizationLoaderHide } from '../authorization/loader';
+// eslint-disable-next-line import/no-cycle 
+import {setActiveStatus} from '../main-page/basicHeader'
+// eslint-disable-next-line import/no-cycle 
+ import showMainPage from '../main-page/showMainPage';
+ import clearContainer from '../clear';
+import mainPageHide from '../main-page/mainPageHide'
 
 export default async function createSpacedRepetition() {
+    authorizationLoaderShow()
     let wordPosition = 0;
     let currentMode = 'learn';
     let showTranslate = true;
     let pronunciationStatus = true;
     let tracks = [];
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMDZkYTljNWY0Zjg0MDAxNzkwOTcyMSIsImlhdCI6MTU5NDQxMzUxNywiZXhwIjoxNTk0NDI3OTE3fQ.G9WJDTyeXQIya4rszswsu1f6wupVAenUkT0AX2vVBAk`;
-    const userId = `5f06da9c5f4f840017909721`;
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
     const CURRENT_WORD_STAT = {
         totalAttempts: 0,
         successfulAttempts: 0,
         unsuccessfulAttempts: 0,
     }
-    const MAIN = createMainTemplate();
-    const CARD_HEADER = MAIN.querySelector('.card__header');
-    const CURRENT_PROGRESS = MAIN.querySelector('.progress__current');
-    const START_VALUE = MAIN.querySelector('.progress__start-value');
-    const END_WALUE = MAIN.querySelector('.progress__end-value');
-    const INPUT_CONTAINER = MAIN.querySelector('.card__input-container');
-    const INPUT_FIELD = MAIN.querySelector('.card__input');
-    const ANSWER = MAIN.querySelector('.answer');
-    const EXAMPLE_TRANSLATE = MAIN.querySelector('.card__word-example-translate');
-    const MEANING_TRANSLATE = MAIN.querySelector('.card__explain-translate');
-    const WORD_EXPLAIN = MAIN.querySelector('.card__explain');
-    const WORD_EXAMPLE = MAIN.querySelector('.card__word-example');
-    const WORD_TRANSCRIPTION = MAIN.querySelector('.card__transcription');
-    const CARD_BUTTONS = MAIN.querySelector('.card__buttons');
-    const DIFFICULTY_BUTTONS = MAIN.querySelector('.card__difficulty-buttons');
-    const ADDITIONAL_BUTTONS = MAIN.querySelector('.card__additional-buttons');
-    const CHECK_BUTTON = MAIN.querySelector('.card__check-word-btn');
-    const SKIP_BUTTON = MAIN.querySelector('.card__skip-word-btn');
-    const CARD_SPEAKER = MAIN.querySelector('.card__pronunciation');
-    const TRANSLATE_CHECKBOX = MAIN.querySelector('.flip-switch input');
-    const NAVIGATE_NEXT = MAIN.querySelector('.navigate--next');
-    const DELETE_BTN = MAIN.querySelector('.card__delete-word-btn');
-    const COMPLICATED_BTN = MAIN.querySelector('.card__complicated-word-btn');
-    const WORD_TRANSLATE = MAIN.querySelector('.card__word-translate');
-    const CARD_IMAGE = MAIN.querySelector('.card__image');
+    const MAIN = document.querySelector('main');
+    MAIN.classList.add('spaced-repetition');
+    const MAIN_WRAPPER = createMainTemplate();
+    const CARD_HEADER = MAIN_WRAPPER.querySelector('.card__header');
+    const CURRENT_PROGRESS = MAIN_WRAPPER.querySelector('.progress__current');
+    const START_VALUE = MAIN_WRAPPER.querySelector('.progress__start-value');
+    const END_WALUE = MAIN_WRAPPER.querySelector('.progress__end-value');
+    const INPUT_CONTAINER = MAIN_WRAPPER.querySelector('.card__input-container');
+    const INPUT_FIELD = MAIN_WRAPPER.querySelector('.card__input');
+    const ANSWER = MAIN_WRAPPER.querySelector('.answer');
+    const EXAMPLE_TRANSLATE = MAIN_WRAPPER.querySelector('.card__word-example-translate');
+    const MEANING_TRANSLATE = MAIN_WRAPPER.querySelector('.card__explain-translate');
+    const WORD_EXPLAIN = MAIN_WRAPPER.querySelector('.card__explain');
+    const WORD_EXAMPLE = MAIN_WRAPPER.querySelector('.card__word-example');
+    const WORD_TRANSCRIPTION = MAIN_WRAPPER.querySelector('.card__transcription');
+    const CARD_BUTTONS = MAIN_WRAPPER.querySelector('.card__buttons');
+    const DIFFICULTY_BUTTONS = MAIN_WRAPPER.querySelector('.card__difficulty-buttons');
+    const ADDITIONAL_BUTTONS = MAIN_WRAPPER.querySelector('.card__additional-buttons');
+    const CHECK_BUTTON = MAIN_WRAPPER.querySelector('.card__check-word-btn');
+    const SKIP_BUTTON = MAIN_WRAPPER.querySelector('.card__skip-word-btn');
+    const CARD_SPEAKER = MAIN_WRAPPER.querySelector('.card__pronunciation');
+    const TRANSLATE_CHECKBOX = MAIN_WRAPPER.querySelector('.flip-switch input');
+    const NAVIGATE_NEXT = MAIN_WRAPPER.querySelector('.navigate--next');
+    const DELETE_BTN = MAIN_WRAPPER.querySelector('.card__delete-word-btn');
+    const COMPLICATED_BTN = MAIN_WRAPPER.querySelector('.card__complicated-word-btn');
+    const WORD_TRANSLATE = MAIN_WRAPPER.querySelector('.card__word-translate');
+    const CARD_IMAGE = MAIN_WRAPPER.querySelector('.card__image');
     const PLAYER = createAudio(); 
     const SETTINGS = await getUserSettings(userId, token);
     const STATISTIC = await getUserStatistic(userId, token);
+    
+    
     const repeatPeriod = {
-        easy: SETTINGS.optional.spacedRepetition.easyInterval,
-        medium: SETTINGS.optional.spacedRepetition.mediumInterval,
-        hard: SETTINGS.optional.spacedRepetition.hardInterval,
-        complicated: SETTINGS.optional.spacedRepetition.hardInterval
+        easy: +(SETTINGS.optional.spacedRepetition.easyInterval),
+        medium: +(SETTINGS.optional.spacedRepetition.mediumInterval),
+        hard: +(SETTINGS.optional.spacedRepetition.hardInterval),
+        complicated: +(SETTINGS.optional.spacedRepetition.hardInterval)
     }
-    console.log(STATISTIC);
-    console.log(SETTINGS, 'settings!');
+
     const CURRENT_DATE = new Date().toLocaleDateString("ru-Ru", {
         "year": "numeric",
         "month": "numeric",
@@ -81,6 +92,8 @@ export default async function createSpacedRepetition() {
         STATISTIC.optional.spacedRepetition.dayStat.correctAnswerSeries = 0;
         STATISTIC.optional.spacedRepetition.dayStat.totalWords = 0;
     }
+
+
 
     if (!SETTINGS.optional.spacedRepetition.translate) {
         WORD_TRANSLATE.classList.add('display-none');
@@ -111,18 +124,32 @@ export default async function createSpacedRepetition() {
 
     const newWordsToLearnNumber = SETTINGS.wordsPerDay - STATISTIC.optional.spacedRepetition.dayStat.newWords;
     const words = await getWordsToLearn(userId, token, newWordsToLearnNumber, SETTINGS.optional.spacedRepetition.group);
+    if (SETTINGS.optional.spacedRepetition.cardsPerDay <= STATISTIC.optional.spacedRepetition.dayStat.totalWords) {
+        MAIN.classList.remove('spaced-repetition');
+        authorizationLoaderHide();
+        createNotification('limit');
+        return;
+    }
+     if (words.learn.length === 0 && words.train.length === 0) {
+        
+        MAIN.classList.remove('spaced-repetition');
+        authorizationLoaderHide();
+        createNotification('nothingToShow');
+        return;
+    }
+        mainPageHide();
+    
 
-    console.log(words, 'слова');
+
     if (words.learn.length === 0) currentMode = 'train';
-    console.log(words[currentMode][wordPosition], 'tut');
-   
-    document.body.append(MAIN);
+
+    MAIN.append(MAIN_WRAPPER);
+    authorizationLoaderHide();
     addCardInfo(words[currentMode][wordPosition]);
     START_VALUE.textContent = STATISTIC.optional.spacedRepetition.dayStat.totalWords;
     END_WALUE.textContent = SETTINGS.optional.spacedRepetition.cardsPerDay;
     CURRENT_PROGRESS.style.width = `${START_VALUE.textContent / END_WALUE.textContent * 100}%`;
     INPUT_FIELD.focus();
-
     const createNextCard = () => {
         if (currentMode === 'learn' && words[currentMode].length <= wordPosition) {
             wordPosition = 0;
@@ -133,7 +160,11 @@ export default async function createSpacedRepetition() {
             const stat = createStatics(STATISTIC);
             const btn = stat.querySelector('.repetition-stat__confirm-btn');
             btn.onclick = () => {
-                alert();
+                    const mainPageLink = document.querySelector('.basic-header__item_main-page');
+                    clearContainer(document.querySelector('main')); 
+                    setActiveStatus(mainPageLink);
+                    MAIN.className = '';
+                    showMainPage();
             }
             document.querySelector('.spaced-repetition').append(stat);
             return;
@@ -236,7 +267,6 @@ export default async function createSpacedRepetition() {
             const {
                 userWord
             } = words[currentMode][wordPosition];
-            console.log(userWord);
             const finalWordStat = {
                 totalAttempts: userWord.optional.wordStat.totalAttempts + CURRENT_WORD_STAT.totalAttempts,
                 successfulAttempts: userWord.optional.wordStat.successfulAttempts + CURRENT_WORD_STAT.successfulAttempts,
@@ -275,7 +305,6 @@ export default async function createSpacedRepetition() {
             userWord.optional.wordStat = finalWordStat;
             userWord.optional.lastDate = lastDate;
             userWord.optional.nextDate = nextDate;
-            console.log(userWord, 'userWord before replace');
              updateUserWord(userId, wordId, userWord, token);
         }
 
@@ -304,8 +333,6 @@ export default async function createSpacedRepetition() {
     if (SETTINGS.optional.spacedRepetition.explanation) {
         tracks.push(`https://raw.githubusercontent.com/icexes/rslang-data/master/${words[currentMode][wordPosition].audioMeaning}`);
     }
-
-
 
     function checkWord(event, word) {
         event.preventDefault();
@@ -380,7 +407,6 @@ export default async function createSpacedRepetition() {
                 words.train.push(await getAgregateWord(userId, wordId, token));
             } else {
                 await setWordToBackEnd(currentMode, event.target.getAttribute('difficulty'));
-
             }
             if (!PLAYER.paused) {
                 PLAYER.pause();
