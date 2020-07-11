@@ -1,9 +1,3 @@
-/*
-function renderHeader() {
-    const header = document.createElement('header');
-    header
-}
-*/
 
 
 export default function introPageRender() {
