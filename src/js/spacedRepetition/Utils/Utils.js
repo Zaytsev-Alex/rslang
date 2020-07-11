@@ -88,3 +88,31 @@ export function compareDates(currentDate, nextDate) {
         stat.innerHTML = statTemplate;
        return stat;
     }
+
+ export const createNotification = (type) => {
+     const notification = document.createElement('div');
+     const types = {
+         limit: 'Лимит карточек на день исчерпан! Для продолжения изучения увеличьте лимит карточек настройках!',
+         nothingToShow: 'Закончились слова на изучение и повторение! Для продолжения изучения увеличьте лимит новых слов в настройках!'
+     }
+     notification.classList.add('notification');
+     const notificationTemplate = `
+     <div class = 'notification__wrapper'>
+     <p class = 'notification__message'>${types[type]}</p>
+     <button type = 'button' class = 'notification__confirm-btn'>Хорошо</button>
+     </div>
+     </div>`
+     notification.innerHTML = notificationTemplate;
+     const confirmBtn = notification.querySelector('.notification__confirm-btn');
+     confirmBtn.onclick = () => {
+         notification.classList.add('notification--hide');
+         setTimeout(()=>{notification.remove()}, 1000);
+        }
+     notification.onclick = (event) => {
+        if (event.target === notification)  {
+            notification.classList.add('notification--hide');
+            setTimeout(()=>{notification.remove()}, 1000);
+    }
+     }
+     document.querySelector('main').append(notification)
+ }   
