@@ -6,16 +6,19 @@ import '../scss/settings/style.scss';
 import '../scss/statistics/style.scss';
 import '../scss/sprint/style.scss';
 
-import menuButtonHandler from './components/nav-menu';
-import { menuButtonEvent, events } from './events/events';
+
+import events from './intro-page/events/events';
 import getNewToken from './getNewToken';
 import clearContainer from './clear';
 import showBasicLayout from './showBasicLayout';
 import showMainPage from './main-page/showMainPage';
+import introPageRender from './intro-page/intro-page-rendering'
 
-menuButtonEvent(menuButtonHandler);
+introPageRender();
 
-events();
+ 
+
+ events();
 
 getNewToken();
 setInterval(getNewToken, 5 * 60 * 1000);
