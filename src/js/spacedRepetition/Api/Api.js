@@ -9,7 +9,8 @@ export async function getWords(group, page) {
 }
 
 export const createUserWord = async ({ userId, wordId, word}, token) => {
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+  try {  
+  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
       withCredentials: true,
       headers: {
@@ -19,8 +20,9 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       },
       body: JSON.stringify(word)
     });
-    const content = await rawResponse.json();
-    console.log(content, 'created');
+  } catch(e) {
+    console.log('Не удалось записать слово')
+  }
   };
 
   export const getUserWord = async ({ userId, wordId }, token) => {
@@ -96,7 +98,6 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       }
     });
     const content = await rawResponse.json();
-    console.log(content, 'wordsTrain');
     return content[0].paginatedResults;
   };
 
@@ -111,7 +112,6 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       }
     });
     const content = await rawResponse.json();
-    console.log(content[0],'wordPaginated');
      return content[0];
   };
 
@@ -167,8 +167,6 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
        const filteredWordsToTrain = wordsToTrain.filter( (el) => {
        return compareDates(new Date().toLocaleDateString("ru-Ru", {"year": "numeric","month": "numeric","day": "numeric"}), el.userWord.optional.nextDate);
        })
-    
-       console.log(filteredWordsToTrain);
        return {'learn':wordsToLearn, 'train' : filteredWordsToTrain};
     }
 
@@ -191,7 +189,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
 
     export const updateUserStatistic = async (userId,token, statistic) => {
       try {
-      const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
+       await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`, {
         method: 'PUT',
         withCredentials: true,
         headers: {
@@ -202,8 +200,8 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
         body: JSON.stringify({'learnedWords' : statistic.learnedWords,
       'optional' : statistic.optional})
       });
-      const content = await rawResponse.json();
-      console.log(content);
+     // const content = await rawResponse.json();
+    //  console.log(content);
     }catch(e) {
       console.log('Не удалось записать статистику');
     }
