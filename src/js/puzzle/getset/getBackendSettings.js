@@ -33,7 +33,7 @@ export default async function getBackendSettings() {
 
 
 export async function setBackendSettings() {
-  const settings = getBackendSettings();
+  const settings = await getBackendSettings();
 
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');

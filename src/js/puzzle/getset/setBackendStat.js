@@ -13,17 +13,17 @@ export default async function setBackendStat(right, wrong) {
   
   try {
     const backStat = await getBackendStat();
-    console.log(backStat);
+    // console.log(backStat);
 
-    if (Object.keys(backStat.optional.puzzle).length > 9) {
-      const lastProp = Object.keys(backStat.optional.puzzle)[0];
-      delete backStat.optional.puzzle[lastProp];
+    if (backStat.optional.puzzle && Object.keys(backStat.optional.puzzle).length > 9) {
+      const firstProp = Object.keys(backStat.optional.puzzle)[0];
+      delete backStat.optional.puzzle[firstProp];
     }
 
-    if (!backStat.optional) {
+    if (!backStat.optional.puzzle) {
       newObj = {
         learnedWords: backStat.learnedWords,
-        optional: {
+        optional: Object.assign(backStat.optional, {
           puzzle: {
             [TIME]: {
               countGame: 1,
@@ -31,7 +31,7 @@ export default async function setBackendStat(right, wrong) {
               wrong,
             },
           }
-        }
+        })
       }
     } else if (!backStat.optional.puzzle.hasOwnProperty(TIME)) {
       newObj = {
