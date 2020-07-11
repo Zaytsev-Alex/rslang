@@ -37,9 +37,9 @@ const mainPageItemHolders = () => {
         mainPageHide();
         console.log('вызов speakit');
     })
-    container.querySelector('.main-page__item-our-game').addEventListener('click', () => {
+    container.querySelector('.main-page__item-vocabulary').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов своей игры');
+        console.log('вызов словаря');
     })
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();

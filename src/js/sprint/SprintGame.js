@@ -13,6 +13,7 @@ export default class SprintGame {
         this.ended = false;
         this.difficultLevel = 0;
         this.breakGameHolder();
+        this.aggregatedWords = false;
     }
 
     showPromoPage() {
@@ -33,6 +34,51 @@ export default class SprintGame {
         sprintPromoDescription.classList.add('sprint__promo_description');
         sprintPromoDescription.textContent = 'Тренировка на скорость. Определите верно ли подобран перевод для слова и нажмите соответсвующую кнопку. Ответы можно давать на клавиатурные клавиши. Выберите уровень сложности и начните тренировку.';
         sprintPromoContainer.appendChild(sprintPromoDescription);
+
+        const togglerP = document.createElement('p');
+        togglerP.classList.add('sprint__promo_toggle');
+        togglerP.textContent = 'Желаете ли вы использовать выученные слова во время игры? (В случае, если их будет недостаточно, будут добавлены новые слова)';
+        sprintPromoContainer.appendChild(togglerP);
+
+        const toggler = document.createElement('div');
+        toggler.classList.add('sprint__toggle');
+
+        const togglerYes = document.createElement('input');
+        togglerYes.classList.add('sprint__toggle_yes');
+        togglerYes.setAttribute('type', 'radio');
+        togglerYes.setAttribute('name', 'sprint__toggle');
+        togglerYes.setAttribute('id', 'sprint__toggle_yes');
+        toggler.appendChild(togglerYes);
+
+        const togglerNo = document.createElement('input');
+        togglerNo.classList.add('sprint__toggle_no');
+        togglerNo.setAttribute('type', 'radio');
+        togglerNo.setAttribute('name', 'sprint__toggle');
+        togglerNo.setAttribute('id', 'sprint__toggle_no');
+        togglerNo.setAttribute('checked', 'checked');
+        toggler.appendChild(togglerNo);
+
+        const toggleSwitch = document.createElement('div');
+        toggleSwitch.classList.add('sprint__toggle_switch');
+
+        const labelYes = document.createElement('label');
+        labelYes.classList.add('sprint__toggle_label');
+        labelYes.setAttribute('for', 'sprint__toggle_yes');
+        labelYes.textContent = 'Да';
+        toggleSwitch.appendChild(labelYes);
+
+        const labelNo = document.createElement('label');
+        labelNo.classList.add('sprint__toggle_label');
+        labelNo.setAttribute('for', 'sprint__toggle_no');
+        labelNo.textContent = 'Нет';
+        toggleSwitch.appendChild(labelNo);
+
+        const toggleSpan = document.createElement('span');
+        toggleSwitch.appendChild(toggleSpan);
+
+        toggler.appendChild(toggleSwitch);
+
+        sprintPromoContainer.appendChild(toggler);
 
         const sprintDifficultLevelContainer = document.createElement('div');
         sprintDifficultLevelContainer.classList.add('sprint__promo_difficult-level');
@@ -56,9 +102,8 @@ export default class SprintGame {
         this.container.appendChild(sprintPromo);
 
         this.switchDifficultLevelHolder();
+        this.aggregatedWordsToggleHolder();
         this.startGameHolder();
-
-        return this;
     }
 
     hidePromoPageSprint() {
@@ -90,6 +135,18 @@ export default class SprintGame {
                 event.target.classList.add('sprint__promo_difficult-level_item-active');
                 this.setDifficultLevel(level - 1);
             }
+        })
+    }
+
+    aggregatedWordsToggleHolder() {
+        const radioYes = this.container.querySelector('.sprint__toggle_yes')
+        const radioNo = this.container.querySelector('.sprint__toggle_no')
+        radioNo.addEventListener('change', () => {
+            this.aggregatedWords = radioYes.checked;
+        })
+
+        radioYes.addEventListener('change', () => {
+            this.aggregatedWords = radioYes.checked;
         })
     }
 
@@ -185,10 +242,56 @@ export default class SprintGame {
         this.container.querySelector('.sprint__card').remove();
     }
 
+    async getAggregatedWords() {
+        let words; 
+        try {
+            const filter = '{"$or": [{"userWord.difficulty":"easy"},{"userWord.difficulty":"medium"},{"userWord.difficulty":"hard"},{"userWord.difficulty":"complicated"}]}';
+            const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${this.userId}/aggregatedWords?wordsPerPage=4000&filter=${filter}`,
+            {
+              method: 'GET',
+              withCredentials: true,
+              headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Accept': 'application/json',
+              }
+            });
+            words = await rawResponse.json();
+        } catch(e) {
+            if (document.querySelector('.sprint__card_errors')) {
+                document.querySelector('.sprint__card_errors').textContent = `Упс, ошибка: ${e}`;
+            }
+        }
+        return words[0].paginatedResults;
+    }
+
     async getWords() {
         let json;
         if (!this.ended) {
             try {
+                if (this.aggregatedWords) {
+                    const aggregatedWords = await this.getAggregatedWords();
+                    aggregatedWords.forEach((e) => {
+                        this.words.push(e);
+                    })
+                    for (let i = this.words.length - 1; i > 0; i-= 1) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [this.words[i], this.words[j]] = [this.words[j], this.words[i]];
+                    }
+                    this.aggregatedWords = false;
+                    this.words.forEach((e, idx) => {
+                        const chance = Math.floor(Math.random() * 10) > 6;
+                        if (chance) {
+                            let randomWord = idx;
+                            while (randomWord === idx) {
+                                randomWord = Math.floor(Math.random() * this.words.length);
+                            }
+                            this.words[idx].wordTranslateFalse = this.words[randomWord].wordTranslate;
+                        }
+                    })
+
+                    return aggregatedWords;
+                } 
+
                 const page = this.getPage();
                 if (page !== null) {
                     const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${this.difficultLevel}`);
@@ -282,13 +385,21 @@ export default class SprintGame {
         this.loaderIndicator(); 
 
         this.getWords().then(() => {
-            this.getWords().then(() => {
+            if (this.words.length > 40) {
                 this.nextWord(0);
                 this.answerHolder();
                 this.loaderIndicatorHide();
                 this.speakWordHolder();
                 this.timer();
-            })
+            } else {
+                this.getWords().then(() => {
+                    this.nextWord(0);
+                    this.answerHolder();
+                    this.loaderIndicatorHide();
+                    this.speakWordHolder();
+                    this.timer();
+                })
+            }
         })
     }
 
@@ -520,7 +631,10 @@ export default class SprintGame {
                 statArray.push(statistics);
                 statArray.push(length);
                 statArray.push(guessedCount);
-                if (statArray.length > 30) {
+                const nowDate = new Date();
+                statArray.push(`${nowDate.getDay()}:${nowDate.getMonth()}:${nowDate.getFullYear()}`)
+                if (statArray.length > 40) {
+                    statArray.shift();
                     statArray.shift();
                     statArray.shift();
                     statArray.shift();
