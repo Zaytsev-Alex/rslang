@@ -10,6 +10,10 @@
         font-size: 2rem;
         font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
         color: $text-white;
+        @media screen and (max-width: 427px) {
+        font-size: 1.3rem;
+        }
+        
     }
 
     &__item {
