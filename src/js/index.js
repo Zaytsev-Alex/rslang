@@ -17,8 +17,11 @@ menuButtonEvent(menuButtonHandler);
 
 events();
 
-getNewToken();
-setInterval(getNewToken, 5 * 60 * 1000);
+if (localStorage.getItem('userId')) {
+    getNewToken();
+    setInterval(getNewToken, 5 * 60 * 1000);
+}
+
 
 if (localStorage.getItem('token') && localStorage.getItem('userId')) {
     clearContainer(document.body);

@@ -1,6 +1,8 @@
 /* eslint-disable no-use-before-define */
 
 export default function getNewToken() {
+  getToken();
+
   const REFRESH_TOKEN = localStorage.getItem('refreshToken');
   const TIME_TO_REFRESH_TOKEN = JSON.parse(atob(REFRESH_TOKEN.split('.')[1])).exp - 30 * 60 * 1000;
   const TIME_NOW = Date.now() / 1000;
@@ -29,4 +31,22 @@ export default function getNewToken() {
         console.log('Получен новый токен');
       })
   }
+}
+
+async function getToken() {
+  const RSSCHOOL_API_URL = 'https://afternoon-falls-25894.herokuapp.com/';
+
+  const response = await fetch(`${RSSCHOOL_API_URL}signin`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(JSON.parse(localStorage.getItem('login&password'))),
+  });
+
+  const data = await response.json();
+
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('refreshToken', data.refreshToken);
 }

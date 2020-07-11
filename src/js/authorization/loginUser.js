@@ -75,6 +75,7 @@ export default function insertLoginUserCode() {
     }
 
     if (AUTHORIZATION_EMAIL.value.match(VALIDATE_EMAIL) && AUTHORIZATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
+      localStorage.setItem('login&password', JSON.stringify(user));
       loginUser(user);
     }
   });

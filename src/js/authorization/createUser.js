@@ -58,6 +58,7 @@ export default function insertCreateUserCode() {
 
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId);
+        localStorage.setItem('refreshToken', data.refreshToken);
 
         await createDefaultStatistics();
         await createDefaultSettings();
@@ -106,6 +107,7 @@ export default function insertCreateUserCode() {
     }
 
     if (REGISTRATION_EMAIL.value.match(VALIDATE_EMAIL) && REGISTRATION_PASSWORD.value.match(VALIDATE_PASSWORD)) {
+      localStorage.setItem('login&password', JSON.stringify(newUser));
       createUser(newUser);
     }
   });
