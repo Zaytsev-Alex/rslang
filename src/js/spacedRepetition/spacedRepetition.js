@@ -91,6 +91,7 @@ export default async function createSpacedRepetition() {
         STATISTIC.optional.spacedRepetition.dayStat.totalAttempts = 0;
         STATISTIC.optional.spacedRepetition.dayStat.correctAnswerSeries = 0;
         STATISTIC.optional.spacedRepetition.dayStat.totalWords = 0;
+        STATISTIC.optional.spacedRepetition.dayStat.finalCorrectAnswerSeries = 0;
     }
 
 
@@ -150,13 +151,14 @@ export default async function createSpacedRepetition() {
     END_WALUE.textContent = SETTINGS.optional.spacedRepetition.cardsPerDay;
     CURRENT_PROGRESS.style.width = `${START_VALUE.textContent / END_WALUE.textContent * 100}%`;
     INPUT_FIELD.focus();
+
     const createNextCard = () => {
         if (currentMode === 'learn' && words[currentMode].length <= wordPosition) {
             wordPosition = 0;
             currentMode = 'train';
             words.train = shuffleArray(shuffleArray(words.train));
         }
-        if (currentMode ==='train' && (words[currentMode].length <= wordPosition || SETTINGS.optional.spacedRepetition.cardsPerDay === STATISTIC.optional.spacedRepetition.dayStat.totalWords)) {
+        if ((currentMode ==='train' && words[currentMode].length <= wordPosition) || SETTINGS.optional.spacedRepetition.cardsPerDay === STATISTIC.optional.spacedRepetition.dayStat.totalWords) {
             const stat = createStatics(STATISTIC);
             const btn = stat.querySelector('.repetition-stat__confirm-btn');
             btn.onclick = () => {
@@ -400,6 +402,10 @@ export default async function createSpacedRepetition() {
             INPUT_FIELD.value = words[currentMode][wordPosition].word;
             checkWord(event, words[currentMode][wordPosition].word);
         } else if ((event.target.closest('.card__difficulty-buttons') || event.target.closest('.card__additional-buttons')) && event.target.closest('button')) {
+            
+            NAVIGATE_NEXT.classList.add('visability-hidden');
+            DIFFICULTY_BUTTONS.classList.add('visability-hidden');
+            ADDITIONAL_BUTTONS.classList.add('visability-hidden');
             if (event.target.closest('.card__repeat-word-btn')) {
                 // eslint-disable-next-line dot-notation
                 const wordId = `${words[currentMode][wordPosition]['_id']}`;

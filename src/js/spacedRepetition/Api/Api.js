@@ -10,7 +10,7 @@ export async function getWords(group, page) {
 
 export const createUserWord = async ({ userId, wordId, word}, token) => {
   try {  
-  await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+  const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
       withCredentials: true,
       headers: {
@@ -20,6 +20,8 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       },
       body: JSON.stringify(word)
     });
+    // eslint-disable-next-line no-unused-vars
+    const content = await rawResponse.json();
   } catch(e) {
     console.log('Не удалось записать слово')
   }
