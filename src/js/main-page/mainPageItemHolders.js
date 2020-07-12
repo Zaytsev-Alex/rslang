@@ -1,4 +1,7 @@
 import mainPageHide from './mainPageHide';
+
+import puzzle from '../puzzle/puzzle';
+
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
 import showStatistics from '../statistics/showStatistics';
@@ -7,7 +10,9 @@ import SprintGame from '../sprint/SprintGame';
 import spacedRepetition from '../spacedRepetition/spacedRepetition'
 import createVocabulary from '../vocabulary/vocabulary'
 
-const mainPageItemHolders = async ()  => {
+
+const mainPageItemHolders = () => {
+
     const container = document.querySelector('main');
     container.querySelector('.main-page__item-main').addEventListener('click', () => {
         spacedRepetition()
@@ -24,6 +29,7 @@ const mainPageItemHolders = async ()  => {
     })
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {
         mainPageHide();
+        puzzle();
         console.log('вызов пазла');
     })
     container.querySelector('.main-page__item-savanna').addEventListener('click', () => {
