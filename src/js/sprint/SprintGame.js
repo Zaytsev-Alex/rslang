@@ -632,7 +632,7 @@ export default class SprintGame {
                 statArray.push(length);
                 statArray.push(guessedCount);
                 const nowDate = new Date();
-                statArray.push(`${nowDate.getDay()}:${nowDate.getMonth()}:${nowDate.getFullYear()}`)
+                statArray.push(`${nowDate.getDate()}:${nowDate.getMonth() + 1}:${nowDate.getFullYear()}`)
                 if (statArray.length > 40) {
                     statArray.shift();
                     statArray.shift();
@@ -685,8 +685,9 @@ export default class SprintGame {
         document.addEventListener('click', (event) => {
             if (this.container 
                 && this.container.classList.contains('sprint') 
-                && event.target.className.indexOf('sprint') === -1) {
-                this.breakGame();
+                && event.target.className.indexOf('sprint') === -1
+                && event.target.tagName !== 'SPAN') {
+                    this.breakGame();
             }
         })
     }
