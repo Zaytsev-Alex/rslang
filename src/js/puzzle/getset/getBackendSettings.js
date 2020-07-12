@@ -19,22 +19,21 @@ export default async function getBackendSettings() {
     setBackendSettings();
   } else if (response.status === 200) {
     const data = await response.json();
+    // console.log(data)
 
-    if (data.optional.puzzle) {
-      localStorage.setItem('player-level', JSON.stringify([data.optional.puzzle.round, data.optional.puzzle.level]));
-      localStorage.setItem('picture-button', data.optional.puzzle.picture);
-      localStorage.setItem('audio-button', data.optional.puzzle.audio);
-      localStorage.setItem('translate-button', data.optional.puzzle.translate);
-    }    
+    // if (data.optional.puzzle) {
+    //   localStorage.setItem('player-level', JSON.stringify([data.optional.puzzle.round, data.optional.puzzle.level]));
+    //   localStorage.setItem('picture-button', data.optional.puzzle.picture);
+    //   localStorage.setItem('audio-button', data.optional.puzzle.audio);
+    //   localStorage.setItem('translate-button', data.optional.puzzle.translate);
+    // }    
 
     return data;
   }
 }
 
 
-export async function setBackendSettings() {
-  const settings = await getBackendSettings();
-
+export async function setBackendSettings() {   
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');
   const ROUND = JSON.parse(localStorage.getItem('player-level'))[0];
@@ -42,7 +41,9 @@ export async function setBackendSettings() {
   const isTranslate = localStorage.getItem('translate-button');
   const isAudio = localStorage.getItem('audio-button');
   const isPicture = localStorage.getItem('picture-button');
-
+  
+  const settings = await getBackendSettings();
+  
   await fetch(`${RSSCHOOL_API_URL}users/${USER_ID}/settings`, {
     method: 'PUT',
     withCredentials: true,
