@@ -5,6 +5,7 @@ import showStatistics from '../statistics/showStatistics';
 import SprintGame from '../sprint/SprintGame';
 // eslint-disable-next-line import/no-cycle 
 import spacedRepetition from '../spacedRepetition/spacedRepetition'
+import createVocabulary from '../vocabulary/vocabulary'
 
 const mainPageItemHolders = async ()  => {
     const container = document.querySelector('main');
@@ -35,7 +36,7 @@ const mainPageItemHolders = async ()  => {
     })
     container.querySelector('.main-page__item-vocabulary').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов словаря');
+        createVocabulary();
     })
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
