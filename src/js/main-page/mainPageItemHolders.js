@@ -26,10 +26,6 @@ const mainPageItemHolders = async ()  => {
         mainPageHide();
         console.log('вызов пазла');
     })
-    container.querySelector('.main-page__item-savanna').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов саванны');
-    })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();
         console.log('вызов speakit');

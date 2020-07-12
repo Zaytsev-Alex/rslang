@@ -23,6 +23,10 @@
         font-size: 1.85rem;
     }
 
+    ul {
+        padding: 5px 25px;
+    }
+
     &__graph { 
         display: flex;
         flex-direction: column;
@@ -61,6 +65,7 @@
         &-label {
             font-size: 1.5rem;
         }
+
     }
 
     canvas {
