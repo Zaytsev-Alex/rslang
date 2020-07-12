@@ -685,8 +685,9 @@ export default class SprintGame {
         document.addEventListener('click', (event) => {
             if (this.container 
                 && this.container.classList.contains('sprint') 
-                && event.target.className.indexOf('sprint') === -1) {
-                this.breakGame();
+                && event.target.className.indexOf('sprint') === -1
+                && event.target.tagName !== 'SPAN') {
+                    this.breakGame();
             }
         })
     }
