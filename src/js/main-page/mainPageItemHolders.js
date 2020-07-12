@@ -3,12 +3,13 @@ import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
 import showStatistics from '../statistics/showStatistics';
 import SprintGame from '../sprint/SprintGame';
+// eslint-disable-next-line import/no-cycle 
+import spacedRepetition from '../spacedRepetition/spacedRepetition'
 
-const mainPageItemHolders = () => {
+const mainPageItemHolders = async ()  => {
     const container = document.querySelector('main');
     container.querySelector('.main-page__item-main').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов основного приложения');
+        spacedRepetition()
     })
     container.querySelector('.main-page__item-sprint').addEventListener('click', (event) => {
         event.target.classList.add('main-page__sprint-card-element');

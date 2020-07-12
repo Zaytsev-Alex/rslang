@@ -6,7 +6,7 @@ import showMainPage from '../main-page/showMainPage';
 import clearContainer from '../clear';
 import showBasicLayout from '../showBasicLayout';
 import { authorizationLoaderShow, authorizationLoaderHide } from './loader';
-
+import getNewToken from '../getNewToken';
 
 export default function insertLoginUserCode() {
   const AUTHORIZATION_EMAIL = document.querySelector('#authorization-email');
@@ -47,6 +47,7 @@ export default function insertLoginUserCode() {
 
       AUTHORIZATION_FORM.classList.add('hide');
       clearContainer(document.body);
+      setInterval(getNewToken, 60 * 60 * 1000);
       showBasicLayout();
       showMainPage();
     } else if (response.status === 403) {

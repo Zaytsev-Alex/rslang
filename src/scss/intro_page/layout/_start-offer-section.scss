@@ -3,8 +3,11 @@
     //background : linear-gradient(180deg, rgba(224, 234, 252, 1) 0%, rgba(207, 222, 243, 1) 100%);
    // background       : url('../assets/images/bg2.png');
    background: linear-gradient(135deg, rgba(255,75,31,1) 0%, rgba(31,221,255,1) 100%);
-    background-size  : cover;
+   background: url(../../assets/images/image-from-rawpixel-id-2044837-jpeg.jpg) 50% no-repeat;
+   background-size: cover;
+
     background-repeat: no-repeat;
+    height: 100vh;
 }
 
 
@@ -13,28 +16,80 @@
     padding-top: 100px;
 }
 
+.start-learning-offer {
+    margin-top: 30px;
+    text-align: center;
+
+}
 .start-learning-title {
     font-size: 3rem;
-    background: -webkit-linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+    background: #6aad8d;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
 }
 
+.start-learning__buttons {
+    display: flex;
+    justify-content: center;
+    margin-top:30px;
+}
 .start-learning__link {
-    min-height      : 40px;
-    min-width       : 90px;
-    line-height     : 3.5;
+    margin-right: 15px;
+    background-color: #f8c4b5;
+}
+.sign-in__link {
+  
+    background-color:#d55815;
+}
+.start-learning__link,
+.sign-in__link {
+    color: #fff;
+    font-weight: bold;
     text-align      : center;
     font-size       : 15px;
     border-radius   : 8px;
-    padding         : 0 10px;
+    padding         : 12px 14px;
     vertical-align  : middle;
     display         : inline-block;
-    margin          : 15px 0;
-    background-color: complement($color: rgb(137, 195, 214));
-
+    
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s ease-in-out;
+    &:hover {
+        cursor: pointer;
+      }
+      &:hover:before {
+        left: 250px;
+        transition: 0.5s ease-in-out;
+      }
+      &:before {
+        content: "";
+        background: -webkit-gradient(
+          linear,
+          left top,
+          right top,
+          from(hsla(0, 0%, 100%, 0.1)),
+          to(hsla(0, 0%, 100%, 0.5))
+        );
+        background: linear-gradient(
+          90deg,
+          hsla(0, 0%, 100%, 0.1),
+          hsla(0, 0%, 100%, 0.5)
+        );
+        height: 70px;
+        width: 50px;
+        position: absolute;
+        top: -8px;
+        left: -75px;
+        -webkit-transform: skewX(-45deg);
+        transform: skewX(-45deg);
+      }
     &:active {
         
         transform : scale(0.9);
     }
 }
+
+
+
