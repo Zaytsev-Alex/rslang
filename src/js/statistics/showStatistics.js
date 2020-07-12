@@ -173,8 +173,13 @@ const getSprintStatistics = (statistics) => {
     return statisticsSprint;
 }
 
-const getAudioStatistics = (statistics) => {
-    console.log(statistics)
+const getAudioStatistics = () => {
+
+     if(localStorage.getItem('gameTable') === null){
+        localStorage.setItem('gameTable', 0);
+        localStorage.setItem('rightTable', 0);
+        localStorage.setItem('wrongTable', 0);
+    }
 
     const statisticsAudio = document.createElement('div');
     statisticsAudio.classList.add('statistics__audio-call', 'statistics__item');
@@ -182,7 +187,9 @@ const getAudioStatistics = (statistics) => {
     audioHeader.textContent = 'Статистика Аудио вызов';
     statisticsAudio.appendChild(audioHeader);
     const audioStatisticsDescription = document.createElement('p');
-    audioStatisticsDescription.textContent = 'Описание статистики Аудио вызов';
+    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${localStorage.getItem('gameTable')}
+    <p>Правильных ответов: ${localStorage.getItem('rightTable')}</p>
+    <p>Неправильных ответов: ${localStorage.getItem('wrongTable')}</p>`;
     statisticsAudio.appendChild( audioStatisticsDescription);
 
     return statisticsAudio;

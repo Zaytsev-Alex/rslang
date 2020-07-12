@@ -6,6 +6,7 @@ import '../scss/settings/style.scss';
 import '../scss/statistics/style.scss';
 import '../scss/sprint/style.scss';
 import '../scss/spacedRepetition/style.scss';
+import '../scss/vocabulary/style.scss'
 
 import {
     events
