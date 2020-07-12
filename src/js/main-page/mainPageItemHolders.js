@@ -6,13 +6,16 @@ import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
 import showStatistics from '../statistics/showStatistics';
 import SprintGame from '../sprint/SprintGame';
+// eslint-disable-next-line import/no-cycle 
+import spacedRepetition from '../spacedRepetition/spacedRepetition'
+import createVocabulary from '../vocabulary/vocabulary'
 
 
 const mainPageItemHolders = () => {
+
     const container = document.querySelector('main');
     container.querySelector('.main-page__item-main').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов основного приложения');
+        spacedRepetition()
     })
     container.querySelector('.main-page__item-sprint').addEventListener('click', (event) => {
         event.target.classList.add('main-page__sprint-card-element');
@@ -39,7 +42,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-vocabulary').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов словаря');
+        createVocabulary();
     })
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
