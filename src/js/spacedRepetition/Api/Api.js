@@ -9,7 +9,7 @@ export async function getWords(group, page) {
 }
 
 export const createUserWord = async ({ userId, wordId, word}, token) => {
-  try {  
+   try {  
   const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
       withCredentials: true,
@@ -20,8 +20,9 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       },
       body: JSON.stringify(word)
     });
-    // eslint-disable-next-line no-unused-vars
-    const content = await rawResponse.json();
+    if (rawResponse.status >= 400) {
+      console.log('lol');
+    }
   } catch(e) {
     console.log('Не удалось записать слово')
   }
@@ -56,7 +57,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
 
 
   export const updateUserWord = async (userId, wordId, word, token) => {
-    try {
+   // try {
     const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'PUT',
       withCredentials: true,
@@ -67,12 +68,19 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       },
       body: JSON.stringify(word)
     });
-    const content = await rawResponse.json();
-    console.log(content);
-  }
-  catch(e) {
-    console.log('Не удалось обновить слово')
-  }
+    if (rawResponse.status >= 400) {
+      console.log('lol');
+    }
+    // }
+    //   else {
+    // const content = await rawResponse.json();
+    // console.log(content);
+    //   }
+    
+  // }
+  // catch(e) {
+  //   console.log('Не удалось обновить слово')
+  // }
   };
 
 
