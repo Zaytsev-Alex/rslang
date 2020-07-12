@@ -632,7 +632,7 @@ export default class SprintGame {
                 statArray.push(length);
                 statArray.push(guessedCount);
                 const nowDate = new Date();
-                statArray.push(`${nowDate.getDay()}:${nowDate.getMonth()}:${nowDate.getFullYear()}`)
+                statArray.push(`${nowDate.getDate()}:${nowDate.getMonth() + 1}:${nowDate.getFullYear()}`)
                 if (statArray.length > 40) {
                     statArray.shift();
                     statArray.shift();

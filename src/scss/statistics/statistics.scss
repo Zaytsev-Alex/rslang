@@ -72,6 +72,15 @@
         width: 400px;
         height: 200px;
         border: 3px solid rgba(77, 77, 105, 0.88);
-        background-image: url(../../assets/images/grid.png);
+        background: url(../../assets/images/grid.png) no-repeat center center;
+        background-size:100% 100%;
+
+        @media screen and (max-width: 460px){
+            width: 330px;
+        }
+
+        @media screen and (max-width: 385px){
+            width: 265px;
+        }
     }
 }
