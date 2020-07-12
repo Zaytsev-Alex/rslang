@@ -189,8 +189,6 @@ const getAudioStatistics = () => {
 }
 
 const getPuzzleStatistics = (statistics) => {
-    // console.log(statistics)
-
     const puzzleStatistics = statistics.optional.puzzle;
     const NUMBER_DAYS = Object.entries(puzzleStatistics).length;
     let totalCountGames = 0;
@@ -236,7 +234,6 @@ const getSpeakStatistics = (statistics) => {
 const showStatistics = async () => {
     loaderShow();
 
-    /* Объект со статистикой */
     const statistics = await getStatistics();
 
     const container = document.querySelector('main');
@@ -245,24 +242,23 @@ const showStatistics = async () => {
     const statisticsSection = document.createElement('section');
     statisticsSection.classList.add('statistics__container');
 
-    /* График */
     statisticsSection.appendChild(getGraph(statistics));
 
-    /* Статистика спринт */
     if (statistics.optional && statistics.optional.sprint) {
         statisticsSection.appendChild(getSprintStatistics(statistics));
     }
 
-    /* Статистика аудио вызов */
-    statisticsSection.appendChild(getAudioStatistics(statistics));
+    if (localStorage.getItem('gameTable')) {
+        statisticsSection.appendChild(getAudioStatistics(statistics));
+    }
 
-    /* Статистика english puzzle */
     if (statistics.optional && statistics.optional.puzzle) {
         statisticsSection.appendChild(getPuzzleStatistics(statistics));
     }    
 
-    /* Статистика speak it */
-    statisticsSection.appendChild(getSpeakStatistics(statistics));
+    if (statistics.optional && statistics.optional.speakIt) {
+        statisticsSection.appendChild(getSpeakStatistics(statistics));
+    }    
 
     container.appendChild(statisticsSection);
 
