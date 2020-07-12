@@ -166,8 +166,13 @@ const getSprintStatistics = (statistics) => {
     return statisticsSprint;
 }
 
-const getAudioStatistics = (statistics) => {
-    console.log(statistics)
+const getAudioStatistics = () => {
+
+     if(localStorage.getItem('gameTable') === null){
+        localStorage.setItem('gameTable', 0);
+        localStorage.setItem('rightTable', 0);
+        localStorage.setItem('wrongTable', 0);
+    }
 
     const statisticsAudio = document.createElement('div');
     statisticsAudio.classList.add('statistics__audio-call', 'statistics__item');
@@ -175,14 +180,28 @@ const getAudioStatistics = (statistics) => {
     audioHeader.textContent = 'Статистика Аудио вызов';
     statisticsAudio.appendChild(audioHeader);
     const audioStatisticsDescription = document.createElement('p');
-    audioStatisticsDescription.textContent = 'Описание статистики Аудио вызов';
+    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${localStorage.getItem('gameTable')}
+    <p>Правильных ответов: ${localStorage.getItem('rightTable')}</p>
+    <p>Неправильных ответов: ${localStorage.getItem('wrongTable')}</p>`;
     statisticsAudio.appendChild( audioStatisticsDescription);
 
     return statisticsAudio;
 }
 
 const getPuzzleStatistics = (statistics) => {
-    console.log(statistics)
+    // console.log(statistics)
+
+    const puzzleStatistics = statistics.optional.puzzle;
+    const NUMBER_DAYS = Object.entries(puzzleStatistics).length;
+    let totalCountGames = 0;
+    let totalRight = 0;
+    let totalWrong = 0;
+
+    for (let i = NUMBER_DAYS - 1; i >= 0; i -= 1) {
+        totalCountGames += Object.values(puzzleStatistics)[i].countGame;
+        totalRight += Object.values(puzzleStatistics)[i].right;
+        totalWrong += Object.values(puzzleStatistics)[i].wrong;
+    }    
 
     const statisticsPuzzle = document.createElement('div');
     statisticsPuzzle.classList.add('statistics__puzzle', 'statistics__item');
@@ -190,7 +209,10 @@ const getPuzzleStatistics = (statistics) => {
     puzzleHeader.textContent = 'Статистика English Puzzle';
     statisticsPuzzle.appendChild(puzzleHeader);
     const puzzleStatisticsDescription = document.createElement('p');
-    puzzleStatisticsDescription.textContent = 'Описание статистики English Puzzle';
+    puzzleStatisticsDescription.innerHTML = 
+        `<p>Сыграно игр: ${totalCountGames}</p>
+        <p>Правильных ответов: ${totalRight}</p>
+        <p>Неправильных ответов: ${totalWrong}`;
     statisticsPuzzle.appendChild(puzzleStatisticsDescription);
 
     return statisticsPuzzle;
@@ -235,7 +257,9 @@ const showStatistics = async () => {
     statisticsSection.appendChild(getAudioStatistics(statistics));
 
     /* Статистика english puzzle */
-    statisticsSection.appendChild(getPuzzleStatistics(statistics));
+    if (statistics.optional && statistics.optional.puzzle) {
+        statisticsSection.appendChild(getPuzzleStatistics(statistics));
+    }    
 
     /* Статистика speak it */
     statisticsSection.appendChild(getSpeakStatistics(statistics));
