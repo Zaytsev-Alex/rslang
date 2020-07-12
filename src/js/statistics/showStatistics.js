@@ -189,6 +189,7 @@ const getAudioStatistics = () => {
 }
 
 const getPuzzleStatistics = (statistics) => {
+    // console.log(statistics)
     const puzzleStatistics = statistics.optional.puzzle;
     const NUMBER_DAYS = Object.entries(puzzleStatistics).length;
     let totalCountGames = 0;
@@ -201,18 +202,39 @@ const getPuzzleStatistics = (statistics) => {
         totalWrong += Object.values(puzzleStatistics)[i].wrong;
     }    
 
+    function daysStat() {
+        const DIV = document.createElement('div');
+
+        for (let i = NUMBER_DAYS - 1; i >= 0; i -= 1) {            
+            const DATE = document.createElement('p');
+            const COUNT_GAMES = document.createElement('p');
+            const RIGHT = document.createElement('p');
+            const WRONG = document.createElement('p');
+
+            DATE.textContent = `* Дата: ${(Object.entries(puzzleStatistics)[i])[0]}`;
+            COUNT_GAMES.textContent = `- Сыграно игр: ${(Object.entries(puzzleStatistics)[i])[1].countGame}`;
+            RIGHT.textContent = `- Правильных ответов: ${(Object.entries(puzzleStatistics)[i])[1].right}`;
+            WRONG.textContent = `- Неправильных ответов: ${(Object.entries(puzzleStatistics)[i])[1].wrong}`;
+            
+            DIV.append(DATE, COUNT_GAMES, RIGHT, WRONG)            
+        } 
+        
+        // console.log(DIV)
+        return DIV;
+    }
+
     const statisticsPuzzle = document.createElement('div');
     statisticsPuzzle.classList.add('statistics__puzzle', 'statistics__item');
     const puzzleHeader = document.createElement('h2');
     puzzleHeader.textContent = 'Статистика English Puzzle';
     statisticsPuzzle.appendChild(puzzleHeader);
-    const puzzleStatisticsDescription = document.createElement('p');
+    const puzzleStatisticsDescription = document.createElement('div');
     puzzleStatisticsDescription.innerHTML = 
-        `<p>Сыграно игр: ${totalCountGames}</p>
-        <p>Правильных ответов: ${totalRight}</p>
-        <p>Неправильных ответов: ${totalWrong}`;
+        `<p>Всего сыграно игр: ${totalCountGames}</p>
+        <p>Всего правильных ответов: ${totalRight}</p>
+        <p>Всего неправильных ответов: ${totalWrong}</p>`;
+    puzzleStatisticsDescription.append(daysStat());
     statisticsPuzzle.appendChild(puzzleStatisticsDescription);
-
     return statisticsPuzzle;
 }
 
