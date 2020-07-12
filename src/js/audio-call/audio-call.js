@@ -1,5 +1,8 @@
-
 const audioCall = () => {
+    if(localStorage.getItem('new-words-output') === null){
+        localStorage.setItem('new-words-output', 10);
+    }
+    console.log(localStorage.getItem('new-words-output'));
 
     const mainBlock = document.querySelector('main'); 
     mainBlock.innerHTML = "";
@@ -68,7 +71,7 @@ const audioCall = () => {
     });
 
     let countClick = 0;
-    let indWidth = 20;
+    let indWidth = 100/localStorage.getItem('new-words-output');
     let rightAnswer = 0;
     let wrongAnswer = 0;
 
@@ -244,7 +247,7 @@ const audioCall = () => {
                     dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
                     dontKnownBtn.style.backgroundPosition = "center";
 
-                }else if (indicator.style.width === "100%"){
+                }else if (indicator.style.width === `${100-100/localStorage.getItem('new-words-output')}%`){
                         dontKnownBtn.style.background = "none";
                         startScreen.innerHTML = "";
                         result.innerText = `Ваш результат:
@@ -258,10 +261,10 @@ const audioCall = () => {
                         localStorage.setItem('wrongTable', +(localStorage.getItem('wrongTable')) + wrongAnswer);
                         dontKnownBtn.addEventListener('click', () => {
                              countClick = 0;
-                             indicator.style.width = '10%';
+                             indicator.style.width = '0%';
                              rightAnswer = 0;
                              wrongAnswer = 0;
-                             indWidth = 20;
+                             indWidth = 100/localStorage.getItem('new-words-output');
                              levelBlock.innerHTML = "";
                              audioCall();
                         });
@@ -270,7 +273,7 @@ const audioCall = () => {
                         startScreen.innerHTML = "";
                         countClick = 0;
                         indicator.style.width = `${indWidth}%`;
-                        indWidth += 10;
+                        indWidth += 100/localStorage.getItem('new-words-output');;
                         nextGame();
                     }
                 
@@ -284,12 +287,9 @@ const audioCall = () => {
 
      nextGame();
 
-        
     }
 
-
     startBtn.addEventListener('click', startGame);
-
 }
 
 export { audioCall as default };

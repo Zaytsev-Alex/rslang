@@ -30,7 +30,7 @@ h3 {
 	flex-wrap: wrap;
 	justify-content: center;
 	padding-bottom: 15px;
-	width: 170px;
+	width: 180px;
 	margin: 0px auto;
 	div {
 		font-size: 22px;
@@ -69,7 +69,7 @@ h3 {
 	}
 }
 .indicator {
-	width: 10%;
+	width: 0%;
 	height: 10px;
 	background-color: white;
 	top: 0%;
@@ -168,6 +168,7 @@ table {
 	text-align: center;
 	margin: 0px auto;
 	margin-bottom: 40px;
+	color: white;
 }
 caption {
 	font-size: 30px;
