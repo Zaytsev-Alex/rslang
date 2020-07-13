@@ -2,7 +2,7 @@ import {compareDates} from '../Utils/Utils'
 
 
 export async function getWords(group, page) {
-    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
+    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}&wordsPerPage=10&wordsPerExampleSentenceLTE=50`;
     const response = await fetch(url);
     const result = await response.json();
     return result;
@@ -42,7 +42,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
     console.log(content);
   };
 
-  export const getUserWords = async ({ userId}, token) => {
+  export const getUserWords = async (userId, token) => {
     const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/`, {
       method: 'GET',
       withCredentials: true,
@@ -52,7 +52,7 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
       }
     });
     const content = await rawResponse.json();
-    console.log(content);
+    return content[0];
   };
 
 
@@ -71,16 +71,6 @@ export const createUserWord = async ({ userId, wordId, word}, token) => {
     if (rawResponse.status >= 400) {
       console.log('lol');
     }
-    // }
-    //   else {
-    // const content = await rawResponse.json();
-    // console.log(content);
-    //   }
-    
-  // }
-  // catch(e) {
-  //   console.log('Не удалось обновить слово')
-  // }
   };
 
 

@@ -7,7 +7,7 @@ import '../scss/statistics/style.scss';
 import '../scss/sprint/style.scss';
 import '../scss/spacedRepetition/style.scss';
 import '../scss/vocabulary/style.scss'
-
+import '../scss/speakIt/style.scss'
 import {
     events
 } from './events/events';
@@ -18,7 +18,7 @@ import getNewToken from './getNewToken'
 import createIntoPage from './into-page/introPage';
 
 if (localStorage.getItem('token') && localStorage.getItem('userId')) {    
-    setInterval(getNewToken, 60 * 60 * 1000);
+    setInterval(getNewToken, 50 * 60 * 1000);
     clearContainer(document.body);
     showBasicLayout();
     showMainPage();
