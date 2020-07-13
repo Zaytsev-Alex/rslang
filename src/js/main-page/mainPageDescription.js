@@ -28,13 +28,6 @@ const mainPageDescription = [
         class: 'main-page__item-puzzle',
     },
     {
-        header: 'Саванна',
-        logoSrc: './img/savanna.svg',
-        infoSrc: './img/info.svg',
-        description: 'Оттачивает понимание английской речи и быстрого перевода слов.',
-        class: 'main-page__item-savanna',
-    },
-    {
         header: 'Speak It',
         logoSrc: './img/speaking.svg',
         infoSrc: './img/info.svg',

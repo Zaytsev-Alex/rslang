@@ -30,11 +30,6 @@ const mainPageItemHolders = () => {
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {
         mainPageHide();
         puzzle();
-        console.log('вызов пазла');
-    })
-    container.querySelector('.main-page__item-savanna').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов саванны');
     })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();

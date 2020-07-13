@@ -2,7 +2,6 @@ const audioCall = () => {
     if(localStorage.getItem('new-words-output') === null){
         localStorage.setItem('new-words-output', 10);
     }
-    console.log(localStorage.getItem('new-words-output'));
 
     const mainBlock = document.querySelector('main'); 
     mainBlock.innerHTML = "";
