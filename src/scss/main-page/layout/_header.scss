@@ -1,73 +1,115 @@
 .basic-header {
     background-color: $main-page-blue;
-
+    box-shadow: 0 10px 50px hsl(0, 0%, 90%);
+    
     .container {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        height: 40px;
-        font-size: 2rem;
-        font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
-        color: $text-white;
-        @media screen and (max-width: 427px) {
-        font-size: 1.3rem;
-        }
-        
+        height: 80px;
+        font-family: 'Open Sans', 'Helvetica Neue', sans-serif;   
     }
 
-    &__item {
-        cursor: pointer;
-        position: relative;
+    .nav {
+        $w: 500px;
+        $h: 80px;
+        width: $w;
+        height: $h;
+        background: $main-page-blue;;
+        transform: translateZ(0);
 
-        &::before{
-            content: '';
-            position: absolute;
-            height: 100%;
-            width: 0;
-            left: 0;
-            top: 0;
-            border-bottom: 3px solid $button-bg-active;
-            transition: 0.3s ease-in;
+        &:hover .nav__item {
+            width: 5%;
         }
 
-        &::after{
-            content: '';
-            position: absolute;
+        .nav__item {
+            position: relative;
+            float: left;
+            width: 25%;
             height: 100%;
-            width: 0;
-            right: 0;
-            top: 0;
-            border-top: 3px solid $button-bg-active;
-            transition: 0.3s ease-in;
-        }
+            color: transparent;
+            border-right: 1px solid #ddd;
+            transition: 0.5s width ease-out;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3px;
 
-        &:hover {
-
-            &::after {
-                width: 50%;
+            &:last-child {
+                border-right: 0;
             }
 
-            &::before {
-                width: 50%;
-            }
-        }
-
-        &-active {
-            text-decoration: underline;
-            cursor: initial;
-
-            
             &:hover {
+                width: 80%;
+                color: $text-white;
+                justify-content: start;
 
-                &::after {
-                    width: 0;
+                .nav__header, .nav__sub-header {
+                    opacity: 0.75;
                 }
 
-                &::before {
-                    width: 0;
+                .nav__full {
+                    position: absolute;
+                    left: 75px;
                 }
+
             }
+
+            .nav__small {
+                position: absolute;
+                width: ($w/10);
+            }
+
+            .nav__full {
+                position: absolute;
+                top: 22px;
+                left: 100px;
+                transition: left 0.5s ease-out;
+
+                text-transform: uppercase;
+
+                .nav__header {
+                    font-size: 1.5rem;
+                    white-space: nowrap;
+
+                    @media screen and (max-width: 365px){
+                        font-size: 1.25rem;
+                    }
+                }
+
+                .nav__sub-header {
+                    margin-top: 8px;
+                    font-size: 1.2rem;
+                    white-space: nowrap;
+
+                    @media screen and (max-width: 515px){
+                        display: none;
+                    }
+                }
+
+            }
+
+            .nav__prev {
+                position: absolute;
+                top: 0;
+                left: 7px;
+                transition: .5s opacity;
+                opacity: 0;
+            }
+
+            &:hover .nav__prev {
+                opacity: 0;
+            }
+
         }
+
+        &:hover .prev {
+            opacity: 1;
+        }
+
     }
+
 }
