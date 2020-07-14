@@ -9,6 +9,7 @@ export default function pageSwitcher() {
   const START_BUTTON = document.querySelector('.start-screen__button');
 
   START_BUTTON.addEventListener('click', () => {
+    document.querySelector('#puzzle').classList.remove('puzzle_full-screen');
     MAIN_PAGE.classList.remove('hide');
     START_SCREEN.classList.add('hide');
     PUZZLE_PAGE.innerHTML = '';
