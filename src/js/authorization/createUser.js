@@ -58,7 +58,7 @@ export default function insertCreateUserCode() {
 
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId);
-
+        localStorage.setItem('refreshToken', data.refreshToken);
         await createDefaultStatistics();
         await createDefaultSettings();
 
