@@ -133,7 +133,7 @@ import createTemplate from './template/template'
                     CARDS[position].classList.add('card--correct-answer');
                     IMG.src = `${SOURCE_URL}${wordsArray[position].image}`;
                     CORRECT_ANSWERS.push(position);
-                    if (CORRECT_ANSWERS.length === wordsArray) {
+                    if (CORRECT_ANSWERS.length === wordsArray.length) {
                         const click = new Event('click', {
                             "bubbles": true,
                             "cancelable": false
