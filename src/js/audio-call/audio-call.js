@@ -11,7 +11,7 @@ const audioCall = () => {
     mainBlock.innerHTML = "";
 
     const mainAudioCall = document.createElement('div');
-    mainAudioCall.classList.add('main-audio-call');
+    mainAudioCall.classList.add('main-audio-call', 'main-audio-call_full-screen');
 
     const startScreen = document.createElement('div');
     startScreen.classList.add('start-screen');
@@ -40,6 +40,7 @@ const audioCall = () => {
     startScreen.append(stat);
     
     stat.addEventListener('click', () => {
+
     startScreen.innerHTML = "";
 
     const showStatistics = async () => {
@@ -113,6 +114,8 @@ const audioCall = () => {
         }
    
         function startGame(){
+        document.querySelector('.main-audio-call').classList.remove('main-audio-call_full-screen');
+        
         const indicatorBlock = document.createElement('div');
         indicatorBlock.classList.add('indicatorBlock');
 
