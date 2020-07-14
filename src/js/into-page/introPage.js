@@ -156,7 +156,7 @@ export default function createIntoPage() {
                     <h3 class="person-name">Субоч Денис</h3>
                     <p class="person-info">Лидер нашей команды. Руководитель проекта. Ловко осуществлял координацию команды в процессе работы.
                     </p>
-                    <p class="responsibility-info">Реализовал функционал основого приложения "Учить слова", страницу "Словарь", а также игру SpeakIt".
+                    <p class="responsibility-info">Реализовал функционал основого приложения "Учить слова", страницу "Словарь", а также игру "SpeakIt".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -171,7 +171,7 @@ export default function createIntoPage() {
                     <h3 class="person-name">Александр Зайцев</h3>
                     <p class="person-info">Настоящий работяга и незаменимый помощник для своих членов команды!
                     </p>
-                    <p class="responsibility-info">Разработал игру Sprint, главную страницу приложения, страницы "Настройка" и "Статистика".
+                    <p class="responsibility-info">Разработал игру "Sprint", главную страницу приложения, страницы "Настройка" и "Статистика".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -186,7 +186,7 @@ export default function createIntoPage() {
             <h3 class="person-name">Андрей Семененко</h3>
             <p class="person-info">Генератор идей, любитель нестандартных подходов к задаче.
             </p>
-            <p class="responsibility-info">Учавствовал в создании игры Speakint. Отвечает за презентацию приложения.
+            <p class="responsibility-info">Учавствовал в создании игры "SpeakIt". Отвечает за презентацию приложения.
             </p>
         </div>
         <div class="item__person-links flex">
@@ -216,7 +216,7 @@ export default function createIntoPage() {
                     <h3 class="person-name">Александр Чубуков</h3>
                     <p class="person-info">Старательный и инициативный. Упорно и целеустремленно идет к рещению поставленной задачи.
                     </p>
-                    <p class="responsibility-info">Разработал страницу авторизации и игру English Puzzle.
+                    <p class="responsibility-info">Разработал страницу авторизации и игру "English Puzzle".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -228,7 +228,7 @@ export default function createIntoPage() {
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${StasIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Короктий Станислав</h3>
+                    <h3 class="person-name">Короткий Станислав</h3>
                     <p class="person-info">Стремится к совершенству стиля и лаконичности. Неисчерпаемый источник воросов.
                     </p>
                     <p class="responsibility-info">Ответственный за создание визитной страницы приложения.
