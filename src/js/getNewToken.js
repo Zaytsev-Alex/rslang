@@ -1,16 +1,5 @@
-/* eslint-disable no-use-before-define */
-
-export default function getNewToken() {
+ export default function refreshToken() {
   const REFRESH_TOKEN = localStorage.getItem('refreshToken');
-  const TIME_TO_REFRESH_TOKEN = JSON.parse(atob(REFRESH_TOKEN.split('.')[1])).exp - 30 * 60 * 1000;
-  const TIME_NOW = Date.now() / 1000;
-
-  if (TIME_NOW > TIME_TO_REFRESH_TOKEN) {
-    refreshToken();
-  }
-
-
-  function refreshToken() {
     const RSSCHOOL_API_URL = 'https://afternoon-falls-25894.herokuapp.com/';
     const USER_ID = localStorage.getItem('userId');
   
@@ -29,4 +18,4 @@ export default function getNewToken() {
         console.log('Получен новый токен');
       })
   }
-}
+
