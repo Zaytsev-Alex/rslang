@@ -38,7 +38,7 @@ const changeRangeOutput = () => {
     const cardsQuantity = document.querySelector('.settings__cards-quantity');
     const easyInterval = document.querySelector('.settings__easy-interval');
     const goodInterval = document.querySelector('.settings__good-interval');
-    newWordsQuantity.addEventListener('change', () => {
+    newWordsQuantity.addEventListener('input', () => {
         document.querySelector('.settings__new-words-output').textContent = newWordsQuantity.value;
         localStorage.setItem('new-words-output', newWordsQuantity.value);
         if (newWordsQuantity.value * 2.5 > cardsQuantity.value) {
@@ -46,13 +46,13 @@ const changeRangeOutput = () => {
             document.querySelector('.settings__cards-output').textContent = cardsQuantity.value;
         }
     })
-    cardsQuantity.addEventListener('change', () => {
+    cardsQuantity.addEventListener('input', () => {
         document.querySelector('.settings__cards-output').textContent = cardsQuantity.value;
     })
-    easyInterval.addEventListener('change', () => {
+    easyInterval.addEventListener('input', () => {
         document.querySelector('.settings__easy-interval-output').textContent = easyInterval.value;
     })
-    goodInterval.addEventListener('change', () => {
+    goodInterval.addEventListener('input', () => {
         document.querySelector('.settings__good-interval-output').textContent = goodInterval.value;
     })
 }

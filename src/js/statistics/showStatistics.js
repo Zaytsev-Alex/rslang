@@ -95,7 +95,7 @@ const setActivePointGraph = (words, status) => {
 
 const setActivePointGraphHolder = () => {
     const range = document.querySelector('.statistics__graph-range');
-    range.addEventListener('change', () => {
+    range.addEventListener('input', () => {
         let x = 0;
         let y = 0;
         while (y * 2 < range.value) {
@@ -189,7 +189,6 @@ const getAudioStatistics = () => {
 }
 
 const getPuzzleStatistics = (statistics) => {
-    // console.log(statistics)
     const puzzleStatistics = statistics.optional.puzzle;
     const NUMBER_DAYS = Object.entries(puzzleStatistics).length;
     let totalCountGames = 0;
