@@ -1,6 +1,7 @@
 export default function renderAllHTML() {
   const PUZZLE = document.createElement('div');
   PUZZLE.id = 'puzzle';
+  PUZZLE.classList.add('puzzle_full-screen');
   PUZZLE.innerHTML = `<div class="puzzle-wrapper">
     <section class="start-screen">
       <h1 class="start-screen__title">English puzzle</h1>
