@@ -166,13 +166,7 @@ const getSprintStatistics = (statistics) => {
     return statisticsSprint;
 }
 
-const getAudioStatistics = () => {
-
-     if(localStorage.getItem('gameTable') === null){
-        localStorage.setItem('gameTable', 0);
-        localStorage.setItem('rightTable', 0);
-        localStorage.setItem('wrongTable', 0);
-    }
+const getAudioStatistics = (statistics) => {
 
     const statisticsAudio = document.createElement('div');
     statisticsAudio.classList.add('statistics__audio-call', 'statistics__item');
@@ -180,10 +174,23 @@ const getAudioStatistics = () => {
     audioHeader.textContent = 'Статистика Аудио вызов';
     statisticsAudio.appendChild(audioHeader);
     const audioStatisticsDescription = document.createElement('p');
-    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${localStorage.getItem('gameTable')}
-    <p>Правильных ответов: ${localStorage.getItem('rightTable')}</p>
-    <p>Неправильных ответов: ${localStorage.getItem('wrongTable')}</p>`;
+    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${statistics.optional.audioCall.countGame}
+    <p>Правильных ответов: ${statistics.optional.audioCall.right}</p>
+    <p>Неправильных ответов: ${statistics.optional.audioCall.wrong}</p>`;
     statisticsAudio.appendChild( audioStatisticsDescription);
+    
+    const ul = document.createElement('ul');
+    const arr = statistics.optional.audioCall.statistics;
+    for (let i = 0; i < arr.length; i += 1) {
+        const li = document.createElement('li');
+        const date = arr[i][0].split(':');
+        date[0] = date[0].padStart(2, '0');
+        date[1] = date[1].padStart(2, '0');
+        li.textContent = `Вы играли ${date.join('.')}. Правильных ответов: ${arr[i][1]}. Неправильных ответов ${arr[i][2]}`;
+        ul.appendChild(li);
+    }
+
+    statisticsAudio.appendChild(ul);
 
     return statisticsAudio;
 }
@@ -269,7 +276,7 @@ const showStatistics = async () => {
         statisticsSection.appendChild(getSprintStatistics(statistics));
     }
 
-    if (localStorage.getItem('gameTable')) {
+    if (statistics.optional && statistics.optional.audioCall) {
         statisticsSection.appendChild(getAudioStatistics(statistics));
     }
 
