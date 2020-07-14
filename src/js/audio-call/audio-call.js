@@ -1,3 +1,7 @@
+
+import setBackendStat from './setBackendStatAudioCall';
+import getStatistics from '../statistics/getStatistics';
+
 const audioCall = () => {
     if(localStorage.getItem('new-words-output') === null){
         localStorage.setItem('new-words-output', 10);
@@ -30,34 +34,42 @@ const audioCall = () => {
     startScreen.append(startBtn);
     startBtn.innerText = "Начать";
 
-    const statistics = document.createElement('div');
-    statistics.classList.add('statistics');
-    statistics.innerText = "Статистика";
-    startScreen.append(statistics);
-
-    if(localStorage.getItem('gameTable') === null){
-        localStorage.setItem('gameTable', 0);
-        localStorage.setItem('rightTable', 0);
-        localStorage.setItem('wrongTable', 0);
-    }
+    const stat = document.createElement('div');
+    stat.classList.add('statistics');
+    stat.innerText = "Статистика";
+    startScreen.append(stat);
     
-
-    statistics.addEventListener('click', () => {
+    stat.addEventListener('click', () => {
     startScreen.innerHTML = "";
+
+    const showStatistics = async () => {
+
+    const statistics = await getStatistics();
+
     const table = document.createElement('table');
-    startScreen.append(table);
+
+    let countGame = 0;
+    let right = 0;
+    let wrong = 0;
+
+    if(statistics.optional.audioCall !== undefined){
+        countGame = statistics.optional.audioCall.countGame;
+        right = statistics.optional.audioCall.right;
+        wrong = statistics.optional.audioCall.wrong;
+    }
     
     table.innerHTML = `<caption>Статистика</caption>
     <tr>
     <td>Игры</td><td>Правильно</td><td>Неправильно</td>
     </tr>
     <tr>
-    <td>${localStorage.getItem('gameTable')}</td>
-    <td>${localStorage.getItem('rightTable')}</td>
-    <td>${localStorage.getItem('wrongTable')}</td>
+    <td>${countGame}</td>
+    <td>${right}</td>
+    <td>${wrong}</td>
     </tr>
     `
-    
+    startScreen.append(table);
+
     const backBtn = document.createElement('div');
     backBtn.classList.add('dont-known-btn');
     backBtn.innerText = "Назад";
@@ -67,6 +79,10 @@ const audioCall = () => {
         audioCall();
     });
 
+    }
+
+    showStatistics();    
+    
     });
 
     let countClick = 0;
@@ -254,10 +270,10 @@ const audioCall = () => {
                         startScreen.append(result);
                         startScreen.append(dontKnownBtn);
                         dontKnownBtn.innerText = "Заново";
-                        startScreen.append(statistics);
-                        localStorage.setItem('gameTable', +(localStorage.getItem('gameTable')) + 1);
-                        localStorage.setItem('rightTable', +(localStorage.getItem('rightTable')) + rightAnswer);
-                        localStorage.setItem('wrongTable', +(localStorage.getItem('wrongTable')) + wrongAnswer);
+                        startScreen.append(stat);
+                        
+                        setBackendStat(rightAnswer, wrongAnswer);
+
                         dontKnownBtn.addEventListener('click', () => {
                              countClick = 0;
                              indicator.style.width = '0%';
@@ -289,6 +305,8 @@ const audioCall = () => {
     }
 
     startBtn.addEventListener('click', startGame);
+
+    
 }
 
 export { audioCall as default };

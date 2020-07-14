@@ -166,13 +166,7 @@ const getSprintStatistics = (statistics) => {
     return statisticsSprint;
 }
 
-const getAudioStatistics = () => {
-
-     if(localStorage.getItem('gameTable') === null){
-        localStorage.setItem('gameTable', 0);
-        localStorage.setItem('rightTable', 0);
-        localStorage.setItem('wrongTable', 0);
-    }
+const getAudioStatistics = (statistics) => {
 
     const statisticsAudio = document.createElement('div');
     statisticsAudio.classList.add('statistics__audio-call', 'statistics__item');
@@ -180,9 +174,9 @@ const getAudioStatistics = () => {
     audioHeader.textContent = 'Статистика Аудио вызов';
     statisticsAudio.appendChild(audioHeader);
     const audioStatisticsDescription = document.createElement('p');
-    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${localStorage.getItem('gameTable')}
-    <p>Правильных ответов: ${localStorage.getItem('rightTable')}</p>
-    <p>Неправильных ответов: ${localStorage.getItem('wrongTable')}</p>`;
+    audioStatisticsDescription.innerHTML = `<p>Сыграно игр: ${statistics.optional.audioCall.countGame}
+    <p>Правильных ответов: ${statistics.optional.audioCall.right}</p>
+    <p>Неправильных ответов: ${statistics.optional.audioCall.wrong}</p>`;
     statisticsAudio.appendChild( audioStatisticsDescription);
 
     return statisticsAudio;
@@ -269,7 +263,7 @@ const showStatistics = async () => {
         statisticsSection.appendChild(getSprintStatistics(statistics));
     }
 
-    if (localStorage.getItem('gameTable')) {
+    if (statistics.optional && statistics.optional.audioCall) {
         statisticsSection.appendChild(getAudioStatistics(statistics));
     }
 
