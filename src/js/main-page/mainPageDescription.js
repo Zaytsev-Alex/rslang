@@ -1,6 +1,6 @@
 const mainPageDescription = [
     {
-        header: 'Интервальное повторение',
+        header: 'Учить Слова',
         logoSrc: './img/summertime.svg',
         infoSrc: './img/info.svg',
         description: 'Учите новые слова при помощи методики интервального повторения.',

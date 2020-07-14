@@ -1,16 +1,18 @@
 .about-team {
-  font-size: 2rem;
+  font-size       : 2rem;
   background-color: #f2f2f2;
-  box-shadow: 0px 6px 0px 0px #ffffff;
-  text-align: justify;
+  box-shadow      : 0px 6px 0px 0px #ffffff;
+  // text-align      : justify;
+  padding-bottom  : 60px;
 
   &__title {
-    font-size: 3rem;
+    font-size  : 3rem;
     padding-top: 20px;
-    background: #103481;;
+    background : #103481;
+    ;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 30px;
+    margin-bottom          : 30px;
   }
 }
 
@@ -18,22 +20,41 @@
   margin-bottom: 20px;
 }
 
-.person-name {
-  font-size: 2.5rem;
-  background: #ecd08e;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
+.person {
+  padding-top   : 30px;
+  padding-bottom: 15px;
+  box-shadow    : 5px 5px 3px lightgrey;
+  border        : 1px solid lightgrey;
+  border-radius : 3px;
+
+  &-name {
+    font-size              : 2.2rem;
+    background             : #ecd08e;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom          : 10px;
+    text-align             : center;
+  }
+
+  &-introduce {
+    height    : 220px;
+   // text-align: justify;
+    font-size : 1.8rem;
+    overflow  : hidden;
+    padding   : 0 10px;
+  }
 }
+
 .item__person-links {
   margin-top: 15px;
 }
 
 .gh-account-name {
   justify-content: flex-start;
+
   span {
     padding-left: 10px;
-    color: rgba(77, 77, 105, 0.877);
-    font-weight: bold;
+    color       : rgba(77, 77, 105, 0.877);
+    font-weight : bold;
   }
 }
