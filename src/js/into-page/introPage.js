@@ -1,19 +1,19 @@
 
 export default function createIntoPage() {
     // const logoSrc = "./img/logo.png";
-   // const footerIconSrc = "./img/logo-rs.svg";
+    // const footerIconSrc = "./img/logo-rs.svg";
     const imgGrowSrc = "./img/icons/growth.svg";
     const imgChartSrc = "./img/icons/chart.svg";
     const imgFunnySrc = "./img/icons/emoji.svg";
     const imgDeviceSrc = "./img/icons/multiple-devices.png";
     const presentationSrc = "https://www.youtube.com/embed/31j4DIpgY9U";
     const hgIconSrc = "./img/icons/gh.png";
-    const StasIntroPctSrc = "./img/photo2.png";
-    const DenIcexesIntroPctSrc = "./img/photo2.png";
-    const AndewSemenettiIntroPctSrc = "./img/photo2.png";
-    const AlexZaytsevIntroPctSrc = "./img/photo2.png";
-    const AlexRonicIntroPctSrc = "./img/photo2.png";
-    const DmitriyDmikolIntroPctSrc = "./img/photo2.png";
+    const StasIntroPctSrc = "./img/stas.jpg";
+    const DenIcexesIntroPctSrc = "./img/den_icexes.jpg";
+    const AndewSemenettiIntroPctSrc = "./img/andrei_semenetti.png";
+    const AlexZaytsevIntroPctSrc = "./img/sasha_zaytsev.jpg";
+    const AlexRonicIntroPctSrc = "./img/sasha_ronic.jpg";
+    const DmitriyDmikolIntroPctSrc = "./img/dmitriy_dmikol.jpg";
 
     const wrapper = document.createElement('div');
     wrapper.classList.add('wrapper');
@@ -153,96 +153,91 @@ export default function createIntoPage() {
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${DenIcexesIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Adam Jensen</h3>
-                    <p class="person-info">Quisque luctus, quam eget molestie commodo, lacus purus cursus
-                        purus,
-                        nec rutrum tellus dolor
-                        id lorem.
+                    <h3 class="person-name">Денис</h3>
+                    <p class="person-info">Лидер нашей команды. Руководитель проекта. Ловко осуществлял кооринацию команды в прцоцессе работы.
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info"> Отвечает за реализацию базового функционала приложения.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/icexes" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>Icexes</span></a>
-                    </div>
-                </div>
+                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${AndewSemenettiIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Adam Jensen</h3>
-                    <p class="person-info">Quisque luctus, quam eget molestie commodo, lacus purus cursus
-                        purus,
-                        nec rutrum tellus dolor
-                        id lorem.
+                    <h3 class="person-name">Андрей</h3>
+                    <p class="person-info">Генератор идей, любитель нестандартных подходов к задаче.
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info">Учавствовал в создании игры Speakint. Отвечает за презентацию приложения.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/semenetti" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>semenetti</span></a>
-                    </div>
                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${AlexZaytsevIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Adam Jensen</h3>
-                    <p class="person-info">Quisque luctus, quam eget molestie commodo, lacus purus cursus
-                        purus,
-                        nec rutrum tellus dolor
-                        id lorem.
+                    <h3 class="person-name">Александр Зайцев</h3>
+                    <p class="person-info">Настоящий работяга и незаменимый помощник для своих членов команды!
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info">Разработал игру Sprint, статистику для нее, главную страницу приложения, функионал настроек приложения.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/zaytsev-alex" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>zaytsev-alex</span></a>
-                    </div>
                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${DmitriyDmikolIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Adam Jensen</h3>
-                    <p class="person-info">Quisque luctus, quam eget molestie commodo, lacus purus cursus
-                        purus,
-                        nec rutrum tellus dolor
-                        id lorem.
+                    <h3 class="person-name">Дмитрий Колосовский</h3>
+                    <p class="person-info">Креатив - его вторая натура. Энергичный и любознательный.
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info">Разработал игру audio-call и статистику для нее.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/dmikol" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>dmikol</span></a>
-                    </div>
                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${AlexRonicIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Desmond Miles</h3>
-                    <p class="person-info">Curabitur vestibulum eget mauris quis laoreet. Phasellus in quam
-                        laoreet, viverra lacus ut,
-                        ultrices velit.
+                    <h3 class="person-name">Александр Чубуков</h3>
+                    <p class="person-info">Старательный и инициативный. Упорно и целеустремленно идет к рещению поставленной задачи.
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info">Разработал страницу авторизации и игру English puzzle.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/ronic404" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>ronic404</span></a>
-                    </div>
                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${StasIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Scolara Visari</h3>
-                    <p class="person-info">Nulla sed nunc et tortor luctus faucibus. Morbi at aliquet
-                        turpis, et
-                        consequat felis.
-                        Quisque condimentum.
+                    <h3 class="person-name">Короктий Станислав</h3>
+                    <p class="person-info">Стремится к совершенству стиля и лаконичности. Неисчерпаемый источник воросов.
                     </p>
-                    <div class="item__person-links flex">
+                    <p class="responsibility-info">Ответственный за создание визитной страници приложения.
+                    </p>
+                </div>
+                <div class="item__person-links flex">
                         <a href="https://github.com/staskorotkiy92" class="gh-account-name flex"> <img
                                 src= ${hgIconSrc} alt="github-icon" class="hg-icon"
                                 width="32px" height="32px"> <span>staskorotkiy92</span></a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -333,7 +328,7 @@ export default function createIntoPage() {
                             появляются
                             кнопки "Легко", "Хорошо", "Трудно", с помощью которых определяется сложность данного
                             слова и на основе выбранного ответа определяется дата следующего повторения. Сложные
-                            слова повторяются на следующий день, повторение остальных групп слов зависит от выставленных в приложении настроек. 
+                            слова повторяются на следующий день, повторение остальных групп слов зависит от выставленных в приложении настроек.
                         </div>
                     </div>
                     <div class="intro-options__item column-layout__item column-layout-6 column-layout-12">
@@ -343,8 +338,8 @@ export default function createIntoPage() {
                         </div>
                         <div class="option-description">
                             Мы предоставляем Вам статистику по результатам занятий, с помощью которых Вы можете контролировать Ваш процесс обучения.
-                            Также приложение имеет ряд гибких настроек, благодаря которым Вы можете настроить его "под себя" для достижения максимальной продуктивности! 
-                            
+                            Также приложение имеет ряд гибких настроек, благодаря которым Вы можете настроить его "под себя" для достижения максимальной продуктивности!
+
                         </div>
                     </div>
                     <div class="intro-options__item column-layout__item column-layout-6 column-layout-12">
@@ -365,7 +360,7 @@ export default function createIntoPage() {
                             <h3 class="option-title">Всегда с Вами</h3>
                         </div>
                         <div class="option-description">
-                            Приложение доступно на различных девайсах, поэтому Вы можете заниматься в любое удобное Вам время и в любом месте! 
+                            Приложение доступно на различных девайсах, поэтому Вы можете заниматься в любое удобное Вам время и в любом месте!
                         </div>
                     </div>
                 </div>
