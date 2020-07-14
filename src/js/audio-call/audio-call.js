@@ -115,7 +115,7 @@ const audioCall = () => {
    
         function startGame(){
         document.querySelector('.main-audio-call').classList.remove('main-audio-call_full-screen');
-        
+
         const indicatorBlock = document.createElement('div');
         indicatorBlock.classList.add('indicatorBlock');
 
@@ -193,7 +193,7 @@ const audioCall = () => {
                     event.target.innerText = eventTargetText;
                     /* eslint-enable */
                     const right = document.createElement('img');
-                    right.src = "img/right.png";
+                    right.src = "./img/right.png";
                     event.target.prepend(right);
                     rightAnswer += 1;
                     

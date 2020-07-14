@@ -178,6 +178,19 @@ const getAudioStatistics = (statistics) => {
     <p>Правильных ответов: ${statistics.optional.audioCall.right}</p>
     <p>Неправильных ответов: ${statistics.optional.audioCall.wrong}</p>`;
     statisticsAudio.appendChild( audioStatisticsDescription);
+    
+    const ul = document.createElement('ul');
+    const arr = statistics.optional.audioCall.statistics;
+    for (let i = 0; i < arr.length; i += 1) {
+        const li = document.createElement('li');
+        const date = arr[i][0].split(':');
+        date[0] = date[0].padStart(2, '0');
+        date[1] = date[1].padStart(2, '0');
+        li.textContent = `Вы играли ${date.join('.')}. Правильных ответов: ${arr[i][1]}. Неправильных ответов ${arr[i][2]}`;
+        ul.appendChild(li);
+    }
+
+    statisticsAudio.appendChild(ul);
 
     return statisticsAudio;
 }

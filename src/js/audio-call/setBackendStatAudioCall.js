@@ -9,12 +9,12 @@ const RSSCHOOL_API_URL = 'https://afternoon-falls-25894.herokuapp.com/';
 export default async function setBackendStat(right, wrong) {
   const TOKEN = localStorage.getItem('token');
   const USER_ID = localStorage.getItem('userId');
-//   const TIME = getTime();
+  const TIME = getTime();
+  const gameStatistics = [TIME, right, wrong];
   let newObj;
   
   try {
     const backStat = await getBackendStat();
-    console.log(backStat);
 
     if (!backStat.optional.audioCall) {
       newObj = {
@@ -23,7 +23,8 @@ export default async function setBackendStat(right, wrong) {
           audioCall: {
               countGame: 1,
               right,
-              wrong
+              wrong,
+              statistics: [gameStatistics],
           }
         })
       }
@@ -34,9 +35,13 @@ export default async function setBackendStat(right, wrong) {
           audioCall: Object.assign(backStat.optional.audioCall, {
               countGame: backStat.optional.audioCall.countGame + 1,
               right: backStat.optional.audioCall.right + right,
-              wrong: backStat.optional.audioCall.wrong + wrong
+              wrong: backStat.optional.audioCall.wrong + wrong,
           })
         })       
+      }
+      newObj.optional.audioCall.statistics.push(gameStatistics);
+      if (newObj.optional.audioCall.statistics.length > 10) {
+        newObj.optional.audioCall.statistics.shift();
       }
     }
 
@@ -83,11 +88,7 @@ export async function getBackendStat() {
 }
 
 
-// function getTime() {
-//   const DATE = new Date();
-//   const DAY = (DATE.getDate().toString().length === 1) ? `0${DATE.getDate()}` : DATE.getDate();
-//   const MONTH = ((DATE.getMonth() + 1).toString().length === 1) ? `0${DATE.getMonth() + 1}` : DATE.getMonth() + 1;
-//   const TIME = `${DAY}.${MONTH}.${DATE.getFullYear()}`;
-
-//   return TIME;
-// }
+function getTime() {
+  const DATE = new Date();
+  return `${DATE.getDate()}:${DATE.getMonth() + 1}:${DATE.getFullYear()}`;
+}
