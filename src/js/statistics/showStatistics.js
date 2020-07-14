@@ -245,18 +245,29 @@ const getPuzzleStatistics = (statistics) => {
 }
 
 const getSpeakStatistics = (statistics) => {
-    console.log(statistics)
+    const speakItStatistics = statistics.optional.speakit;
 
-    const statisticsSpeak = document.createElement('div');
-    statisticsSpeak.classList.add('statistics__speak', 'statistics__item');
+    const statisticsSpeakIt = document.createElement('div');
+    statisticsSpeakIt.classList.add('statistics__speak', 'statistics__item');
     const speakHeader = document.createElement('h2');
     speakHeader.textContent = 'Статистика Speak It';
-    statisticsSpeak.appendChild(speakHeader);
+    statisticsSpeakIt.appendChild(speakHeader);
     const speakStatisticsDescription = document.createElement('p');
-    speakStatisticsDescription.textContent = 'Описание статистики Speak It';
-    statisticsSpeak.appendChild(speakStatisticsDescription);
-
-    return statisticsSpeak;
+    speakStatisticsDescription.innerHTML = `<p>Всего сыграно игр: ${speakItStatistics.totalStat.games}</p>
+    <p>Количество названных слов: ${speakItStatistics.totalStat.correctAnswers}</p>
+    `;
+    statisticsSpeakIt.appendChild(speakStatisticsDescription);
+    const keys = Object.keys(speakItStatistics.dayStat);
+    for (let i = keys.length -1 ; i >= 0; i -= 1) {
+        const dayStat = document.createElement('div');
+        dayStat.innerHTML = `
+        <p>* Дата: ${keys[i]}</p>
+        <p>- Количество игр: ${speakItStatistics.dayStat[keys[i]].games} </p>
+        <p>- Количество названных слов: ${speakItStatistics.dayStat[keys[i]].correctAnswers} </p>
+        `
+        statisticsSpeakIt.append(dayStat); 
+    }
+    return statisticsSpeakIt;
 }
 
 const showStatistics = async () => {
@@ -284,7 +295,7 @@ const showStatistics = async () => {
         statisticsSection.appendChild(getPuzzleStatistics(statistics));
     }    
 
-    if (statistics.optional && statistics.optional.speakIt) {
+    if (statistics.optional && statistics.optional.speakit) {
         statisticsSection.appendChild(getSpeakStatistics(statistics));
     }    
 

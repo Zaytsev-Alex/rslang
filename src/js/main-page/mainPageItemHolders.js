@@ -9,7 +9,7 @@ import SprintGame from '../sprint/SprintGame';
 // eslint-disable-next-line import/no-cycle 
 import spacedRepetition from '../spacedRepetition/spacedRepetition'
 import createVocabulary from '../vocabulary/vocabulary'
-
+import speakIt from '../speakit-new/speakit'
 
 const mainPageItemHolders = () => {
 
@@ -33,7 +33,7 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов speakit');
+        speakIt();
     })
     container.querySelector('.main-page__item-vocabulary').addEventListener('click', () => {
         mainPageHide();

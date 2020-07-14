@@ -33,7 +33,7 @@ body {
       justify-content: center;
 
       .card {
-        margin-top: 100px;
+        margin-top: 60px;
         width: 550px;
         @media screen and (max-width: 600px) {
           width: 400px;
@@ -305,7 +305,7 @@ body {
       height: 20px;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       .progress__start-value,
       .progress__end-value {
         color: rgb(209, 134, 100);
