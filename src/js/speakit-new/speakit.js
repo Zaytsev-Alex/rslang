@@ -1,6 +1,8 @@
 import {
     getWords,
-    getAgregatedWords
+    getAgregatedWords,
+    getUserStatistic,
+    updateUserStatistic
 } from '../spacedRepetition/Api/Api'
 import {
     createAudio,
@@ -58,6 +60,7 @@ import createTemplate from './template/template'
         wordsArray = shuffleArray(wordsArray).slice(0,10);
     }
     }
+    const STATISTIC = await getUserStatistic(localStorage.getItem('userId'), localStorage.getItem('token'));
     const CORRECT_ANSWERS = [];
     const GAME_WORDS = [];
 
@@ -130,6 +133,14 @@ import createTemplate from './template/template'
                     CARDS[position].classList.add('card--correct-answer');
                     IMG.src = `${SOURCE_URL}${wordsArray[position].image}`;
                     CORRECT_ANSWERS.push(position);
+                    if (CORRECT_ANSWERS.length === wordsArray) {
+                        const click = new Event('click', {
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        RESULTS_BTN.dispatchEvent(click);
+                        RESTART_BTN.dispatchEvent(click);                       
+                    }
                 }
             })
 
@@ -149,9 +160,34 @@ import createTemplate from './template/template'
             GAME_BTN.classList.remove('game--started');
             CARDS.forEach((card) => card.classList.remove('card--correct-answer'));
             TRANSLATION.textContent = 'Перевод';
-            CORRECT_ANSWERS.length = 0;
+            
             TRANSLATION.classList.remove('speakit__translation--active');
-            IMG.src = `${DEFAULT_IMG_URL}`
+            const currentDate = new Date().toLocaleDateString("ru-Ru", {
+                "year": "numeric",
+                "month": "numeric",
+                "day": "numeric"
+            });
+            IMG.src = `${DEFAULT_IMG_URL}`;
+            if (STATISTIC.optional.speakit === undefined) {
+                STATISTIC.optional.speakit = {};
+            }
+            if (STATISTIC.optional.speakit.dayStat === undefined) {
+                STATISTIC.optional.speakit.dayStat = {}
+            }
+            if (STATISTIC.optional.speakit.totalStat === undefined) {
+                STATISTIC.optional.speakit.totalStat = {games: 0, correctAnswers: 0}
+            }
+            if (STATISTIC.optional.speakit.dayStat[currentDate] === undefined) {
+                STATISTIC.optional.speakit.dayStat[currentDate] = {};
+                STATISTIC.optional.speakit.dayStat[currentDate].games = 0;
+                STATISTIC.optional.speakit.dayStat[currentDate].correctAnswers = 0;
+            }
+            STATISTIC.optional.speakit.totalStat.games = +STATISTIC.optional.speakit.totalStat.games + 1;
+            STATISTIC.optional.speakit.totalStat.correctAnswers = +STATISTIC.optional.speakit.totalStat.correctAnswers + CORRECT_ANSWERS.length;
+            STATISTIC.optional.speakit.dayStat[currentDate].games = +STATISTIC.optional.speakit.dayStat[currentDate].games +1;
+            STATISTIC.optional.speakit.dayStat[currentDate].correctAnswers = +STATISTIC.optional.speakit.dayStat[currentDate].correctAnswers +CORRECT_ANSWERS.length; 
+            CORRECT_ANSWERS.length = 0;
+            updateUserStatistic(localStorage.getItem('userId'),localStorage.getItem('token'), STATISTIC)
         }
     })
 
