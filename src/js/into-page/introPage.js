@@ -153,10 +153,10 @@ export default function createIntoPage() {
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${DenIcexesIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Денис</h3>
-                    <p class="person-info">Лидер нашей команды. Руководитель проекта. Ловко осуществлял кооринацию команды в прцоцессе работы.
+                    <h3 class="person-name">Субоч Денис</h3>
+                    <p class="person-info">Лидер нашей команды. Руководитель проекта. Ловко осуществлял координацию команды в процессе работы.
                     </p>
-                    <p class="responsibility-info"> Отвечает за реализацию базового функционала приложения.
+                    <p class="responsibility-info">Реализовал функционал основого приложения "Учить слова", страницу "Словарь", а также игру SpeakIt".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -166,27 +166,12 @@ export default function createIntoPage() {
                  </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
-                    class="profile__photo" src= ${AndewSemenettiIntroPctSrc} alt="photo">
-                <div class="person-introduce">
-                    <h3 class="person-name">Андрей</h3>
-                    <p class="person-info">Генератор идей, любитель нестандартных подходов к задаче.
-                    </p>
-                    <p class="responsibility-info">Учавствовал в создании игры Speakint. Отвечает за презентацию приложения.
-                    </p>
-                </div>
-                <div class="item__person-links flex">
-                        <a href="https://github.com/semenetti" class="gh-account-name flex"> <img
-                                src= ${hgIconSrc} alt="github-icon" class="hg-icon"
-                                width="32px" height="32px"> <span>semenetti</span></a>
-                </div>
-            </div>
-            <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${AlexZaytsevIntroPctSrc} alt="photo">
                 <div class="person-introduce">
                     <h3 class="person-name">Александр Зайцев</h3>
                     <p class="person-info">Настоящий работяга и незаменимый помощник для своих членов команды!
                     </p>
-                    <p class="responsibility-info">Разработал игру Sprint, статистику для нее, главную страницу приложения, функионал настроек приложения.
+                    <p class="responsibility-info">Разработал игру Sprint, главную страницу приложения, страницы "Настройка" и "Статистика".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -196,12 +181,27 @@ export default function createIntoPage() {
                 </div>
             </div>
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
+            class="profile__photo" src= ${AndewSemenettiIntroPctSrc} alt="photo">
+        <div class="person-introduce">
+            <h3 class="person-name">Андрей Семененко</h3>
+            <p class="person-info">Генератор идей, любитель нестандартных подходов к задаче.
+            </p>
+            <p class="responsibility-info">Учавствовал в создании игры Speakint. Отвечает за презентацию приложения.
+            </p>
+        </div>
+        <div class="item__person-links flex">
+                <a href="https://github.com/semenetti" class="gh-account-name flex"> <img
+                        src= ${hgIconSrc} alt="github-icon" class="hg-icon"
+                        width="32px" height="32px"> <span>semenetti</span></a>
+        </div>
+    </div>
+            <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${DmitriyDmikolIntroPctSrc} alt="photo">
                 <div class="person-introduce">
                     <h3 class="person-name">Дмитрий Колосовский</h3>
                     <p class="person-info">Креатив - его вторая натура. Энергичный и любознательный.
                     </p>
-                    <p class="responsibility-info">Разработал игру audio-call и статистику для нее.
+                    <p class="responsibility-info">Разработал игру "Аудиовызов".
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -216,7 +216,7 @@ export default function createIntoPage() {
                     <h3 class="person-name">Александр Чубуков</h3>
                     <p class="person-info">Старательный и инициативный. Упорно и целеустремленно идет к рещению поставленной задачи.
                     </p>
-                    <p class="responsibility-info">Разработал страницу авторизации и игру English puzzle.
+                    <p class="responsibility-info">Разработал страницу авторизации и игру English Puzzle.
                     </p>
                 </div>
                 <div class="item__person-links flex">
@@ -231,7 +231,7 @@ export default function createIntoPage() {
                     <h3 class="person-name">Короктий Станислав</h3>
                     <p class="person-info">Стремится к совершенству стиля и лаконичности. Неисчерпаемый источник воросов.
                     </p>
-                    <p class="responsibility-info">Ответственный за создание визитной страници приложения.
+                    <p class="responsibility-info">Ответственный за создание визитной страницы приложения.
                     </p>
                 </div>
                 <div class="item__person-links flex">
