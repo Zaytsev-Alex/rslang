@@ -42,7 +42,7 @@ h2 {
 }
 h3 {
 	padding-bottom: 20px;
-	font-size: 18px;
+	font-size: 22px;
 	
 }
 .main-page__description {
@@ -128,52 +128,89 @@ h3 {
 	justify-content: center;
 	padding-top: 40px;
 	padding-bottom: 20px;
-	font-size: 24px;
+	font-size: 26px;
 	font-weight: 600;
-	color: #db7235;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #000000;
+
 	div {
 		padding-left: 20px;
 		padding-bottom: 20px;
 		text-transform: lowercase;
-		&:hover {
-			cursor: pointer;
-			opacity: 1;
-			transition: 0.5s linear;
+		position: relative;
+		cursor: pointer	;
+
+		&::after {
+			background: none repeat scroll 0 0 transparent;
+			bottom: 0;
+			content: "";
+			display: block;
+			height: 2px;
+			left: 60%;
+			position: absolute;
+			background: #fff;
+			transition: width 0.3s ease 0s, left 0.3s ease 0s;
+			width: 0;
+		}
+	
+		&:hover::after { 
+			width: 95%; 
+			left: 10%; 
 		}
 	}
 }
 .result {
-	font-size: 24px;
+	font-size: 26px;
 	padding-bottom: 50px;
-	color: #db7235;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #000000;
 	font-weight: 600;
 }
 .dont-known-btn {
-	background-color: #46489a;
+	color: #46489a;
 	border-radius: 5px;
 	width: 200px;
-	font-size: 20px;
+	font-size: 23px;
 	text-transform: uppercase;
 	padding: 10px 20px;
 	margin: 0px auto;
 	height: 45px;
+	background-color: #ffffff;
 	
 	&:hover {
 		cursor: pointer;
 		border: none;
 		background-color: #46489a;
-		transition: 0.5s linear;
+		color: #ffffff;
+		transition: background-color 0.3s ease-out,
+					color 0.3s ease-out;
+	}
+
+	&_image {
+		background: url("../../assets/images/next.svg") no-repeat center;
+		background-size: cover;
+		width: 50px;
+		height: 50px;
+		transition: filter 0.3s ease-out;
+
+		&:hover {
+			background-color: transparent;
+			filter: blur(1px);
+		}
 	}
 }
 .sound-img {
-	width: 120px;
-	height: 120px;
-	background: url(../../assets/images/sound.png) no-repeat;
+	width: 80px;
+	height: 80px;
+	background: url(../../assets/images/sound.svg) no-repeat center;
+	background-size: cover;
 	margin: 0px auto;
+	cursor: pointer;
+	transition: filter 0.3s ease-out;
+	filter: invert(100%);
+
 	&:hover {
-		cursor: pointer;
-		background: url(../../assets/images/sound-on.png) no-repeat;
-		transition: 0.5s linear;
+		filter: invert(100%) blur(2px);
 	}
 }
 .right {
@@ -220,7 +257,7 @@ h3 {
 		bottom: -5px;
 		width: 100%; 
 		left: 0; 
-	  }
+	}
 }
 td {
 	padding: 5px;

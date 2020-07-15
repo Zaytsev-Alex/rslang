@@ -240,10 +240,7 @@ const audioCall = () => {
                 countClick = 1;
 
                 dontKnownBtn.innerText = "";
-                dontKnownBtn.style.backgroundImage = "url('img/arrow.png')";
-                dontKnownBtn.style.backgroundPosition = "center";
-                dontKnownBtn.style.backgroundRepeat = "no-repeat";
-
+                dontKnownBtn.classList.add('dont-known-btn_image');
                 }
                 
                  });
@@ -285,12 +282,11 @@ const audioCall = () => {
                     wrongAnswer += 1;
 
                     dontKnownBtn.innerText = "";
-                    dontKnownBtn.style.backgroundImage = "url('img/arrow.png')";
-                    dontKnownBtn.style.backgroundPosition = "center";
-                    dontKnownBtn.style.backgroundRepeat = "no-repeat";
+                    dontKnownBtn.classList.add('dont-known-btn_image');
 
                 }else if (indicator.style.width === `${100-100/localStorage.getItem('new-words-output')}%`){
                         dontKnownBtn.style.background = "none";
+                        dontKnownBtn.classList.remove('dont-known-btn_image');
                         startScreen.innerHTML = "";
                         result.innerText = `Ваш результат:
                         Правильно ${rightAnswer}/${wrongAnswer} Неправильно`;
