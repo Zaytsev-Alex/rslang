@@ -22,7 +22,7 @@ const getGraph = (statistics) => {
 
     let textPercent = 0;
     if (statistics.learnedWords) {
-        textPercent = Math.floor(11.74096 * Math.log(statistics.learnedWords / 12.5));
+        textPercent = Math.abs(Math.floor(11.74096 * Math.log(statistics.learnedWords / 12.5)));
     }
 
     const range = document.createElement('input');
