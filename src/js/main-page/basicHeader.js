@@ -50,7 +50,7 @@ const basicHeaderHolder = () => {
     logout.addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
-        localStorage.remove('refreshToken');
+        localStorage.removeItem('refreshToken');
         clearContainer(document.body); 
         createIntroPage();
     })
