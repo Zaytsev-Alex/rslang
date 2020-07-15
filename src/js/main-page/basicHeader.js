@@ -1,8 +1,11 @@
+// eslint-disable-next-line import/no-cycle 
 import showMainPage from './showMainPage';
 import clearContainer from '../clear';
 import showSettings from '../settings/showSettings';
+import showStatistics from '../statistics/showStatistics';
+import createIntroPage from '../into-page/introPage'
 
-const setActiveStatus = (link) => {
+export const setActiveStatus = (link) => {
     const activeItem = document.querySelector('.basic-header__item-active');
     if (activeItem) {
         activeItem.classList.remove('basic-header__item-active');
@@ -31,6 +34,7 @@ const basicHeaderHolder = () => {
             clearContainer(document.querySelector('main')); 
             setActiveStatus(statistics);
             container.className = '';
+            showStatistics();
         }
     });
 
@@ -46,8 +50,9 @@ const basicHeaderHolder = () => {
     logout.addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('refreshToken');
         clearContainer(document.body); 
-        console.log('Выход, надо показать интро страницу');
+        createIntroPage();
     })
 }
 

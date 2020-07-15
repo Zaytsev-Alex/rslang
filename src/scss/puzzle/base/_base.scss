@@ -1,0 +1,47 @@
+#puzzle {
+  background: url(../../assets/images/puzzle/start-bg.jpeg) center center no-repeat;
+  background-size: cover;
+  min-height: calc(100vh - 80px);
+  font-size: 10px;  
+  font-family: 'Cormorant Upright', serif;
+
+  &.puzzle_full-screen {
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &::before {
+      top: 0;
+    }  
+
+  }
+  
+  &::before {
+    position: absolute;
+    content: '';
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+  }  
+
+  .puzzle-wrapper {
+    padding: 0 50px;
+    min-height: calc(100vh - 80px);
+  }
+  
+  .hide {
+    display: none !important;
+  }
+  
+  .error {
+    @include text(2rem, 1.4, $text-error);
+    position: absolute;
+  }
+}
+
+
+  

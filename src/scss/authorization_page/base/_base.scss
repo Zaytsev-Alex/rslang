@@ -1,9 +1,8 @@
 main {
-  background: url(../../assets/images/nature.jpg) center center no-repeat;
+  background: url(../../assets/images/nature.jpg) 50% no-repeat;
   background-size: cover;
-  height: 100vh;
+  min-height: calc(100vh - 80px);
 }
-
 
 .hide {
   display: none !important;

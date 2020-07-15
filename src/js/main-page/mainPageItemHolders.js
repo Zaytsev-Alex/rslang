@@ -1,13 +1,21 @@
 import mainPageHide from './mainPageHide';
+
+import puzzle from '../puzzle/puzzle';
+
 import audioCall from '../audio-call/audio-call';
 import showSettings from '../settings/showSettings';
+import showStatistics from '../statistics/showStatistics';
 import SprintGame from '../sprint/SprintGame';
+// eslint-disable-next-line import/no-cycle 
+import spacedRepetition from '../spacedRepetition/spacedRepetition'
+import createVocabulary from '../vocabulary/vocabulary'
+import speakIt from '../speakit-new/speakit'
 
 const mainPageItemHolders = () => {
+
     const container = document.querySelector('main');
     container.querySelector('.main-page__item-main').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов основного приложения');
+        spacedRepetition()
     })
     container.querySelector('.main-page__item-sprint').addEventListener('click', (event) => {
         event.target.classList.add('main-page__sprint-card-element');
@@ -21,24 +29,20 @@ const mainPageItemHolders = () => {
     })
     container.querySelector('.main-page__item-puzzle').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов пазла');
-    })
-    container.querySelector('.main-page__item-savanna').addEventListener('click', () => {
-        mainPageHide();
-        console.log('вызов саванны');
+        puzzle();
     })
     container.querySelector('.main-page__item-speakit').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов speakit');
+        speakIt();
     })
-    container.querySelector('.main-page__item-our-game').addEventListener('click', () => {
+    container.querySelector('.main-page__item-vocabulary').addEventListener('click', () => {
         mainPageHide();
-        console.log('вызов своей игры');
+        createVocabulary();
     })
     container.querySelector('.main-page__item-statistics').addEventListener('click', () => {
         mainPageHide();
         document.querySelector('.basic-header__item_statistics').classList.add('basic-header__item-active');
-        console.log('вызов статистики');
+        showStatistics();
     })
     container.querySelector('.main-page__item-setting').addEventListener('click', () => {
         mainPageHide();

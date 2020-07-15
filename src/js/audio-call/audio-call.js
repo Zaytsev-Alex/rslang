@@ -1,11 +1,17 @@
 
+import setBackendStat from './setBackendStatAudioCall';
+import getStatistics from '../statistics/getStatistics';
+
 const audioCall = () => {
+    if(localStorage.getItem('new-words-output') === null){
+        localStorage.setItem('new-words-output', 10);
+    }
 
     const mainBlock = document.querySelector('main'); 
     mainBlock.innerHTML = "";
 
     const mainAudioCall = document.createElement('div');
-    mainAudioCall.classList.add('main-audio-call');
+    mainAudioCall.classList.add('main-audio-call', 'main-audio-call_full-screen');
 
     const startScreen = document.createElement('div');
     startScreen.classList.add('start-screen');
@@ -17,45 +23,65 @@ const audioCall = () => {
     const titleGame = document.createElement('h1');
     startScreen.append(titleGame);
     titleGame.innerText = "Аудиовызов";
-
+    
     const levelBlock = document.createElement('div');    
     const titleLevel = document.createElement('h2');
+    
+    const description = document.createElement('div');
+    description.classList.add('main-page__description');
+    description.textContent = `Прослушиваете слово на английском языке и выбираете из пяти предложенных вариантов ответа верный.`
+    startScreen.append(description);
+    
+    
     startScreen.append(titleLevel);
     startScreen.append(levelBlock);
+    
 
+    
+       
+    
     const startBtn = document.createElement('div');
     startBtn.classList.add('start-btn');
     startScreen.append(startBtn);
     startBtn.innerText = "Начать";
 
-    const statistics = document.createElement('div');
-    statistics.classList.add('statistics');
-    statistics.innerText = "Статистика";
-    startScreen.append(statistics);
-
-    if(localStorage.getItem('gameTable') === null){
-        localStorage.setItem('gameTable', 0);
-        localStorage.setItem('rightTable', 0);
-        localStorage.setItem('wrongTable', 0);
-    }
+    const stat = document.createElement('div');
+    stat.classList.add('statistics');
+    stat.innerText = "Статистика";
+    startScreen.append(stat);
     
+    stat.addEventListener('click', () => {
 
-    statistics.addEventListener('click', () => {
     startScreen.innerHTML = "";
+
+    const showStatistics = async () => {
+
+    const statistics = await getStatistics();
+
     const table = document.createElement('table');
-    startScreen.append(table);
+
+    let countGame = 0;
+    let right = 0;
+    let wrong = 0;
+
+    if(statistics.optional.audioCall !== undefined){
+        countGame = statistics.optional.audioCall.countGame;
+        right = statistics.optional.audioCall.right;
+        wrong = statistics.optional.audioCall.wrong;
+    }
     
     table.innerHTML = `<caption>Статистика</caption>
     <tr>
     <td>Игры</td><td>Правильно</td><td>Неправильно</td>
     </tr>
     <tr>
-    <td>${localStorage.getItem('gameTable')}</td>
-    <td>${localStorage.getItem('rightTable')}</td>
-    <td>${localStorage.getItem('wrongTable')}</td>
+    <td>${countGame}</td>
+    <td>${right}</td>
+    <td>${wrong}</td>
     </tr>
     `
-    
+    startScreen.append(table);
+
     const backBtn = document.createElement('div');
     backBtn.classList.add('dont-known-btn');
     backBtn.innerText = "Назад";
@@ -65,10 +91,14 @@ const audioCall = () => {
         audioCall();
     });
 
+    }
+
+    showStatistics();    
+    
     });
 
     let countClick = 0;
-    let indWidth = 20;
+    let indWidth = 100/localStorage.getItem('new-words-output');
     let rightAnswer = 0;
     let wrongAnswer = 0;
 
@@ -95,6 +125,10 @@ const audioCall = () => {
         }
    
         function startGame(){
+
+        document.querySelector('.main-audio-call').classList.remove('main-audio-call_full-screen');
+        document.querySelector('.main-audio-call').classList.add('main-audio-call--game');
+
         const indicatorBlock = document.createElement('div');
         indicatorBlock.classList.add('indicatorBlock');
 
@@ -113,6 +147,9 @@ const audioCall = () => {
         const soundImg = document.createElement('div');
         soundImg.classList.add('sound-img');
         startScreen.append(soundImg);
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+        startScreen.append(imageContainer);
 
         const page = Math.floor(0 + Math.random() * (29 + 1 - 0));
         
@@ -164,7 +201,7 @@ const audioCall = () => {
                 if (countClick === 0){
                     const num = event.target.innerText[0];
                 for(let m = 0; m < 4; m += 1){
-                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.8";
                 }
                 if(randWord === +num){
                     /* eslint-disable */
@@ -172,7 +209,7 @@ const audioCall = () => {
                     event.target.innerText = eventTargetText;
                     /* eslint-enable */
                     const right = document.createElement('img');
-                    right.src = "img/right.png";
+                    right.src = "./img/right.png";
                     event.target.prepend(right);
                     rightAnswer += 1;
                     
@@ -194,15 +231,16 @@ const audioCall = () => {
                     });
                     /* eslint-enable */
                 engWord.innerText = `${data[randWords+randWord-1].word}`;
-                soundImg.after(engWord);
-                soundImg.after(engImg);
+                
+                engImg.onload = () => {
+                imageContainer.append(engImg);
+                }
+                imageContainer.after(engWord);
 
                 countClick = 1;
 
                 dontKnownBtn.innerText = "";
-                dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
-                dontKnownBtn.style.backgroundPosition = "center";
-
+                dontKnownBtn.classList.add('dont-known-btn_image');
                 }
                 
                  });
@@ -211,7 +249,8 @@ const audioCall = () => {
             function clickDontKnown(){
                 if (countClick === 0){
                     for(let m = 0; m < 4; m += 1){
-                        document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                        document.getElementsByClassName('opacity-no')[m].style.opacity = "0.8";
+                        document.getElementsByClassName('opacity-no')[m].style.textDecoration = "line-through";
                     }
                     const right = document.createElement('img');
                     right.src = "img/right.png";
@@ -223,7 +262,7 @@ const audioCall = () => {
                     engWord.classList.add('eng-word');
                     const engImg = document.createElement('img');
                     engImg.classList.add('eng-img');
-                    
+
                     const url2 = `https://dictionary.skyeng.ru/api/public/v1/words/search?search=${data[randWords+randWord-1].word}`;
                     fetch(url2)
                         .then((res) => res.json())
@@ -234,34 +273,35 @@ const audioCall = () => {
                         });
                         /* eslint-enable */
                     engWord.innerText = `${data[randWords+randWord-1].word}`;
-                    soundImg.after(engWord);
-                    soundImg.after(engImg);
+                    imageContainer.after(engWord);
+                    engImg.onload = () => {
+                    imageContainer.append(engImg);
+                    }
 
                     countClick = 1;
                     wrongAnswer += 1;
 
                     dontKnownBtn.innerText = "";
-                    dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
-                    dontKnownBtn.style.backgroundPosition = "center";
+                    dontKnownBtn.classList.add('dont-known-btn_image');
 
-                }else if (indicator.style.width === "100%"){
-                        dontKnownBtn.style.background = "none";
+                }else if (indicator.style.width === `${100-100/localStorage.getItem('new-words-output')}%`){
+                        dontKnownBtn.classList.remove('dont-known-btn_image');
                         startScreen.innerHTML = "";
                         result.innerText = `Ваш результат:
                         Правильно ${rightAnswer}/${wrongAnswer} Неправильно`;
                         startScreen.append(result);
                         startScreen.append(dontKnownBtn);
                         dontKnownBtn.innerText = "Заново";
-                        startScreen.append(statistics);
-                        localStorage.setItem('gameTable', +(localStorage.getItem('gameTable')) + 1);
-                        localStorage.setItem('rightTable', +(localStorage.getItem('rightTable')) + rightAnswer);
-                        localStorage.setItem('wrongTable', +(localStorage.getItem('wrongTable')) + wrongAnswer);
+                        startScreen.append(stat);
+                        
+                        setBackendStat(rightAnswer, wrongAnswer);
+
                         dontKnownBtn.addEventListener('click', () => {
                              countClick = 0;
-                             indicator.style.width = '10%';
+                             indicator.style.width = '0%';
                              rightAnswer = 0;
                              wrongAnswer = 0;
-                             indWidth = 20;
+                             indWidth = 100/localStorage.getItem('new-words-output');
                              levelBlock.innerHTML = "";
                              audioCall();
                         });
@@ -270,7 +310,7 @@ const audioCall = () => {
                         startScreen.innerHTML = "";
                         countClick = 0;
                         indicator.style.width = `${indWidth}%`;
-                        indWidth += 10;
+                        indWidth += 100/localStorage.getItem('new-words-output');;
                         nextGame();
                     }
                 
@@ -284,12 +324,11 @@ const audioCall = () => {
 
      nextGame();
 
-        
     }
-
 
     startBtn.addEventListener('click', startGame);
 
+    
 }
 
 export { audioCall as default };

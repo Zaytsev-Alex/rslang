@@ -1,11 +1,10 @@
 
 .footer {
-   background: linear-gradient(135deg, rgba(29,67,80,1) 0%, rgba(164,57,49,1) 100%);
-    padding: 30px 0;
+    background: #fff5ee;
     color: white;
     &-inner {
         flex: 0 0 auto;
-       // position: absolute;
+
         width: 100%;
     }
     &-container {
@@ -27,6 +26,20 @@
         font-size: 2rem;
         color: white;
         font-family: Yellowtail,cursive;
+    }
+    .project-link,
+    .rs__logo {
+        height: 50px;
+        width: 60px;
+        background-repeat: no-repeat;
+        background-size: 60px;
+        background-position: 50%;
+    }
+        .rs__logo {
+            background-image: url(../../assets/images/rs_school.svg);
+    }
+    .project-link {
+        background-image: url(../../assets/images/github-logo.png); 
     }
 }
 

@@ -13,13 +13,12 @@ const createDefaultSettings = async () => {
             "explanation": true,
             "example": true,
             "transcription": true,
-            "associateImage": false,
+            "associateImage": true,
             "showAnswer": true,
             "showDelete": true,
             "showHard": true,
             "showDifficult": true,
             "group": 0,
-            "complicatedInterval": 1
           }
         }
     };

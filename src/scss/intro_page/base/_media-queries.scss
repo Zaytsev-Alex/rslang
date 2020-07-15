@@ -1,8 +1,4 @@
 @media screen and (max-width: 920px) {
-    html {
-        font-size: 8px;
-    }
-
     .about-team {
         .column-layout-6 {
             width: calc(50% - 30px);
@@ -18,10 +14,7 @@
 @media screen and (max-width: 680px) {
 
 
-    html {
-        font-size: 6px;
-    }
-
+ 
     .app-intro-options {
         .column-layout-12 {
             width: 100%;
@@ -33,6 +26,11 @@
     }
 
     .about-team {
+        .profile__photo {
+            width: 200px;
+            height: 200px;
+            min-height: 200px;
+        }
         .column-layout-12 {
             width: 100%;
         }
@@ -73,11 +71,6 @@
         display: block;
     }
 
-    .btn-container {
-        display   : block;
-        text-align: start;
-    }
-
     .nav-bar {
         padding-top: 40px;
 
@@ -89,13 +82,18 @@
     }
 
     .footer {
-        &-container {
-            flex-direction: column;
-        }
-
         .team-github-info {
             padding-left: 0;
 
         }
     }
+}
+@media screen and (max-width: 400px) {
+
+    .logo_title {
+        font-size: 13rem;
+}
+.start-learning-title{
+    font-size: 2rem;
+}
 }

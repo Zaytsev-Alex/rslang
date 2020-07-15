@@ -1,6 +1,6 @@
 const mainPageDescription = [
     {
-        header: 'Интервальное повторение',
+        header: 'Учить Слова',
         logoSrc: './img/summertime.svg',
         infoSrc: './img/info.svg',
         description: 'Учите новые слова при помощи методики интервального повторения.',
@@ -28,13 +28,6 @@ const mainPageDescription = [
         class: 'main-page__item-puzzle',
     },
     {
-        header: 'Саванна',
-        logoSrc: './img/savanna.svg',
-        infoSrc: './img/info.svg',
-        description: 'Оттачивает понимание английской речи и быстрого перевода слов.',
-        class: 'main-page__item-savanna',
-    },
-    {
         header: 'Speak It',
         logoSrc: './img/speaking.svg',
         infoSrc: './img/info.svg',
@@ -42,24 +35,24 @@ const mainPageDescription = [
         class: 'main-page__item-speakit',
     },
     {
-        header: 'Своя Игра',
-        logoSrc: './img/our-game.svg',
+        header: 'Словарь',
+        logoSrc: './img/vocabulary.svg',
         infoSrc: './img/info.svg',
-        description: 'Это писание своей игры. Нет своей игры - нет описания.',
-        class: 'main-page__item-our-game',
+        description: 'В словаре Вы можете увидить слова, которые Вы добавляли во время обучения.',
+        class: 'main-page__item-vocabulary',
     },
     {
         header: 'Статистика',
         logoSrc: './img/metrics.svg',
         infoSrc: './img/info.svg',
-        description: 'Здесь вы можете посмотреть статистику изучения слов.',
+        description: 'Здесь Вы можете посмотреть статистику изучения слов.',
         class: 'main-page__item-statistics',
     },
     {
         header: 'Настройки',
         logoSrc: './img/gear.svg',
         infoSrc: './img/info.svg',
-        description: 'Здесь вы можете изменить настройки приложения под себя.',
+        description: 'Здесь Вы можете изменить настройки приложения под себя.',
         class: 'main-page__item-setting',
     },
 ];

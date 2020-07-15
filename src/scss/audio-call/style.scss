@@ -1,13 +1,30 @@
-
-
 .main-audio-call{
-	min-height: 100vh;
+	min-height: calc(100vh - 80px);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: url(../../assets/images/background2.jpg);
+	background: url(../../assets/images/audio-call-4.png);
 	background-size: cover;
 	color: white;
+	&--game {
+		display: block;
+		.start-screen {
+			padding-top: 50px;
+			padding-bottom: 20px;
+			margin: 0 auto;
+		} 
+	}
+	.indicator {
+		transition: 1s ease-in;
+	}
+	&.main-audio-call_full-screen {
+		height: 100vh;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
 
 .start-screen {
 	width: 80%;
@@ -15,39 +32,56 @@
 	text-align: center;
 }
 h1 {
-	font-size: 50px;
+	font-size: 60px;
+	font-weight: 300;
 }
 h2 {
 	font-size: 24px;
 	padding: 5px 0px;
+	margin-bottom: 30px;
 }
 h3 {
 	padding-bottom: 20px;
-	font-size: 18px;
+	font-size: 22px;
+	
 }
+.main-page__description {
+    font-size: 25px;
+    line-height: 1.4;
+    font-weight: 300;
+    text-align: center;
+	margin: 80px 0;
+  }
+
 .level-block {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	padding-bottom: 15px;
-	width: 170px;
-	margin: 0px auto;
+	width: 280px;
+	margin: 15px auto;
 	div {
 		font-size: 22px;
-		padding: 0px 5px;
-		opacity: 0.5;
-		border-radius: 5px;
-		margin: 2px;
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		margin-right: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		border: 1px solid white;
+
 		&:hover {
 			cursor: pointer;
-			opacity: 1;
-			border: 1px solid white;
-			transition: 0.5s linear;
+			border-color: #5556aa;
+			color: #5556aa;
+			transition: border-color 0.3s ease-out,
+						color 0.3s ease-out;
 		}
 	}
 	.active {
-		border: 1px solid white;
+		background-color: #5556aa;
+		border: none;
 		opacity: 1;
 	}
 }
@@ -62,19 +96,22 @@ h3 {
 	text-transform: uppercase;
 	font-size: 30px;
 	padding-top: 8px;
+
 	&:hover {
-		background-color: rgb(163, 224, 199);
+		background-color: #46489a;
+		color: #fff;
 		cursor: pointer;
-		transition: 0.5s linear;
+		transition: 0.3s ease-out;
 	}
 }
 .indicator {
-	width: 10%;
+	width: 0%;
 	height: 10px;
 	background-color: white;
 	top: 0%;
 	left: 0%;
 	border-radius: 5px;
+	transition: 0.5s;
 }
 .indicatorBlock {
 	width: 100%;
@@ -91,47 +128,89 @@ h3 {
 	justify-content: center;
 	padding-top: 40px;
 	padding-bottom: 20px;
-	font-size: 20px;
+	font-size: 26px;
+	font-weight: 600;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #000000;
+
 	div {
 		padding-left: 20px;
 		padding-bottom: 20px;
 		text-transform: lowercase;
-		&:hover {
-			cursor: pointer;
-			opacity: 0.5;
-			transition: 0.5s linear;
+		position: relative;
+		cursor: pointer	;
+
+		&::after {
+			background: none repeat scroll 0 0 transparent;
+			bottom: 0;
+			content: "";
+			display: block;
+			height: 2px;
+			left: 60%;
+			position: absolute;
+			background: #fff;
+			transition: width 0.3s ease 0s, left 0.3s ease 0s;
+			width: 0;
+		}
+	
+		&:hover::after { 
+			width: 95%; 
+			left: 10%; 
 		}
 	}
 }
 .result {
-	font-size: 24px;
+	font-size: 26px;
 	padding-bottom: 50px;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #000000;
+	font-weight: 600;
 }
 .dont-known-btn {
-	border: 1px solid white;
+	color: #46489a;
+	border-radius: 5px;
 	width: 200px;
-	font-size: 20px;
+	font-size: 23px;
 	text-transform: uppercase;
 	padding: 10px 20px;
 	margin: 0px auto;
-	opacity: 0.5;
 	height: 45px;
-	margin-bottom: 40px;
+	background-color: #ffffff;
+	
 	&:hover {
 		cursor: pointer;
-		opacity: 1;
-		transition: 0.5s linear;
+		border: none;
+		background-color: #46489a;
+		color: #ffffff;
+		transition: background-color 0.3s ease-out,
+					color 0.3s ease-out;
+	}
+
+	&_image {
+		background: url("../../assets/images/next.svg") no-repeat center;
+		background-size: cover;
+		width: 50px;
+		height: 50px;
+		transition: filter 0.3s ease-out;
+
+		&:hover {
+			background-color: transparent;
+			filter: blur(1px);
+		}
 	}
 }
 .sound-img {
-	width: 120px;
-	height: 120px;
-	background: url(../../assets/images/sound.png) no-repeat;
+	width: 80px;
+	height: 80px;
+	background: url(../../assets/images/sound.svg) no-repeat center;
+	background-size: cover;
 	margin: 0px auto;
+	cursor: pointer;
+	transition: filter 0.3s ease-out;
+	filter: invert(100%);
+
 	&:hover {
-		cursor: pointer;
-		background: url(../../assets/images/sound-on.png) no-repeat;
-		transition: 0.5s linear;
+		filter: invert(100%) blur(2px);
 	}
 }
 .right {
@@ -141,21 +220,43 @@ h3 {
 	font-size: 50px;
 	margin: 40px 0px 10px 0px;
 }
-.eng-img {
+.image-container {
 	margin-top: 40px;
-	width: 120px;
-	height: auto;
-	border-radius: 20%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 180px;
+	width: 200px;
+}
+.eng-img {
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
 }
 .statistics {
 	font-size: 26px;
 	padding-top: 30px;
-	opacity: 0.7;
 	margin: 0px auto;
-	&:hover {
-		cursor: pointer;
-		opacity: 1;
-		transition: 0.5s linear;
+	position: relative;
+	width: 15%;
+	cursor: pointer;
+
+	&::after {
+		background: none repeat scroll 0 0 transparent;
+		bottom: 0;
+		content: "";
+		display: block;
+		height: 2px;
+		left: 50%;
+		position: absolute;
+		background: #fff;
+		transition: width 0.3s ease 0s, left 0.3s ease 0s;
+		width: 0;
+	}
+
+	&:hover::after { 
+		bottom: -5px;
+		width: 100%; 
+		left: 0; 
 	}
 }
 td {
@@ -168,6 +269,7 @@ table {
 	text-align: center;
 	margin: 0px auto;
 	margin-bottom: 40px;
+	color: white;
 }
 caption {
 	font-size: 30px;
