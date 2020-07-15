@@ -150,7 +150,7 @@ export default function createIntoPage() {
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${DenIcexesIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Субоч Денис</h3>
+                    <h3 class="person-name">Денис Субоч</h3>
                     <p class="person-info">Лидер нашей команды. Руководитель проекта. Ловко осуществлял координацию команды в процессе работы.
                     </p>
                     <p class="responsibility-info">Реализовал функционал основого приложения "Учить слова", страницу "Словарь", а также игру "SpeakIt".
@@ -210,7 +210,7 @@ export default function createIntoPage() {
             <div class="column-layout__item column-layout-4 column-layout-6 column-layout-12 person"><img
                     class="profile__photo" src= ${StasIntroPctSrc} alt="photo">
                 <div class="person-introduce">
-                    <h3 class="person-name">Короткий Станислав</h3>
+                    <h3 class="person-name">Станислав Короткий</h3>
                     <p class="person-info">Стремится к совершенству стиля и лаконичности. Неисчерпаемый источник воросов.
                     </p>
                     <p class="responsibility-info">Ответственный за создание визитной страницы приложения.
