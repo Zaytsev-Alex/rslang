@@ -285,7 +285,6 @@ const audioCall = () => {
                     dontKnownBtn.classList.add('dont-known-btn_image');
 
                 }else if (indicator.style.width === `${100-100/localStorage.getItem('new-words-output')}%`){
-                        dontKnownBtn.style.background = "none";
                         dontKnownBtn.classList.remove('dont-known-btn_image');
                         startScreen.innerHTML = "";
                         result.innerText = `Ваш результат:
