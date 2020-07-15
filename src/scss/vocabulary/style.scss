@@ -123,12 +123,27 @@ html {
             }
         }
       }
-
+    .card__word-container {
+      margin-top: 5px;
+      display:flex;
+    }
     .card__word,
     .card__word-trascription {
         font-size: 2rem;
         margin-right: 5px;
         color: #2582e7;
+    }
+    .card__speaker {
+      width: 25px;
+      min-height: 100%;
+      background-image: url(/../img/speaker.svg);
+      background-position: 50%;
+      background-size: 25px;
+      background-repeat: no-repeat;
+      &:hover {
+        cursor: pointer;
+      }
+
     }
     .card__restore-btn {
         outline: none;

@@ -4,9 +4,11 @@ import {
     updateUserWord
 } from '../spacedRepetition/Api/Api'
 import {authorizationLoaderShow, authorizationLoaderHide } from '../authorization/loader'
+import {createAudio} from '../spacedRepetition/Utils/Utils'
 
 export default async function createVocabulary() {
     authorizationLoaderShow();
+    const PLAYER = createAudio();
     const MAIN = document.querySelector('main');
     const vocabulary = document.createElement('div')
     vocabulary.classList.add('vocabulary');
@@ -125,7 +127,11 @@ export default async function createVocabulary() {
                 wordTranscription.textContent = arr[i].transcription;
                 wordContainer.append(wordTranscription)
                 }
-                wordContainer.prepend(word)
+                wordContainer.prepend(word);
+                const cardSpeaker = document.createElement('div');
+                cardSpeaker.classList.add('card__speaker');
+                cardSpeaker.dataset.src = `https://raw.githubusercontent.com/icexes/rslang-data/master/${arr[i].audio}`
+                wordContainer.append(cardSpeaker);
                 if (difficulty !== undefined) {
                     const restoreBtn = document.createElement('button');
                     restoreBtn.classList.add('card__restore-btn');
@@ -230,6 +236,10 @@ export default async function createVocabulary() {
                 "day": "numeric"
             });
             updateUserWord(userId,wordId, userWord, token);
+        }
+        if (event.target.closest('.card__speaker')) {
+            PLAYER.src = event.target.closest('.card__speaker').dataset.src;
+            PLAYER.play();
         }
     })
 
