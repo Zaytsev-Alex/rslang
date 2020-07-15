@@ -23,12 +23,23 @@ const audioCall = () => {
     const titleGame = document.createElement('h1');
     startScreen.append(titleGame);
     titleGame.innerText = "Аудиовызов";
-
+    
     const levelBlock = document.createElement('div');    
     const titleLevel = document.createElement('h2');
+    
+    const description = document.createElement('div');
+    description.classList.add('main-page__description');
+    description.textContent = `Прослушиваете слово на английском языке и выбираете из пяти предложенных вариантов ответа верный.`
+    startScreen.append(description);
+    
+    
     startScreen.append(titleLevel);
     startScreen.append(levelBlock);
+    
 
+    
+       
+    
     const startBtn = document.createElement('div');
     startBtn.classList.add('start-btn');
     startScreen.append(startBtn);
@@ -114,7 +125,9 @@ const audioCall = () => {
         }
    
         function startGame(){
+
         document.querySelector('.main-audio-call').classList.remove('main-audio-call_full-screen');
+        document.querySelector('.main-audio-call').classList.add('main-audio-call--game');
 
         const indicatorBlock = document.createElement('div');
         indicatorBlock.classList.add('indicatorBlock');
@@ -134,6 +147,9 @@ const audioCall = () => {
         const soundImg = document.createElement('div');
         soundImg.classList.add('sound-img');
         startScreen.append(soundImg);
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+        startScreen.append(imageContainer);
 
         const page = Math.floor(0 + Math.random() * (29 + 1 - 0));
         
@@ -185,7 +201,7 @@ const audioCall = () => {
                 if (countClick === 0){
                     const num = event.target.innerText[0];
                 for(let m = 0; m < 4; m += 1){
-                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                    document.getElementsByClassName('opacity-no')[m].style.opacity = "0.8";
                 }
                 if(randWord === +num){
                     /* eslint-disable */
@@ -215,15 +231,16 @@ const audioCall = () => {
                     });
                     /* eslint-enable */
                 engWord.innerText = `${data[randWords+randWord-1].word}`;
-                soundImg.after(engWord);
-                soundImg.after(engImg);
+                
+                engImg.onload = () => {
+                imageContainer.append(engImg);
+                }
+                imageContainer.after(engWord);
 
                 countClick = 1;
 
                 dontKnownBtn.innerText = "";
-                dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
-                dontKnownBtn.style.backgroundPosition = "center";
-
+                dontKnownBtn.classList.add('dont-known-btn_image');
                 }
                 
                  });
@@ -232,7 +249,8 @@ const audioCall = () => {
             function clickDontKnown(){
                 if (countClick === 0){
                     for(let m = 0; m < 4; m += 1){
-                        document.getElementsByClassName('opacity-no')[m].style.opacity = "0.3";
+                        document.getElementsByClassName('opacity-no')[m].style.opacity = "0.8";
+                        document.getElementsByClassName('opacity-no')[m].style.textDecoration = "line-through";
                     }
                     const right = document.createElement('img');
                     right.src = "img/right.png";
@@ -244,7 +262,7 @@ const audioCall = () => {
                     engWord.classList.add('eng-word');
                     const engImg = document.createElement('img');
                     engImg.classList.add('eng-img');
-                    
+
                     const url2 = `https://dictionary.skyeng.ru/api/public/v1/words/search?search=${data[randWords+randWord-1].word}`;
                     fetch(url2)
                         .then((res) => res.json())
@@ -255,18 +273,20 @@ const audioCall = () => {
                         });
                         /* eslint-enable */
                     engWord.innerText = `${data[randWords+randWord-1].word}`;
-                    soundImg.after(engWord);
-                    soundImg.after(engImg);
+                    imageContainer.after(engWord);
+                    engImg.onload = () => {
+                    imageContainer.append(engImg);
+                    }
 
                     countClick = 1;
                     wrongAnswer += 1;
 
                     dontKnownBtn.innerText = "";
-                    dontKnownBtn.style.background = "url('img/arrow.png') no-repeat";
-                    dontKnownBtn.style.backgroundPosition = "center";
+                    dontKnownBtn.classList.add('dont-known-btn_image');
 
                 }else if (indicator.style.width === `${100-100/localStorage.getItem('new-words-output')}%`){
                         dontKnownBtn.style.background = "none";
+                        dontKnownBtn.classList.remove('dont-known-btn_image');
                         startScreen.innerHTML = "";
                         result.innerText = `Ваш результат:
                         Правильно ${rightAnswer}/${wrongAnswer} Неправильно`;
